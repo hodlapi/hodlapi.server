@@ -10,7 +10,6 @@ const queue = kue.createQueue({
 });
 
 queue.process('binance', ({ data }, done) => {
-    console.log('queue handler', data);
     parseBinance(data).then(() => {
         done();
     });

@@ -21,3 +21,4 @@ services:
       - '3020:3020'
     volumes:
       - './:/app/'
+      - './volumes:/app/volumes/'
