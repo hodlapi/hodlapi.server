@@ -1,0 +1,26 @@
+{
+  "name": "cryptoparser.server",
+  "version": "0.0.1",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/finkee/cryptoparser.server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/finkee/cryptoparser.server#readme",
+  "dependencies": {
+    "@koa/cors": "^2.2.3",
+    "axios": "^0.18.0",
+    "config": "^3.0.1",
+    "koa": "^2.6.2",
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^7.4.0",
+    "kue": "^0.11.6",
+    "ramda": "^0.26.1"
+  }
+}
