@@ -2,6 +2,8 @@ const axios = require('axios');
 const Router = require('koa-router');
 const R = require('ramda');
 
+const queue = require('../../queue');
+
 const router = new Router();
 
 const symbols = async (ctx) => {
@@ -15,7 +17,16 @@ const symbols = async (ctx) => {
     )(exchange);
 };
 
-const createJob = async (ctx) => {};
+const createJob = async (ctx) => {
+    try {
+        queue.create('binance', ctx.request.body).save();
+        ctx.status = 200;
+        ctx.body = ctx.request.body;
+    } catch (e) {
+        ctx.status = 403;
+        ctx.body = 'Error';
+    }
+};
 
 router.get('/symbols', symbols);
 router.post('/parse', createJob);

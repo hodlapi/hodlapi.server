@@ -3,7 +3,7 @@ const R = require('ramda');
 
 const createRequest = url => axios.default.get(url);
 
-const parseBinance = params => R.compose();
+const parseBinance = params => Promise.resolve();
 
 module.exports = {
     parseBinance
