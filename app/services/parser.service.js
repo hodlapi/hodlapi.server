@@ -7,17 +7,17 @@ const { store } = require('./storage.service');
 const parseBinance = params => axios.default.get('https://api.binance.com/api/v1/klines', { params })
     .then(R.propOr([], 'data'));
 
-const binanceParser = ({ symbol, interval, startDate = '2017-01-01' }) => new Promise(async (resolve, reject) => {
+const binanceParser = ({ symbol, interval, startDate = '2017-01-01', endDate }) => new Promise(async (resolve, reject) => {
     /**
      * loop conditions
      * startTime - unix time of the first date
      */
-    let startTime = moment(startDate).unix();
-    const currentDateInUnix = moment.unix(moment().unix());
+    let startTime = moment(startDate).unix() * 1000;
+    const currentDate = moment(endDate).unix() * 1000;
+    
     let parsedLength = 1;
-    let cycleIterator = 0;
     let courses = [];
-    while (startTime < currentDateInUnix && parsedLength > 0) {
+    while (startTime < currentDate && parsedLength > 0) {
         try {
             const data = await parseBinance({
                 symbol,
@@ -27,7 +27,6 @@ const binanceParser = ({ symbol, interval, startDate = '2017-01-01' }) => new Pr
             parsedLength = data.length;
             // hack
             courses = [...courses, ...data];
-            cycleIterator++;
             startTime = R.compose(
                 R.inc,
                 R.nth(6),
@@ -35,6 +34,8 @@ const binanceParser = ({ symbol, interval, startDate = '2017-01-01' }) => new Pr
             )(data);
             console.log(moment(startTime).toString());
         } catch (e) {
+            console.log(e);
+            
             reject(e);
             return;
         }

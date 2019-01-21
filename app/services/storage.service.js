@@ -5,11 +5,11 @@ const path = require('path');
 const writeFile = (filename, data) => {
     return new Promise((resolve, reject) => {
         const dirname = path.dirname(`${filename}.txt`);
-        if (!fs.existsSync(`./volumes/${dirname}`)) {
-            fs.mkdirSync(`./volumes/${dirname}`);
+        if (!fs.existsSync(`./static/${dirname}`)) {
+            fs.mkdirSync(`./static/${dirname}`);
         }
         
-        fs.appendFile(`./volumes/${filename}.txt`, data, err => {
+        fs.appendFile(`./static/${filename}.txt`, data, err => {
             if (err) {
                 reject(err);
             } else {

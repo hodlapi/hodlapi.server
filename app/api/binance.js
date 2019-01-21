@@ -1,6 +1,7 @@
 const axios = require('axios');
 const Router = require('koa-router');
 const R = require('ramda');
+const moment = require('moment');
 
 const queue = require('../../queue');
 
@@ -19,9 +20,15 @@ const symbols = async (ctx) => {
 
 const createJob = async (ctx) => {
     try {
-        queue.create('binance', { ...ctx.request.body }).save();
+        let { symbols = [], intervals, startDate, endDate, email } = ctx.request.body;
+        startDate = startDate || '2017-01-01';
+        endDate = endDate || moment().format('YYYY-MM-DD');
+        R.map(symbol => queue.create('binance', { symbol, intervals, startDate, endDate, email }).save())(symbols);
         ctx.status = 200;
-        ctx.body = ctx.request.body;
+        ctx.body = {
+            status: 200,
+            message: 'Success'
+        };
     } catch (e) {
         ctx.status = 403;
         ctx.body = 'Error';
