@@ -19,7 +19,7 @@ const symbols = async (ctx) => {
 
 const createJob = async (ctx) => {
     try {
-        queue.create('binance', ctx.request.body).save();
+        queue.create('binance', { ...ctx.request.body }).save();
         ctx.status = 200;
         ctx.body = ctx.request.body;
     } catch (e) {

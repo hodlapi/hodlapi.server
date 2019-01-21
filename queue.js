@@ -1,6 +1,8 @@
 const kue = require('kue');
+const fs = require('fs');
+const R = require('ramda');
 
-const { parseBinance } = require('./app/services/parser.service');
+const { binanceParser } = require('./app/services/parser.service');
 
 const queue = kue.createQueue({
     redis: {
@@ -10,9 +12,22 @@ const queue = kue.createQueue({
 });
 
 queue.process('binance', ({ data }, done) => {
-    parseBinance(data).then(() => {
-        done();
-    });
+    const { symbol, intervals = [], startDate } = data;
+    // if (fs.existsSync())
+    Promise.all(
+        R.compose(
+           R.map(interval => binanceParser({ symbol, interval, startDate: '2017-01-01' }))
+        )(intervals)
+    ).then(() => {
+            console.log('Parsing completed');
+            done();
+        })
+        .catch(e => {
+            throw new Error(e);
+            done();
+        });
+    
+        
 });
 
 module.exports = queue;

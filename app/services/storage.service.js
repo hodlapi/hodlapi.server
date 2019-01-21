@@ -1,8 +1,14 @@
 const R = require('ramda');
 const fs = require('fs');
+const path = require('path');
 
 const writeFile = (filename, data) => {
     return new Promise((resolve, reject) => {
+        const dirname = path.dirname(`${filename}.txt`);
+        if (!fs.existsSync(`./volumes/${dirname}`)) {
+            fs.mkdirSync(`./volumes/${dirname}`);
+        }
+        
         fs.appendFile(`./volumes/${filename}.txt`, data, err => {
             if (err) {
                 reject(err);
