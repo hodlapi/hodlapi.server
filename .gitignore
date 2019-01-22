@@ -131,3 +131,4 @@ typings/
 # docker volumes
 
 /volumes
+/static
