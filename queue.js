@@ -36,7 +36,7 @@ queue.process('binance', ({ data }, done) => {
             if (fs.existsSync(`./static/${folderName}`)) {
                 rimraf.sync(`./static/${folderName}`)
             }
-            queue.create('sendEmail', { email, link: `${config.get('hostingUrl')}/${folderName}.zip`}).save();
+            queue.create('sendEmail', { email, link: `${config.get('hostingUrl')}/${folderName}.zip` }).save();
             done();
         });
     })
@@ -57,14 +57,12 @@ queue.process('sendEmail', ({ data }, done) => {
             "name": "Recipient Name",
             "type": "to"
         }],
-        "message": {
-            "global_merge_vars": [
-                {
-                    "name": "LINK_TO_CRYPTO_DATA",
-                    "content": data.link
-                }
-            ],
-        },
+        "global_merge_vars": [
+            {
+                "name": "LINK_TO_CRYPTO_DATA",
+                "content": data.link
+            }
+        ],
         "headers": {
             "Reply-To": "vladb951@gmail.com"
         },
