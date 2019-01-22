@@ -18,7 +18,7 @@ const queue = kue.createQueue({
 
 queue.process('binance', ({ data }, done) => {
     const { email, symbol, intervals = [], startDate, endDate } = data;
-    
+
     const folderName = `${moment().format('YYYY-MM-DD')}_${symbol}`;
     if (fs.existsSync(`./static/${folderName}`)) {
         rimraf.sync(`./static/${folderName}`)
@@ -36,7 +36,7 @@ queue.process('binance', ({ data }, done) => {
             if (fs.existsSync(`./static/${folderName}`)) {
                 rimraf.sync(`./static/${folderName}`)
             }
-
+            queue.create('sendEmail', { email, link: `${config.get('hostingUrl')}/${folderName}.zip`).save();
             done();
         });
     })
@@ -46,25 +46,36 @@ queue.process('binance', ({ data }, done) => {
         });
 });
 
-queue.process('sendEmail', ({ email, message }, done) => {
+queue.process('sendEmail', ({ data }, done) => {
     const mandrillClient = new mandrill.Mandrill(config.get('mandrill.apiKey'));
-    var message = {
-        "html": "<p>Example HTML content</p>",
-        "text": "Example text content",
-        "subject": "example subject",
+    const message = {
+        "subject": "Parsing completed",
         "from_email": "contact@finkee.org",
-        "from_name": "Example Name",
+        "from_name": "CryptoParsing service",
         "to": [{
-            "email": "vladb951@gmail.com",
+            "email": data.email,
             "name": "Recipient Name",
             "type": "to"
         }],
+        "message": {
+            "global_merge_vars": [
+                {
+                    "name": "LINK_TO_CRYPTO_DATA",
+                    "content": data.link
+                }
+            ],
+        },
         "headers": {
             "Reply-To": "vladb951@gmail.com"
         },
         "important": false
     };
-    mandrillClient.messages.send({ message, async: false, ip_pool: "Main Pool" }, function (result) {
+    var template_name = "crypto-data-ready";
+    var template_content = [{
+        "name": "example name",
+        "content": "example content"
+    }];
+    mandrillClient.messages.sendTemplate({ template_name, template_content, message, async: false, ip_pool: "Main Pool" }, function (result) {
         console.log(result);
     }, function (e) {
         // Mandrill returns the error as an object with name and message keys
@@ -73,7 +84,5 @@ queue.process('sendEmail', ({ email, message }, done) => {
     });
     done();
 });
-
-// queue.create('sendEmail', 'test').save();
 
 module.exports = queue;
