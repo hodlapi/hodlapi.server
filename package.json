@@ -17,6 +17,7 @@
     "@koa/cors": "^2.2.3",
     "axios": "^0.18.0",
     "config": "^3.0.1",
+    "json2csv": "^4.3.3",
     "koa": "^2.6.2",
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",
