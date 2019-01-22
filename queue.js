@@ -36,7 +36,7 @@ queue.process('binance', ({ data }, done) => {
             if (fs.existsSync(`./static/${folderName}`)) {
                 rimraf.sync(`./static/${folderName}`)
             }
-            queue.create('sendEmail', { email, link: `${config.get('hostingUrl')}/${folderName}.zip`).save();
+            queue.create('sendEmail', { email, link: `${config.get('hostingUrl')}/${folderName}.zip`}).save();
             done();
         });
     })
