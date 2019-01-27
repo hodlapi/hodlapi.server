@@ -2,11 +2,13 @@ version: '3'
 services:
   redis:
     restart: always
-    image: redis:latest
+    image: bitnami/redis:latest
     ports:
       - '6379:6379'
     volumes:
-      - './volumes/data:/data'
+      - './volumes/data:/bitnami/redis/data'
+    environment:
+      - REDIS_PASSWORD=Password1Startup
   app:
     restart: always
     build:

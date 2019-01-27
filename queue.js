@@ -12,7 +12,8 @@ const { binanceParser } = require('./app/services/parser.service');
 const queue = kue.createQueue({
     redis: {
         host: 'redis',
-        port: 6379
+        port: 6379,
+        auth: 'Password1Startup'
     }
 });
 
@@ -49,7 +50,7 @@ queue.process('binance', ({ data }, done) => {
 queue.process('sendEmail', ({ data }, done) => {
     const mandrillClient = new mandrill.Mandrill(config.get('mandrill.apiKey'));
     const message = {
-        "subject": "Parsing completed",
+        "subject": `Parsing completed ${moment().format('YYYY-MM-DD')}`,
         "from_email": "contact@finkee.org",
         "from_name": "CryptoParsing service",
         "to": [{
