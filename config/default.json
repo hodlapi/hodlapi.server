@@ -2,5 +2,13 @@
     "hostingUrl": "http://157.230.53.82:3000",
     "mandrill": {
         "apiKey": "vNh3wfU2xDxrZMr3TXMH7A"
-    }
+    },
+    "emailsWhitelist": [
+        "vladb95@gmail.com",
+        "lirik1105@gmail.com",
+        "kirill.museychuk@gmail.com",
+        "Sergei.tran@gmail.com",
+        "Sergei@block.science",
+        "fernando@block.science"
+    ]
 }
