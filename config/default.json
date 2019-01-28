@@ -1,7 +1,7 @@
 {
     "hostingUrl": "api.hodlapi.com",
     "mandrill": {
-        "apiKey": "vNh3wfU2xDxrZMr3TXMH7A",
+        "apiKey": "svpU6Vx8VJ6q0hvyF1jsXA",
         "fromEmail": "whale@hodlapi.com",
         "fromName": "Blue Whale"
     },
