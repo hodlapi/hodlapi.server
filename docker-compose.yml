@@ -13,7 +13,7 @@ services:
     restart: always
     build:
       context: .
-    command: nodemon --ignore './static/' server.js
+    # command: nodemon --ignore './static/' server.js
     depends_on:
       - redis
     links:

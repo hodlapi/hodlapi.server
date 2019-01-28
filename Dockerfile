@@ -1,6 +1,6 @@
 FROM node:latest
 
-RUN npm install -g nodemon forever
+RUN npm install -g nodemon pm2
 
 COPY package-lock.json /app/
 COPY package.json /app/
@@ -11,4 +11,4 @@ RUN npm i
 
 COPY . /app/
 
-CMD ["forever", "start", "server.js"]
+CMD ["pm2-runtime", "server.js"]
