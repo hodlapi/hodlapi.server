@@ -1,5 +1,5 @@
 {
-    "hostingUrl": "api.hodlapi.com",
+    "hostingUrl": "https://api.hodlapi.com",
     "mandrill": {
         "apiKey": "svpU6Vx8VJ6q0hvyF1jsXA",
         "fromEmail": "whale@hodlapi.com",
