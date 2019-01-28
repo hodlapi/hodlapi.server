@@ -6,6 +6,7 @@ const moment = require('moment');
 const rimraf = require('rimraf');
 const config = require('config');
 const mandrill = require('mandrill-api/mandrill');
+const logger = require('./logger');
 
 const { binanceParser } = require('./app/services/parser.service');
 
@@ -33,6 +34,10 @@ queue.process('binance', ({ data }, done) => {
         )(intervals)
     ).then(() => {
         console.log('Parsing completed');
+        logger.log({
+            level: 'info',
+            message: `Parsing [${symbol} ${email}] completed`
+        });
         zip(`./static/${folderName}`, { saveTo: `./static/${folderName}.zip` }, err => {
             if (fs.existsSync(`./static/${folderName}`)) {
                 rimraf.sync(`./static/${folderName}`)
@@ -42,7 +47,10 @@ queue.process('binance', ({ data }, done) => {
         });
     })
         .catch(e => {
-            throw new Error(e);
+            logger.log({
+                level: 'error',
+                message: `[parsing queue error] ${R.toString(e)}`
+            });
             done();
         });
 });
@@ -71,12 +79,16 @@ queue.process('sendEmail', ({ data }, done) => {
         "name": "example name",
         "content": "example content"
     }];
-    mandrillClient.messages.sendTemplate({ template_name, template_content, message, async: false, ip_pool: "Main Pool" }, function (result) {
-        console.log(result);
-    }, function (e) {
-        // Mandrill returns the error as an object with name and message keys
-        console.log('A mandrill error occurred: ' + e.name + ' - ' + e.message);
-        // A mandrill error occurred: Unknown_Subaccount - No subaccount exists with the id 'customer-123'
+    mandrillClient.messages.sendTemplate({ template_name, template_content, message, async: false, ip_pool: "Main Pool" }, (result) => {
+        logger.log({
+            level: 'info',
+            message: `[mandrill] ${R.toString(result)}`
+        });
+    }, (e) => {
+        logger.log({
+            level: 'error',
+            message: `A mandrill error occurred: ${e.name} - ${e.message}`
+        });
     });
     done();
 });
