@@ -3,12 +3,14 @@ const Router = require('koa-router');
 const R = require('ramda');
 const moment = require('moment');
 const config = require('config');
+const logger = require('../../logger');
 
 const queue = require('../../queue');
 
 const router = new Router();
 
 const symbols = async (ctx) => {
+    try {
     const exchange = await axios.default.get('https://api.binance.com/api/v1/exchangeInfo');
 
     ctx.body = R.compose(
@@ -17,6 +19,12 @@ const symbols = async (ctx) => {
         R.propOr([], 'symbols'),
         R.propOr({}, 'data')
     )(exchange);
+    } catch (e) {
+        logger.log({
+            level: 'error',
+            message: R.toString(e)
+        });
+    }
 };
 
 const createJob = async (ctx) => {
@@ -24,6 +32,8 @@ const createJob = async (ctx) => {
         let {
             symbols = [], intervals, startDate, endDate, email
         } = ctx.request.body;
+        logger.log({
+            level: 'info', message: `Request created ${email}`});
         const emailsWhitelist = config.get('emailsWhitelist') || [];
         const isEmailInWhiteList = !!emailsWhitelist.find(e => R.toLower(e) === R.toLower(email));
         if (isEmailInWhiteList) {
@@ -47,10 +57,17 @@ const createJob = async (ctx) => {
                 status: 403,
                 message: 'Permissions denied'
             };
+            logger.log({
+                level: 'error',
+                message: ` ${email} isn't in white list`});
         }
     } catch (e) {
         ctx.status = 403;
         ctx.body = 'Error';
+        logger.log({
+            level: 'error',
+            message: R.toString(e)
+        });
     }
 };
 

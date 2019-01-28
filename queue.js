@@ -11,9 +11,9 @@ const { binanceParser } = require('./app/services/parser.service');
 
 const queue = kue.createQueue({
     redis: {
-        host: 'redis',
-        port: 6379,
-        auth: 'Password1Startup'
+        host: config.get('redis.host'),
+        port: config.get('redis.port'),
+        auth: config.get('redis.auth')
     }
 });
 
@@ -50,23 +50,20 @@ queue.process('binance', ({ data }, done) => {
 queue.process('sendEmail', ({ data }, done) => {
     const mandrillClient = new mandrill.Mandrill(config.get('mandrill.apiKey'));
     const message = {
-        "subject": `Parsing completed ${moment().format('YYYY-MM-DD')}`,
-        "from_email": "contact@finkee.org",
-        "from_name": "CryptoParsing service",
-        "to": [{
-            "email": data.email,
-            "name": "Recipient Name",
-            "type": "to"
+        'subject': `Parsing completed ${moment().format('YYYY-MM-DD')}`,
+        'from_email': config.get('mandrill.fromEmail'),
+        'from_name': config.get('mandrill.fromName'),
+        'to': [{
+            'email': data.email,
+            'name': "Recipient Name",
+            'type': "to"
         }],
-        "global_merge_vars": [
+        'global_merge_vars': [
             {
                 "name": "LINK_TO_CRYPTO_DATA",
                 "content": data.link
             }
         ],
-        "headers": {
-            "Reply-To": "vladb951@gmail.com"
-        },
         "important": false
     };
     var template_name = "crypto-data-ready";

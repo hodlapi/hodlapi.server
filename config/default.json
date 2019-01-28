@@ -1,7 +1,14 @@
 {
-    "hostingUrl": "http://157.230.53.82:3000",
+    "hostingUrl": "api.hodlapi.com",
     "mandrill": {
-        "apiKey": "vNh3wfU2xDxrZMr3TXMH7A"
+        "apiKey": "vNh3wfU2xDxrZMr3TXMH7A",
+        "fromEmail": "whale@hodlapi.com",
+        "fromName": "Blue Whale"
+    },
+    "redis": {
+        "host": "redis",
+        "port": 6379,
+        "auth": "Password1Startup"
     },
     "emailsWhitelist": [
         "vladb951@gmail.com",

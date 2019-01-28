@@ -4,7 +4,7 @@ services:
     restart: always
     image: bitnami/redis:latest
     ports:
-      - '6379:6379'
+      - '6380:6379'
     volumes:
       - './volumes/data:/bitnami/redis/data'
     environment:
@@ -24,4 +24,4 @@ services:
     volumes:
       - './:/app/'
       - './volumes:/app/volumes/'
-      - /app/node_modules/
+      # - /app/node_modules/
