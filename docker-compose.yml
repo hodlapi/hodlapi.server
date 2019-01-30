@@ -19,7 +19,7 @@ services:
     restart: always
     build:
       context: .
-    command: nodemon --ignore './static/' server.js
+    # command: nodemon --ignore './static/' server.js
     depends_on:
       - redis
       - mongo
@@ -32,4 +32,4 @@ services:
     volumes:
       - './:/app/'
       - './volumes:/app/volumes/'
-      # - /app/node_modules/
+      - /app/node_modules/
