@@ -1,5 +1,5 @@
 const kue = require('kue');
-const app = require('./app');
+const app = require('./app/app');
 const serve = require('koa-static');
 
 app.use(serve(`${__dirname}/static`));

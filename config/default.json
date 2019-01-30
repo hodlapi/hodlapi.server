@@ -1,5 +1,12 @@
 {
     "hostingUrl": "https://api.hodlapi.com",
+    "mongodb": {
+        "host": "mongo",
+        "port": 27017,
+        "passowrd": "example",
+        "username": "root",
+        "dbName": "hodl"
+    },
     "mandrill": {
         "apiKey": "svpU6Vx8VJ6q0hvyF1jsXA",
         "fromEmail": "whale@hodlapi.com",

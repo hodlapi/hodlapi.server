@@ -6,7 +6,7 @@ const Json2Csv = require('json2csv').Parser;
 const {
     store
 } = require('./storage.service');
-const logger = require('../../logger');
+const logger = require('../logger');
 
 const parseBinance = params => axios.default.get('https://api.binance.com/api/v1/klines', {
         params

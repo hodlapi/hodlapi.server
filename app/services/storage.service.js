@@ -8,13 +8,10 @@ const writeFile = (filename, data) => {
         if (!fs.existsSync(`./static/${dirname}`)) {
             fs.mkdirSync(`./static/${dirname}`);
         }
-        
-        fs.appendFile(`./static/${filename}`, data, err => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve();
-            }
+        const writeStream = fs.createWriteStream(`./static/${filename}`);
+        writeStream.write(data);
+        writeStream.end(e => {
+            resolve();
         });
     });
 };
