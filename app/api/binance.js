@@ -32,10 +32,12 @@ const createJob = async (ctx) => {
         let {
             symbols = [], intervals, startDate, endDate, email
         } = ctx.request.body;
+        console.log(ctx.request.body);
+        
         logger.log({
             level: 'info', message: `Request created ${email}`});
         const emailsWhitelist = config.get('emailsWhitelist') || [];
-        const isEmailInWhiteList = !!emailsWhitelist.find(e => R.toLower(e) === R.toLower(email));
+        const isEmailInWhiteList = !!emailsWhitelist.find(e => R.toLower(e || '') === R.toLower(email || ''));
         if (isEmailInWhiteList) {
             startDate = startDate || '2017-01-01';
             endDate = endDate || moment().format('YYYY-MM-DD');
@@ -63,7 +65,9 @@ const createJob = async (ctx) => {
         }
     } catch (e) {
         ctx.status = 403;
-        ctx.body = 'Error';
+        ctx.body = e;
+        console.log(e);
+        
         logger.log({
             level: 'error',
             message: R.toString(e)

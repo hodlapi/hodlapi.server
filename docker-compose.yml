@@ -3,23 +3,22 @@ services:
   mongo:
     restart: always
     image: mongo
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
     volumes:
       - './volumes/mongo:/data/db'
+    ports:
+      - 27017:27017
   redis:
     restart: always
     image: bitnami/redis:latest
     volumes:
-      - './volumes/data:/bitnami/redis/data'
+      - 'mongo:/bitnami/redis/data'
     environment:
       - REDIS_PASSWORD=Password1Startup
   app:
     restart: always
     build:
       context: .
-    # command: nodemon --ignore './static/' server.js
+    command: nodemon --ignore './static/' server.js
     depends_on:
       - redis
       - mongo
@@ -32,4 +31,6 @@ services:
     volumes:
       - './:/app/'
       - './volumes:/app/volumes/'
-      - /app/node_modules/
+      # - /app/node_modules/
+volumes:
+  mongo:
