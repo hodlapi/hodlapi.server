@@ -18,7 +18,7 @@ services:
     restart: always
     build:
       context: .
-    command: nodemon --ignore './static/' server.js
+    command: npm run dev
     depends_on:
       - redis
       - mongo
@@ -26,6 +26,7 @@ services:
       - redis
       - mongo
     ports:
+      - '9229:9229'
       - '3000:3000'
       - '3020:3020'
     volumes:
