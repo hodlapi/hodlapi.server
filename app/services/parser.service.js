@@ -1,6 +1,5 @@
 const axios = require('axios');
 const R = require('ramda');
-const trim = require('lodash/trim');
 const moment = require('moment');
 const Json2Csv = require('json2csv').Parser;
 const logger = require('../logger');
@@ -41,32 +40,31 @@ const saveRate = R.curry((_intervals, interval, symbol, data) => {
         takerBuyQuoteAssetVol: data[10],
         ignore: data[11]
     };
-    
-    new _intervals[interval](mappedData).save().then(e => {
-        console.log('Saved ', e);
-        
-    }, err => {
-        console.log(err);
+
+    _intervals[interval].findOne(mappedData, (e, doc) => {
+        if (!doc) {
+            new _intervals[interval](mappedData).save();
+        }
         
     });
 })(intervalsMap); 
 
-const consvertToCSV = data => {
-    try {
-        const fields = ["Open time", "open", "high", "low", "close", "volume", "close_time",
-            "quote_asset_vol", "num_trades", "taker_buy_base_asset_vol", "taker_buy_quote_asset_vol", "ignore"
-        ].map((label, value) => ({
-            label,
-            value: `${value}`
-        }));
-        const parser = new Json2Csv({
-            fields
-        });
-        return parser.parse(data);
-    } catch (e) {
-        console.log(e);
-    }
-};
+// const consvertToCSV = data => {
+//     try {
+//         const fields = ["Open time", "open", "high", "low", "close", "volume", "close_time",
+//             "quote_asset_vol", "num_trades", "taker_buy_base_asset_vol", "taker_buy_quote_asset_vol", "ignore"
+//         ].map((label, value) => ({
+//             label,
+//             value: `${value}`
+//         }));
+//         const parser = new Json2Csv({
+//             fields
+//         });
+//         return parser.parse(data);
+//     } catch (e) {
+//         console.log(e);
+//     }
+// };
 
 const binanceParser = ({
     symbol,
@@ -91,9 +89,6 @@ const binanceParser = ({
                 startTime
             }) || [];
             parsedLength = data.length;
-            // hack
-            // courses = [...courses, ...data];
-            
             data.map(e => {
                 rateStore(e);
             });
@@ -102,10 +97,7 @@ const binanceParser = ({
                 R.nth(6),
                 R.last
             )(data);
-            logger.log('info', `Parsed ${moment(startTime).toString()}`);
         } catch (e) {
-            console.log(e);
-            
             logger.log({
                 level: 'error',
                 message: `[parsing] ${R.toString(e)}`
@@ -114,28 +106,6 @@ const binanceParser = ({
             return;
         }
     }
-    // try {
-    //     await store(
-    //         `${moment().format('YYYY-MM-DD')}_${symbol}/${interval}.csv`,
-    //         consvertToCSV([...courses])
-    //     );
-    // } catch (e) {
-    //     logger.log({
-    //         level: 'error',
-    //         message: `[storing csv] ${R.toString(e)}`
-    //     });
-    // }
-    // try {
-    //     await store(
-    //         `${moment().format('YYYY-MM-DD')}_${symbol}/${interval}.json`,
-    //         courses
-    //     );
-    // } catch (e) {
-    //     logger.log({
-    //         level: 'error',
-    //         message: `[storing json] ${R.toString(e)}`
-    //     });
-    // }
     resolve();
 });
 

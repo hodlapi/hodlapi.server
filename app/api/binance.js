@@ -11,14 +11,14 @@ const router = new Router();
 
 const symbols = async (ctx) => {
     try {
-    const exchange = await axios.default.get('https://api.binance.com/api/v1/exchangeInfo');
+        const exchange = await axios.default.get('https://api.binance.com/api/v1/exchangeInfo');
 
-    ctx.body = R.compose(
-        R.filter(e => e.length > 0),
-        R.map(R.propOr('', 'symbol')),
-        R.propOr([], 'symbols'),
-        R.propOr({}, 'data')
-    )(exchange);
+        ctx.body = R.compose(
+            R.filter(e => e.length > 0),
+            R.map(R.propOr('', 'symbol')),
+            R.propOr([], 'symbols'),
+            R.propOr({}, 'data')
+        )(exchange);
     } catch (e) {
         logger.log({
             level: 'error',
@@ -33,9 +33,11 @@ const createJob = async (ctx) => {
             symbols = [], intervals, startDate, endDate, email
         } = ctx.request.body;
         console.log(ctx.request.body);
-        
+
         logger.log({
-            level: 'info', message: `Request created ${email}`});
+            level: 'info',
+            message: `Request created ${email}`
+        });
         const emailsWhitelist = config.get('emailsWhitelist') || [];
         const isEmailInWhiteList = !!emailsWhitelist.find(e => R.toLower(e || '') === R.toLower(email || ''));
         if (isEmailInWhiteList) {
@@ -61,13 +63,14 @@ const createJob = async (ctx) => {
             };
             logger.log({
                 level: 'error',
-                message: ` ${email} isn't in white list`});
+                message: ` ${email} isn't in white list`
+            });
         }
     } catch (e) {
         ctx.status = 403;
         ctx.body = e;
         console.log(e);
-        
+
         logger.log({
             level: 'error',
             message: R.toString(e)
