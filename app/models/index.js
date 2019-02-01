@@ -5,9 +5,11 @@ const {
     Rate5m,
     Rate1m,
     RateBase
-} = require('./Rates');
-const Request = require('./Request');
-const Currency = require('./Currency');
+} = require("./Rate");
+const Request = require("./Request");
+const Currency = require("./Currency");
+const CurrencyPair = require("./CurrencyPair");
+const DataSource = require("./DataSource");
 
 module.exports = {
     Rate1h,
@@ -17,5 +19,7 @@ module.exports = {
     Rate1m,
     RateBase,
     Request,
-    Currency
+    Currency,
+    CurrencyPair,
+    DataSource
 };
