@@ -9,5 +9,5 @@ const Currency = mongoose.Schema({
 });
 
 module.exports = {
-    Currency: mongoose.model("Currency", Currency)
+    Currency
 };

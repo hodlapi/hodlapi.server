@@ -5,7 +5,7 @@ const Request = mongoose.Schema({
     ...baseModel,
     email: mongoose.SchemaTypes.String,
     //user: { type: Schema.Types.ObjectId, ref: "User" },
-    currencyPairs: [{ type: Schema.Types.ObjectId, ref: "CurrencyPair" }],
+    currencyPairs: [{ type: mongoose.SchemaTypes.ObjectId, ref: "CurrencyPair" }],
     intervals: [mongoose.SchemaTypes.String],
     fromDate: mongoose.SchemaTypes.Date,
     toDate: mongoose.SchemaTypes.Date,
@@ -15,5 +15,5 @@ const Request = mongoose.Schema({
 });
 
 module.exports = {
-    Request: mongoose.model("Request", Request)
+    Request
 };
