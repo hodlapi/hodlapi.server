@@ -4,8 +4,8 @@ const baseModel = require("./BaseModel");
 const CurrencyPair = mongoose.Schema({
     ...baseModel,
     name: mongoose.SchemaTypes.String,
-    fromId: { type: Mongoose.Schema.Types.ObjectId, ref: "Currency" },
-    toId: { type: Mongoose.Schema.Types.ObjectId, ref: "Currency" }
+    fromId: { type: mongoose.Schema.Types.ObjectId, ref: "Currency" },
+    toId: { type: mongoose.Schema.Types.ObjectId, ref: "Currency" }
 });
 
 module.exports = {

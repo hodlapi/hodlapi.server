@@ -16,8 +16,8 @@ const RateBase = {
     takerBuyQuoteAssetVol: mongoose.SchemaTypes.Mixed,
     ignore: mongoose.SchemaTypes.Mixed,
     symbol: mongoose.SchemaTypes.String,
-    dataSource: { type: Mongoose.Schema.Types.ObjectId, ref: "DataSource" },
-    currencyPair: { type: Mongoose.Schema.Types.ObjectId, ref: "CurrencyPair" }
+    dataSource: { type: mongoose.Schema.Types.ObjectId, ref: "DataSource" },
+    currencyPair: { type: mongoose.Schema.Types.ObjectId, ref: "CurrencyPair" }
 };
 
 const Rate1h = mongoose.Schema({
