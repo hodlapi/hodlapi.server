@@ -32,6 +32,7 @@ const createRequest = async (ctx) => {
                     start,
                     end
                 },
+                email,
                 extensions
             }).save())(symbols);
             ctx.status = 200;
