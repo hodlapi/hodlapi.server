@@ -8,6 +8,4 @@ const Currency = mongoose.Schema({
     symbol: mongoose.SchemaTypes.String
 });
 
-module.exports = {
-    Currency
-};
+module.exports = mongoose.model('Currency', Currency);

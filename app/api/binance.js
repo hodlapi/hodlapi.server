@@ -13,6 +13,16 @@ const symbols = async (ctx) => {
     try {
         const exchange = await axios.default.get('https://api.binance.com/api/v1/exchangeInfo');
 
+        // queue.create('fwriter.write', {
+        //     interval: '1m',
+        //     symbol: 'ETHBTC',
+        //     range: {
+        //         start: '2017-06-01',
+        //         end: '2018-09-12'
+        //     },
+        //     extensions: ['json', 'csv']
+        // }).save();
+
         ctx.body = R.compose(
             R.filter(e => e.length > 0),
             R.map(R.propOr('', 'symbol')),
@@ -30,9 +40,8 @@ const symbols = async (ctx) => {
 const createJob = async (ctx) => {
     try {
         let {
-            symbols = [], intervals, startDate, endDate, email
+            symbols = [], intervals, start, end, email
         } = ctx.request.body;
-        console.log(ctx.request.body);
 
         logger.log({
             level: 'info',
@@ -41,14 +50,13 @@ const createJob = async (ctx) => {
         const emailsWhitelist = config.get('emailsWhitelist') || [];
         const isEmailInWhiteList = !!emailsWhitelist.find(e => R.toLower(e || '') === R.toLower(email || ''));
         if (isEmailInWhiteList) {
-            startDate = startDate || '2017-01-01';
-            endDate = endDate || moment().format('YYYY-MM-DD');
-            R.map(symbol => queue.create('binance', {
+            start = start || '2017-01-01';
+            end = end || moment().format('YYYY-MM-DD');
+            R.map(symbol => queue.create('parser.binance', {
                 symbol,
-                intervals,
-                startDate,
-                endDate,
-                email
+                interval,
+                start,
+                end
             }).save())(symbols);
             ctx.status = 200;
             ctx.body = {
@@ -69,7 +77,6 @@ const createJob = async (ctx) => {
     } catch (e) {
         ctx.status = 403;
         ctx.body = e;
-        console.log(e);
 
         logger.log({
             level: 'error',

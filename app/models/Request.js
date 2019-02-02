@@ -14,6 +14,4 @@ const Request = mongoose.Schema({
     description: mongoose.SchemaTypes.String
 });
 
-module.exports = {
-    Request
-};
+module.exports = mongoose.model('Request', Request);
