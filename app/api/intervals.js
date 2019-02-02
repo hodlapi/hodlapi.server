@@ -12,12 +12,24 @@ const router = new Router();
 const intervals = async ctx => {
   ctx.body = [
     {
-      name: "CSV",
-      ext: ".csv"
+      name: "1Hour",
+      value: "1h"
     },
     {
-      name: "JSON",
-      ext: ".json"
+      name: "30Minutes",
+      value: "30m"
+    },
+    {
+      name: "15Minutes",
+      value: "15m"
+    },
+    {
+      name: "5minutes",
+      value: "5m"
+    },
+    {
+      name: "1Minute",
+      value: "1m"
     }
   ];
 };
