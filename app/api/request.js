@@ -11,7 +11,7 @@ const router = new Router();
 const createRequest = async (ctx) => {
     try {
         let {
-            symbols = [], start, end, email, extensions = ['json', 'csv']
+            symbols = [], interval, start, end, email, extensions = ['json', 'csv']
         } = ctx.request.body;
 
         logger.log({
@@ -23,7 +23,7 @@ const createRequest = async (ctx) => {
         if (isEmailInWhiteList) {
             start = start || '2017-01-01';
             end = end || moment().format('YYYY-MM-DD');
-            R.map(symbol => queue.create('parser.binance', {
+            R.map(symbol => queue.create('fwriter.write', {
                 symbol,
                 interval,
                 range: {
