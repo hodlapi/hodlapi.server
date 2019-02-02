@@ -1,6 +1,4 @@
-const axios = require('axios');
 const Router = require('koa-router');
-const request = require('../models/Request');
 const R = require('ramda');
 const moment = require('moment');
 const config = require('config');
@@ -13,7 +11,7 @@ const router = new Router();
 const createRequest = async (ctx) => {
     try {
         let {
-            symbols = [], intervals, start, end, email, extensions = ['json', 'csv']
+            symbols = [], start, end, email, extensions = ['json', 'csv']
         } = ctx.request.body;
 
         logger.log({
