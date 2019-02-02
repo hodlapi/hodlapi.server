@@ -1,5 +1,6 @@
 const axios = require('axios');
 const Router = require('koa-router');
+const request = require('../models/Request');
 const R = require('ramda');
 const moment = require('moment');
 const config = require('config');
@@ -9,43 +10,15 @@ const queue = require('../queue');
 
 const router = new Router();
 
-const symbols = async (ctx) => {
-    try {
-        const exchange = await axios.default.get('https://api.binance.com/api/v1/exchangeInfo');
-
-        // queue.create('fwriter.write', {
-        //     interval: '1m',
-        //     symbol: 'ETHBTC',
-        //     range: {
-        //         start: '2017-06-01',
-        //         end: '2018-09-12'
-        //     },
-        //     extensions: ['json', 'csv']
-        // }).save();
-
-        ctx.body = R.compose(
-            R.filter(e => e.length > 0),
-            R.map(R.propOr('', 'symbol')),
-            R.propOr([], 'symbols'),
-            R.propOr({}, 'data')
-        )(exchange);
-    } catch (e) {
-        logger.log({
-            level: 'error',
-            message: R.toString(e)
-        });
-    }
-};
-
-const createJob = async (ctx) => {
+const createRequest = async (ctx) => {
     try {
         let {
-            symbols = [], intervals, start, end, email
+            symbols = [], intervals, start, end, email, extensions = ['json', 'csv']
         } = ctx.request.body;
 
         logger.log({
             level: 'info',
-            message: `Request created ${email}`
+            message: `Request created for ${email}`
         });
         const emailsWhitelist = config.get('emailsWhitelist') || [];
         const isEmailInWhiteList = !!emailsWhitelist.find(e => R.toLower(e || '') === R.toLower(email || ''));
@@ -55,8 +28,11 @@ const createJob = async (ctx) => {
             R.map(symbol => queue.create('parser.binance', {
                 symbol,
                 interval,
-                start,
-                end
+                range: {
+                    start,
+                    end
+                },
+                extensions
             }).save())(symbols);
             ctx.status = 200;
             ctx.body = {
@@ -85,7 +61,6 @@ const createJob = async (ctx) => {
     }
 };
 
-router.get('/symbols', symbols);
-router.post('/parse', createJob);
+router.post('/request', createRequest);
 
 module.exports = router;
