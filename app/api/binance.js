@@ -40,7 +40,7 @@ const symbols = async (ctx) => {
 const createJob = async (ctx) => {
     try {
         let {
-            symbols = [], intervals, start, end, email
+            symbols = [], interval, start, end, email
         } = ctx.request.body;
 
         logger.log({
