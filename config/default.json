@@ -3,7 +3,7 @@
     "mongodb": {
         "host": "mongo",
         "port": 27017,
-        "passowrd": "example",
+        "password": "example",
         "username": "root",
         "dbName": "hodl"
     },
