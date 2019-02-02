@@ -8,6 +8,4 @@ const CurrencyPair = mongoose.Schema({
     toId: { type: mongoose.Schema.Types.ObjectId, ref: "Currency" }
 });
 
-module.exports = {
-    CurrencyPair
-};
+module.exports = mongoose.model('CurrencyPair', CurrencyPair);

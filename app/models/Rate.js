@@ -5,7 +5,7 @@ const RateBase = {
     ...baseModel,
     openTime: mongoose.SchemaTypes.Date,
     open: mongoose.SchemaTypes.Mixed,
-    hight: mongoose.SchemaTypes.Mixed,
+    high: mongoose.SchemaTypes.Mixed,
     low: mongoose.SchemaTypes.Mixed,
     close: mongoose.SchemaTypes.Mixed,
     volume: mongoose.SchemaTypes.Mixed,

@@ -9,6 +9,4 @@ const DataSource = mongoose.Schema({
     url: mongoose.SchemaTypes.String
 });
 
-module.exports = {
-    DataSource
-};
+module.exports = mongoose.model('DataSource', DataSource);
