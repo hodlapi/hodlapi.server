@@ -6,6 +6,13 @@ const rimraf = require('rimraf');
 const config = require('config');
 const mandrill = require('mandrill-api/mandrill');
 const logger = require('./logger');
+const {
+  CurrencyPair,
+  getRateByInterval
+} = require('./models');
+const {
+  intervals
+} = require('./lib/constants');
 
 const queue = kue.createQueue({
   redis: {
@@ -90,8 +97,48 @@ const queue = kue.createQueue({
 //     done();
 // });
 
+/******** Jobs createors block ********/
+
 const currencyParsingJob = queue.createJob('parser.binance.currencies', null).attempts(1).priority('normal');
 
+const rateParsingJobs = queue.createJob('core.rateParserStarter', null).attempts(3).priority('normal');
+
+/******** Jobs createors block end ********/
+
+/******** Scheduler block ********/
+
 queue.now(currencyParsingJob);
+
+queue.every('1 day', currencyParsingJob);
+queue.every('3 hours', rateParsingJobs);
+
+/******** Scheduler block end ********/
+
+/******** Job processors *********/
+
+queue.process('core.rateParserStarter', (_, done) => {
+  intervals.map(({
+    value
+  }) => {
+    CurrencyPair.find().populate('toId').populate('fromId').then(R.map(({
+      fromId,
+      toId,
+      _id
+    }) => {
+      getRateByInterval(value).find({ currencyPair: _id }, {}, { sort: { 'openTime' : -1 } }).then(data => {
+        const start = data[0].openTime;
+        return queue.create('parser.binance.rates', {
+          interval: value,
+          symbol: `${R.propOr('', 'symbol')(fromId)}${R.propOr('', 'symbol')(toId)}`,
+          end: moment(),
+          start
+        }).save();
+      })
+
+    })).then(done());
+  });
+});
+
+/******** Job processors end *********/
 
 module.exports = queue;

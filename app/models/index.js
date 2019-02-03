@@ -4,7 +4,8 @@ const {
     Rate15m,
     Rate5m,
     Rate1m,
-    RateBase
+    RateBase,
+    getRateByInterval
 } = require("./Rate");
 const Request = require("./Request");
 const Currency = require("./Currency");
@@ -21,5 +22,6 @@ module.exports = {
     Request,
     Currency,
     CurrencyPair,
-    DataSource
+    DataSource,
+    getRateByInterval
 };

@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const baseModel = require("./BaseModel");
+const R = require('ramda');
 
 const RateBase = {
     ...baseModel,
@@ -16,31 +17,47 @@ const RateBase = {
     takerBuyQuoteAssetVol: mongoose.SchemaTypes.Mixed,
     ignore: mongoose.SchemaTypes.Mixed,
     symbol: mongoose.SchemaTypes.String,
-    dataSource: { type: mongoose.Schema.Types.ObjectId, ref: "DataSource" },
-    currencyPair: { type: mongoose.Schema.Types.ObjectId, ref: "CurrencyPair" }
+    dataSource: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "DataSource"
+    },
+    currencyPair: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "CurrencyPair"
+    }
 };
 
-const Rate1h = mongoose.Schema({
+const Rate1h = mongoose.model("Rate1h", mongoose.Schema({
     ...RateBase
-});
-const Rate30m = mongoose.Schema({
+}));
+const Rate30m = mongoose.model("Rate30m", mongoose.Schema({
     ...RateBase
-});
-const Rate15m = mongoose.Schema({
+}));
+const Rate15m = mongoose.model("Rate15m", mongoose.Schema({
     ...RateBase
-});
-const Rate5m = mongoose.Schema({
+}));
+const Rate5m = mongoose.model("Rate5m", mongoose.Schema({
     ...RateBase
-});
-const Rate1m = mongoose.Schema({
+}));
+const Rate1m = mongoose.model("Rate1m", mongoose.Schema({
     ...RateBase
-});
+}));
+
+const ratesMap = {
+    '1h': Rate1h,
+    '30m': Rate30m,
+    '15m': Rate15m,
+    '5m': Rate5m,
+    '1m': Rate1m
+};
+
+const getRateByInterval = R.curry((rates, interval) => R.propOr(R.tap, interval)(rates));
 
 module.exports = {
-    Rate1h: mongoose.model("Rate1h", Rate1h),
-    Rate30m: mongoose.model("Rate30m", Rate30m),
-    Rate15m: mongoose.model("Rate15m", Rate15m),
-    Rate5m: mongoose.model("Rate5m", Rate5m),
-    Rate1m: mongoose.model("Rate1m", Rate1m),
-    RateBase
+    Rate1h,
+    Rate30m,
+    Rate15m,
+    Rate5m,
+    Rate1m,
+    getRateByInterval: getRateByInterval(ratesMap)
 };
