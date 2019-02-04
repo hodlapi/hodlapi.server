@@ -120,22 +120,24 @@ queue.process('core.rateParserStarter', (_, done) => {
   intervals.map(({
     value
   }) => {
-    CurrencyPair.find().populate('toId').populate('fromId').then(R.map(({
-      fromId,
-      toId,
-      _id
-    }) => {
-      getRateByInterval(value).find({ currencyPair: _id }, {}, { sort: { 'openTime' : -1 } }).then(data => {
-        const start = data[0].openTime;
-        return queue.create('parser.binance.rates', {
-          interval: value,
-          symbol: `${R.propOr('', 'symbol')(fromId)}${R.propOr('', 'symbol')(toId)}`,
-          end: moment(),
-          start
-        }).save();
-      })
-
-    })).then(done());
+    CurrencyPair.find().populate('toId').populate('fromId').then(
+      R.map(pair => {
+        getRateByInterval(value).find({
+          currencyPair: pair._id
+        }, {}, {
+          sort: {
+            'openTime': -1
+          }
+        }).then(data => {
+          const start = R.pathOr('2017-01-01', [0, 'openTime'])(data);
+          return queue.create('parser.binance.rates', {
+            interval: value,
+            pair,
+            end: moment(),
+            start
+          }).save();
+        })
+      })).then(done());
   });
 });
 
