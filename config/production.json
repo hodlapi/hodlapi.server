@@ -1,0 +1,28 @@
+{
+    "hostingUrl": "https://api.hodlapi.com",
+    "mongodb": {
+        "host": "mongo",
+        "port": 27017,
+        "password": "example",
+        "username": "root",
+        "dbName": "hodl"
+    },
+    "mandrill": {
+        "apiKey": "svpU6Vx8VJ6q0hvyF1jsXA",
+        "fromEmail": "whale@hodlapi.com",
+        "fromName": "Blue Whale"
+    },
+    "redis": {
+        "host": "redis",
+        "port": 6379,
+        "auth": "Password1Startup"
+    },
+    "emailsWhitelist": [
+        "vladb951@gmail.com",
+        "lirik1105@gmail.com",
+        "kirill.museychuk@gmail.com",
+        "Sergei.tran@gmail.com",
+        "Sergei@block.science",
+        "fernando@block.science"
+    ]
+}
