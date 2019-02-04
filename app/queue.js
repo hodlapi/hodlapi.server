@@ -1,11 +1,7 @@
 const kue = require('kue-scheduler');
-const zip = require('zip-dir');
 const R = require('ramda');
 const moment = require('moment');
-const rimraf = require('rimraf');
 const config = require('config');
-const mandrill = require('mandrill-api/mandrill');
-const logger = require('./logger');
 const {
   CurrencyPair,
   getRateByInterval
@@ -13,6 +9,9 @@ const {
 const {
   intervals
 } = require('./lib/constants');
+const {
+  sendEmail
+} = require('./workers');
 
 const queue = kue.createQueue({
   redis: {
@@ -59,44 +58,6 @@ const queue = kue.createQueue({
 //         });
 // });
 
-// queue.process('sendEmail', ({ data }, done) => {
-//     const mandrillClient = new mandrill.Mandrill(config.get('mandrill.apiKey'));
-//     const message = {
-//         'subject': `Parsing completed ${moment().format('YYYY-MM-DD')}`,
-//         'from_email': config.get('mandrill.fromEmail'),
-//         'from_name': config.get('mandrill.fromName'),
-//         'to': [{
-//             'email': data.email,
-//             'name': "Recipient Name",
-//             'type': "to"
-//         }],
-//         'global_merge_vars': [
-//             {
-//                 "name": "LINK_TO_CRYPTO_DATA",
-//                 "content": data.link
-//             }
-//         ],
-//         "important": false
-//     };
-//     var template_name = "crypto-data-ready";
-//     var template_content = [{
-//         "name": "example name",
-//         "content": "example content"
-//     }];
-//     mandrillClient.messages.sendTemplate({ template_name, template_content, message, async: false, ip_pool: "Main Pool" }, (result) => {
-//         logger.log({
-//             level: 'info',
-//             message: `[mandrill] ${R.toString(result)}`
-//         });
-//     }, (e) => {
-//         logger.log({
-//             level: 'error',
-//             message: `A mandrill error occurred: ${e.name} - ${e.message}`
-//         });
-//     });
-//     done();
-// });
-
 /******** Jobs createors block ********/
 
 const currencyParsingJob = queue.createJob('parser.binance.currencies', null).attempts(1).priority('normal');
@@ -106,11 +67,12 @@ const rateParsingJobs = queue.createJob('core.rateParserStarter', null).attempts
 /******** Jobs createors block end ********/
 
 /******** Scheduler block ********/
+if (process.env.NODE_ENV === 'production') {
+  queue.now(currencyParsingJob);
 
-queue.now(currencyParsingJob);
-
-queue.every('1 day', currencyParsingJob);
-queue.every('3 hours', rateParsingJobs);
+  queue.every('1 day', currencyParsingJob);
+  queue.every('3 hours', rateParsingJobs);
+}
 
 /******** Scheduler block end ********/
 
@@ -140,6 +102,8 @@ queue.process('core.rateParserStarter', (_, done) => {
       })).then(done());
   });
 });
+
+queue.process('core.sendFileEmail', sendEmail);
 
 /******** Job processors end *********/
 
