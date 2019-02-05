@@ -43,6 +43,10 @@ const createRequest = async (ctx) => {
         job.save();
         job.on('complete', result => {
           console.log(result);
+          queue.create('core.sendFileEmail', {
+            email,
+            link: `${config.get('hostingUrl')}/${result}`
+          }).save();
         });
       });
     })(jobs);

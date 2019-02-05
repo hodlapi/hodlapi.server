@@ -2,6 +2,7 @@ const R = require('ramda');
 const config = require('config');
 const mandrill = require('mandrill-api/mandrill');
 const logger = require('../logger');
+const moment = require('moment');
 
 const sendEmail = ({ data }, done) => {
   const {
