@@ -24,5 +24,9 @@
         "Sergei.tran@gmail.com",
         "Sergei@block.science",
         "fernando@block.science"
-    ]
+    ],
+    "jwt": {
+      "secret": "HodlAPI-hodl-hodl-v0yF41yj",
+      "expiresIn": "72h"
+    }
 }

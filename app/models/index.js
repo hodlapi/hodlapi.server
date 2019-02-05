@@ -11,6 +11,7 @@ const Request = require("./Request");
 const Currency = require("./Currency");
 const CurrencyPair = require("./CurrencyPair");
 const DataSource = require("./DataSource");
+const User = require('./User');
 
 module.exports = {
     Rate1h,
@@ -23,5 +24,6 @@ module.exports = {
     Currency,
     CurrencyPair,
     DataSource,
-    getRateByInterval
+    getRateByInterval,
+    User
 };
