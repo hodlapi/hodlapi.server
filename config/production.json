@@ -26,7 +26,7 @@
         "fernando@block.science"
     ],
     "jwt": {
-      "secret": "HodlAPI-hodl-hodl-v0yF41yj",
+      "secret": "HodlAPIprod-uyhodl-hodl-v0yF67gh41yj",
       "expiresIn": "72h"
     }
 }
