@@ -9,6 +9,7 @@ const {
 const Currency = require('./Currency');
 const CurrencyPair = require('./CurrencyPair');
 const DataSource = require('./DataSource');
+const ZeroXTransaction = require('./ZeroXTransaction')
 
 module.exports = {
     Rate15m,
@@ -19,5 +20,6 @@ module.exports = {
     getRateByInterval,
     Currency,
     CurrencyPair,
-    DataSource
+    DataSource,
+    ZeroXTransaction
 };
