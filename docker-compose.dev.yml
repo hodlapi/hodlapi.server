@@ -1,0 +1,75 @@
+version: '3'
+services:
+  mongo:
+    restart: always
+    image: mongo
+    logging:
+      driver: "none"
+    volumes:
+      - './volumes/mongo:/data/db'
+    ports:
+      - 27017:27017
+  redis:
+    restart: always
+    image: bitnami/redis:latest
+    volumes:
+      - './volumes/redis:/bitnami/redis/data'
+    environment:
+      - REDIS_PASSWORD=Password1Startup
+  api:
+    restart: always
+    build:
+      context: ./hodlapi.core
+    command: bash -c "cd hodlapi.core && nodemon --ignore './static/' server.js"
+    depends_on:
+      - redis
+      - mongo
+    links:
+      - redis
+      - mongo
+    ports:
+      - '3000:3000'
+      - '3020:3020'
+    volumes:
+      - './:/app/'
+  parser:
+    restart: always
+    build:
+      context: ./hodlapi.parser
+    command: bash -c "cd hodlapi.parser && nodemon server.js"
+    depends_on:
+      - redis
+      - mongo
+    links:
+      - redis
+      - mongo
+    volumes:
+      - './:/app/'
+  filewriter:
+    restart: always
+    build:
+      context: ./hodlapi.fwriter
+    command: bash -c "cd hodlapi.fwriter && nodemon --ignore './static/' server.js"
+    depends_on:
+      - redis
+      - mongo
+    links:
+      - redis
+      - mongo
+    volumes:
+      - './:/app/'
+  seeds:
+    restart: on-failure
+    build:
+      context: ./hodlapi.dbseeds/
+    command: bash -c "cd hodlapi.dbseeds && node server.js"
+    depends_on:
+      - redis
+      - mongo
+    links:
+      - redis
+      - mongo
+    volumes:
+      - './:/app/'
+volumes:
+  mongo:

@@ -1,0 +1,14 @@
+{
+    "redis": {
+        "host": "redis",
+        "port": 6379,
+        "auth": "Password1Startup"
+    },
+    "mongodb": {
+        "host": "mongo",
+        "port": 27017,
+        "password": "example",
+        "username": "root",
+        "dbName": "hodl"
+    }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "hodlapi.parser",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "config": "^3.0.1",
+    "kue": "^0.11.6",
+    "moment": "^2.24.0",
+    "mongoose": "^5.4.9",
+    "ramda": "^0.26.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/finkee/hodlapi.parser.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/finkee/hodlapi.parser#readme"
+}

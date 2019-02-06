@@ -1,0 +1,32 @@
+{
+    "hostingUrl": "https://api.hodlapi.com:8080",
+    "mongodb": {
+        "host": "localhost",
+        "port": 27017,
+        "password": "example",
+        "username": "root",
+        "dbName": "hodl"
+    },
+    "mandrill": {
+        "apiKey": "svpU6Vx8VJ6q0hvyF1jsXA",
+        "fromEmail": "whale@hodlapi.com",
+        "fromName": "Blue Whale"
+    },
+    "redis": {
+        "host": "localhost",
+        "port": 6379,
+        "auth": "Password1Startup"
+    },
+    "emailsWhitelist": [
+        "vladb951@gmail.com",
+        "lirik1105@gmail.com",
+        "kirill.museychuk@gmail.com",
+        "Sergei.tran@gmail.com",
+        "Sergei@block.science",
+        "fernando@block.science"
+    ],
+    "jwt": {
+        "secret": "HodlAPI-hodl-hodl-v0yF41yj",
+        "expiresIn": "72h"
+    }
+}

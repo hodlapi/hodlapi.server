@@ -1,0 +1,21 @@
+{
+  "name": "hodlapi.dbseeds",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/finkee/hodlapi.dbseeds.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/finkee/hodlapi.dbseeds#readme",
+  "dependencies": {
+    "config": "^3.0.1",
+    "mongoose": "^5.4.9",
+    "mongoose-seed": "^0.5.1"
+  }
+}
