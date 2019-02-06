@@ -130,6 +130,6 @@ typings/
 
 # docker volumes
 
-/volumes
-/static/*
+volumes/
+static/
 !/static/.gitkeep
