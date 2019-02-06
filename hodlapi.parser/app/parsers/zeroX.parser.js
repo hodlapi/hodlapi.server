@@ -50,7 +50,6 @@ const zeroXParser = async (loadedCount) => {
     const fullPageRequest = createRequest(PAGE_LIMIT)
     const firstPage = await fullPageRequest(1)
     const { total } = firstPage
-    // todo update total in db
     const diff = total - loadedCount
     if (diff === 0) {
       console.log('already up do date')
@@ -59,7 +58,7 @@ const zeroXParser = async (loadedCount) => {
     console.log(`${diff} documents to load`)
     const fullPages = Math.floor(diff / PAGE_LIMIT)
     const lastPageItems = diff - fullPages
-    await pageRangeLoader(fullPageRequest, Math.min(fullPages, 10))
+    await pageRangeLoader(fullPageRequest, fullPages)
     if (lastPageItems !== 0) {
       const lastItems = await createRequest(lastPageItems)(fullPages + 1)
       R.compose(saveDocuments, R.prop('fills'))(lastItems)
