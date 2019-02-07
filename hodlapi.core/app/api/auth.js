@@ -63,7 +63,7 @@ router.post('/create', async ctx => {
         .slice(-8);
     new User({
         login,
-        password: await bcrypt.hash(generatedPassword, config.get('jwt.secret'))
+        password: await bcrypt.hash(generatedPassword, 10)
     }).save();
     queue.create('core.sendSignUpEmail', {
         login,
