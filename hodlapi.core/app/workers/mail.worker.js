@@ -26,8 +26,13 @@ const sendEmail = ({ data }, done) => {
         "important": false
     };
     var template_name = "crypto-data-ready";
+    var template_content = [{
+        "name": "example name",
+        "content": "example content"
+    }];
     mandrillClient.messages.sendTemplate({
         template_name,
+        template_content,
         message,
         async: false,
         ip_pool: "Main Pool"
@@ -66,8 +71,13 @@ const sendSignUpEmail = ({ data }, done) => {
         "important": false
     };
     var template_name = "hodlapi-signup-email";
+    var template_content = [{
+        "name": "example name",
+        "content": "example content"
+    }];
     mandrillClient.messages.sendTemplate({
         template_name,
+        template_content,
         message,
         async: false,
         ip_pool: "Main Pool"
