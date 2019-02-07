@@ -11,10 +11,15 @@ const app = new Koa();
 app.use(bodyparser());
 app.use(cors());
 app.use(jwt({
-  secret: config.get('jwt.secret'),
-  debug: process.env.NODE_ENV !== 'production'
+    secret: config.get('jwt.secret'),
+    debug: process.env.NODE_ENV !== 'production'
 }).unless({
-  path: [/^\/api\/auth/]
+    path: [
+        /^\/api\/auth/,
+        /^\/api\/intervals/,
+        /^\/api\/currencyPairs/,
+        /^\/api\/dataSources/
+    ]
 }));
 app.use(api.routes());
 
