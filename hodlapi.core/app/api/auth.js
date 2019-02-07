@@ -3,6 +3,7 @@ const R = require('ramda');
 const { generateJWT } = require('../lib');
 const bcrypt = require('bcryptjs');
 const { User } = require('../models');
+const config = require('config');
 const queue = require('../queue');
 
 const router = new Router();
@@ -62,12 +63,13 @@ router.post('/create', async ctx => {
         .slice(-8);
     new User({
         login,
-        password: await bcrypt.hash(generatedPassword, 10)
+        password: await bcrypt.hash(generatedPassword, config.get('jwt.secret'))
     }).save();
     queue.create('core.sendSignUpEmail', {
         login,
         password: generatedPassword
     }).save();
+    ctx.status = 200;
 });
 
 module.exports = router;
