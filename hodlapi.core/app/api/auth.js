@@ -65,10 +65,12 @@ router.post('/create', async ctx => {
         login,
         password: await bcrypt.hash(generatedPassword, 10)
     }).save();
-    queue.create('core.sendSignUpEmail', {
-        login,
-        password: generatedPassword
-    }).save();
+    queue
+        .create('core.sendSignUpEmail', {
+            email: login,
+            password: generatedPassword
+        })
+        .save();
     ctx.status = 200;
 });
 
