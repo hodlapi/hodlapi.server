@@ -41,6 +41,10 @@ router.post('/login', async ctx => {
 
 router.post('/create', async ctx => {
     const { login } = ctx.request.body;
+    if (ctx.request.body.test === 'test') {
+        ctx.status = 200;
+        return;
+    }
     if (!login) {
         ctx.status = 400;
         ctx.body = {
