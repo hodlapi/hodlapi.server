@@ -1,7 +1,6 @@
-const {
-  sendEmail
-} = require('./mail.worker');
+const { sendEmail, sendSignUpEmail } = require('./mail.worker');
 
 module.exports = {
-  sendEmail
+    sendEmail,
+    sendSignUpEmail
 };
