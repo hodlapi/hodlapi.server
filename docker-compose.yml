@@ -29,6 +29,7 @@ services:
       - '80:3000'
     volumes:
       - './:/app/'
+      - './hodlapi.core/node_modules/'
   parser:
     restart: on-failure
     build:
@@ -42,6 +43,7 @@ services:
       - mongo
     volumes:
       - './:/app/'
+      - '/hodlapi.parser/node_modules/'
   filewriter:
     restart: on-failure
     build:
@@ -55,6 +57,7 @@ services:
       - mongo
     volumes:
       - './:/app/'
+      - '/node_modules/'
   seeds:
     restart: on-failure
     build:
@@ -68,5 +71,6 @@ services:
       - mongo
     volumes:
       - './:/app/'
+      - 'hodlapi.dbseeds/node_modules/'
 volumes:
   mongo:
