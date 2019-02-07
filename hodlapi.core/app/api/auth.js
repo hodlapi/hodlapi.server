@@ -3,6 +3,7 @@ const R = require('ramda');
 const { generateJWT } = require('../lib');
 const bcrypt = require('bcryptjs');
 const { User } = require('../models');
+const queue = require('../queue');
 
 const router = new Router();
 
