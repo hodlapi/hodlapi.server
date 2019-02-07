@@ -60,18 +60,25 @@ const queue = kue.createQueue({
 
 /******** Jobs createors block ********/
 
-const currencyParsingJob = queue.createJob('parser.binance.currencies', null).attempts(1).priority('normal');
+const currencyParsingJob = queue.createJob('parser.binance.currencies', null)
+  .attempts(1).priority('normal');
 
-const rateParsingJobs = queue.createJob('core.rateParserStarter', null).attempts(3).priority('normal');
+const rateParsingJobs = queue.createJob('core.rateParserStarter', null)
+  .attempts(3).priority('normal');
+
+const zeroXParsingJob = queue.createJob('parser.zeroX.transactions', null)
+
 
 /******** Jobs createors block end ********/
 
 /******** Scheduler block ********/
 if (process.env.NODE_ENV === 'production') {
   queue.now(currencyParsingJob);
-
+  queue.now(zeroXParsingJob)
+  
   queue.every('1 day', currencyParsingJob);
   queue.every('3 hours', rateParsingJobs);
+  queue.every('2 days', zeroXParsingJob);
 }
 
 /******** Scheduler block end ********/
