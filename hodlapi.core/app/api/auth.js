@@ -40,10 +40,13 @@ router.post('/login', async ctx => {
 });
 
 router.post('/create', async ctx => {
-    const { login } = ctx.request.body;
+    let { login } = ctx.request.body;
     if (ctx.request.body.test === 'test') {
         ctx.status = 200;
         return;
+    }
+    if (ctx.request.body.email) {
+        login = ctx.request.body.email;
     }
     if (!login) {
         ctx.status = 400;
