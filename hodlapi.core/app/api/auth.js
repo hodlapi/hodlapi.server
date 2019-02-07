@@ -5,6 +5,7 @@ const bcrypt = require('bcryptjs');
 const { User } = require('../models');
 const config = require('config');
 const queue = require('../queue');
+const logger = require('../logger');
 
 const router = new Router();
 
@@ -45,6 +46,14 @@ router.post('/create', async ctx => {
         ctx.status = 200;
         return;
     }
+    logger.log({
+        level: 'info',
+        message: ctx.request.body
+    });
+    logger.log({
+        level: 'info',
+        message: ctx.request.body.email
+    });
     if (ctx.request.body.email) {
         login = ctx.request.body.email;
     }
