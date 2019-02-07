@@ -29,7 +29,7 @@ services:
       - '80:3000'
     volumes:
       - './:/app/'
-      - '/node_modules'
+      - '/app/node_modules'
   parser:
     restart: on-failure
     build:
@@ -57,7 +57,7 @@ services:
       - mongo
     volumes:
       - './:/app/'
-      - 'node_modules'
+      - '/app/node_modules'
   seeds:
     restart: on-failure
     build:
@@ -71,6 +71,6 @@ services:
       - mongo
     volumes:
       - './:/app/'
-      - '/node_modules'
+      - '/app/node_modules'
 volumes:
   mongo:
