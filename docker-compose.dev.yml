@@ -8,7 +8,7 @@ services:
     volumes:
       - './volumes/mongo:/data/db'
     ports:
-      - 27017:27017
+      - 27018:27017
   redis:
     restart: always
     image: bitnami/redis:latest
@@ -32,7 +32,6 @@ services:
       - '3020:3020'
     volumes:
       - './:/app/'
-      - '/app/node_modules'
   parser:
     restart: always
     build:
@@ -46,7 +45,6 @@ services:
       - mongo
     volumes:
       - './:/app/'
-      - '/app/node_modules'
   filewriter:
     restart: always
     build:
@@ -60,7 +58,6 @@ services:
       - mongo
     volumes:
       - './:/app/'
-      - '/app/node_modules'
   seeds:
     restart: on-failure
     build:
@@ -74,6 +71,5 @@ services:
       - mongo
     volumes:
       - './:/app/'
-      - '/app/node_modules'
 volumes:
   mongo:
