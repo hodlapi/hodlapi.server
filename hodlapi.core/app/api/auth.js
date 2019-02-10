@@ -83,9 +83,10 @@ router.post('/create', async ctx => {
     };
     return;
   }
-  const generatedPassword = 'Password1';/*Math.random()
+  const generatedPassword = Math.random()
     .toString(36)
-    .slice(-8);*/
+    .slice(-8);
+
   new User({
     login,
     password: await bcrypt.hash(generatedPassword, 10)
