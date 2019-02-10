@@ -8,7 +8,7 @@ services:
     volumes:
       - './volumes/mongo:/data/db'
     ports:
-      - 27018:27017
+      - 27017:27017
   redis:
     restart: always
     image: bitnami/redis:latest
@@ -62,12 +62,10 @@ services:
     restart: on-failure
     build:
       context: ./hodlapi.dbseeds/
-    command: bash -c "cd hodlapi.dbseeds && node server.js"
+    command: bash -c "cd hodlapi.dbseeds && npx md-seed run --dropdb"
     depends_on:
-      - redis
       - mongo
     links:
-      - redis
       - mongo
     volumes:
       - './:/app/'
