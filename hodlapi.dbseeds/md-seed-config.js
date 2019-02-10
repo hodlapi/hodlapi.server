@@ -10,7 +10,9 @@ const mongoose = mongooseLib;
 const mongoURL = `mongodb://${config.get('mongodb.host')}:${config.get('mongodb.port')}/${config.get('mongodb.dbName')}` || 'mongodb://localhost:27017/dbname';
 
 const {
-  RolesSeeder
+  RolesSeeder,
+  UserSeeder,
+  DataSource
 } = require('./seeders');
 
 /*
@@ -19,7 +21,9 @@ const {
   order is important
 */
 const seedersList = {
-  RolesSeeder
+  RolesSeeder,
+  UserSeeder,
+  DataSource
 };
 
 module.exports = {
