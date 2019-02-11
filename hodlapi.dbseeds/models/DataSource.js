@@ -1,12 +1,14 @@
 const mongoose = require("mongoose");
 const baseModel = require("./BaseModel");
 
-const DataSource = mongoose.Schema({
-    ...baseModel,
+const DataSource = mongoose.Schema(Object.assign(baseModel, {
     name: mongoose.SchemaTypes.String,
     lastUpdated: mongoose.SchemaTypes.Date,
-    currencyPairs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'CurrencyPair' }],
+    currencyPairs: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'CurrencyPair'
+    }],
     url: mongoose.SchemaTypes.String
-});
+}));
 
 module.exports = mongoose.model('DataSource', DataSource);

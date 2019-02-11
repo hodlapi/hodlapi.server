@@ -29,7 +29,6 @@ const multiPageLoad = async (requests) => {
   
   R.compose(
     saveDocuments,
-    (data) => { console.log(data.length); return data },
     R.flatten,
     R.map(R.propOr([], 'fills')),
   )(res)

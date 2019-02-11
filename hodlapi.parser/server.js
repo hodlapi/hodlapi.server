@@ -3,6 +3,8 @@ const {
 } = require('./app/db');
 const queue = require('./app/queue');
 
+require('./app/transformers/zeroX.transformer')
+
 connect().then(e => {
     console.log('Connected to mongo');
 });

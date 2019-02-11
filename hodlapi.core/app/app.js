@@ -3,6 +3,7 @@ const bodyparser = require('koa-bodyparser');
 const cors = require('@koa/cors');
 const jwt = require('koa-jwt');
 const config = require('config');
+const { userMiddleware } = require('./middlewares');
 
 const api = require('./api');
 
@@ -21,6 +22,7 @@ app.use(jwt({
         /^\/api\/dataSources/
     ]
 }));
+app.use(userMiddleware());
 app.use(api.routes());
 
 module.exports = app;

@@ -4,7 +4,7 @@ const baseModel = require("./BaseModel")
 const ZeroXTransaction = mongoose.Schema({
   ...baseModel,
   amount: mongoose.SchemaTypes.Mixed,
-  data: mongoose.SchemaTypes.Date,
+  date: mongoose.SchemaTypes.Date,
   feeRecipient: mongoose.SchemaTypes.String,
   transactionId: mongoose.SchemaTypes.String,
   makerAddress: mongoose.SchemaTypes.String,

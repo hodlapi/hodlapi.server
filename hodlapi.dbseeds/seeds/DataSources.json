@@ -1,3 +1,4 @@
 [
-    { "name": "Binance", "currencyPairs": [], "url": "binance.com" }
+    { "name": "Binance", "currencyPairs": [], "url": "binance.com" },
+    { "name": "0x", "currencyPairs":  [], "url": ""}
 ]

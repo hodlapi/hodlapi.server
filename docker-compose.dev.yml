@@ -32,7 +32,6 @@ services:
       - '3020:3020'
     volumes:
       - './:/app/'
-      - '/app/node_modules'
   parser:
     restart: always
     build:
@@ -46,7 +45,6 @@ services:
       - mongo
     volumes:
       - './:/app/'
-      - '/app/node_modules'
   filewriter:
     restart: always
     build:
@@ -60,20 +58,16 @@ services:
       - mongo
     volumes:
       - './:/app/'
-      - '/app/node_modules'
   seeds:
     restart: on-failure
     build:
       context: ./hodlapi.dbseeds/
-    command: bash -c "cd hodlapi.dbseeds && node server.js"
+    command: bash -c "cd hodlapi.dbseeds && npx md-seed run --dropdb"
     depends_on:
-      - redis
       - mongo
     links:
-      - redis
       - mongo
     volumes:
       - './:/app/'
-      - '/app/node_modules'
 volumes:
   mongo:

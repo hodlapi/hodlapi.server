@@ -1,0 +1,4 @@
+[
+    { "email": "superadmin@test.com", "password": "$2a$10$7WZhELJMtjIwsxkrBqyTiOqXS/7b4JCnJMUPrJsbrXZUiaYaqMuBm", "role": "SUPERADMIN" },
+    { "email": "admin@test.com", "password": "$2a$10$7WZhELJMtjIwsxkrBqyTiOqXS/7b4JCnJMUPrJsbrXZUiaYaqMuBm", "role": "ADMIN" }
+]
