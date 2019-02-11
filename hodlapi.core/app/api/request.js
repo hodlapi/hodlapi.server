@@ -14,7 +14,7 @@ const router = new Router();
 const createRequest = async (ctx) => {
   // try {
   let {
-    symbols = [], interval, start, end, email, extensions = ['json', 'csv']
+    symbols = [], interval, start, end, email, extensions = ['json', 'csv'], dataSource
   } = ctx.request.body;
 
   logger.log({
@@ -30,6 +30,7 @@ const createRequest = async (ctx) => {
       pair: await CurrencyPair.findOne({
         name: symbol
       }),
+      platform,
       interval,
       range: {
         start,
