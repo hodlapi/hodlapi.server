@@ -16,7 +16,6 @@ const RateBase = {
     takerBuyBaseAssetVol: mongoose.SchemaTypes.Mixed,
     takerBuyQuoteAssetVol: mongoose.SchemaTypes.Mixed,
     ignore: mongoose.SchemaTypes.Mixed,
-    symbol: mongoose.SchemaTypes.String,
     dataSource: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "DataSource"
