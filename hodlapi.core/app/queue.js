@@ -68,14 +68,12 @@ const zeroXParsingJob = queue.createJob('parser.zeroX.transactions', null);
 /******** Jobs createors block end ********/
 
 /******** Scheduler block ********/
-if (process.env.NODE_ENV === 'production') {
-    queue.now(currencyParsingJob);
-    queue.now(zeroXParsingJob);
+queue.now(currencyParsingJob);
+queue.now(zeroXParsingJob);
 
-    queue.every('1 day', currencyParsingJob);
-    queue.every('3 hours', rateParsingJobs);
-    queue.every('2 days', zeroXParsingJob);
-}
+queue.every('1 day', currencyParsingJob);
+queue.every('3 hours', rateParsingJobs);
+queue.every('2 days', zeroXParsingJob);
 
 /******** Scheduler block end ********/
 
@@ -92,10 +90,10 @@ queue.process('core.rateParserStarter', (_, done) => {
                         .find({
                             currencyPair: pair._id
                         }, {}, {
-                            sort: {
-                                openTime: -1
-                            }
-                        })
+                                sort: {
+                                    openTime: -1
+                                }
+                            })
                         .then(data => {
                             const start = R.pathOr('2017-01-01', [0, 'openTime'])(data);
                             return queue

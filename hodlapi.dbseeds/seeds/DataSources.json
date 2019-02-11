@@ -1,4 +1,4 @@
 [
-    { "name": "Binance", "currencyPairs": [], "url": "binance.com" },
-    { "name": "0x", "currencyPairs":  [], "url": ""}
+    { "name": "Binance", "currencyPairs": [], "url": "binance.com", "logo":"https://hodlcdn.sfo2.cdn.digitaloceanspaces.com/data-sources-logos/binance.svg" },
+    { "name": "0x", "currencyPairs":  [], "url": "", "logo":"https://hodlcdn.sfo2.cdn.digitaloceanspaces.com/data-sources-logos/0x.svg"}
 ]

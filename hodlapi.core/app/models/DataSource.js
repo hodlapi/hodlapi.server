@@ -6,7 +6,8 @@ const DataSource = mongoose.Schema({
     name: mongoose.SchemaTypes.String,
     lastUpdated: mongoose.SchemaTypes.Date,
     currencyPairs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'CurrencyPair' }],
-    url: mongoose.SchemaTypes.String
+    url: mongoose.SchemaTypes.String,
+    logo: mongoose.SchemaTypes.String
 });
 
 module.exports = mongoose.model('DataSource', DataSource);

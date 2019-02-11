@@ -8,7 +8,8 @@ const DataSource = mongoose.Schema(Object.assign(baseModel, {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'CurrencyPair'
     }],
-    url: mongoose.SchemaTypes.String
+    url: mongoose.SchemaTypes.String,
+    logo: mongoose.SchemaTypes.String
 }));
 
 module.exports = mongoose.model('DataSource', DataSource);
