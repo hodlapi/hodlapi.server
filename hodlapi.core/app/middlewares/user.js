@@ -5,7 +5,7 @@ const {
 
 const userMiddleware = () => async (ctx, next) => {
   const stateUser = R.pathOr({}, ['state', 'user'])(ctx);
-  const _id = R.pathOr(-1, ['id'])(stateUser);
+  const _id = R.pathOr(null, ['id'])(stateUser);
   const {
     email,
     role

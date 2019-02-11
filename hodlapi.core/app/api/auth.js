@@ -28,7 +28,7 @@ router.post('/login', loginValidator, async ctx => {
     password
   } = ctx.request.body;
   const user = await User.findOne({
-    email
+    email: R.toLower(email)
   });
   if (!user) {
     ctx.throw(401, 'Invalid credentials');
