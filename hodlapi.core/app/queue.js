@@ -14,43 +14,6 @@ const queue = kue.createQueue({
     }
 });
 
-// queue.process('binance', ({ data }, done) => {
-//     const { email, symbol, intervals = [], startDate, endDate } = data;
-
-//     const folderName = `${moment().format('YYYY-MM-DD')}_${symbol}`;
-//     if (fs.existsSync(`./static/${folderName}`)) {
-//         rimraf.sync(`./static/${folderName}`)
-//     }
-//     if (fs.existsSync(`./static/${folderName}.zip`)) {
-//         fs.unlinkSync(`./static/${folderName}.zip`);
-//     }
-//     Promise.all(
-//         R.compose(
-//             R.map(interval => binanceParser({ symbol, interval, startDate, endDate, startDate }))
-//         )(intervals)
-//     ).then(() => {
-//         console.log('Parsing completed');
-//         logger.log({
-//             level: 'info',
-//             message: `Parsing [${symbol} ${email}] completed`
-//         });
-//         zip(`./static/${folderName}`, { saveTo: `./static/${folderName}.zip` }, err => {
-//             if (fs.existsSync(`./static/${folderName}`)) {
-//                 rimraf.sync(`./static/${folderName}`)
-//             }
-//             queue.create('sendEmail', { email, link: `${config.get('hostingUrl')}/${folderName}.zip` }).save();
-//             done();
-//         });
-//     })
-//         .catch(e => {
-//             logger.log({
-//                 level: 'error',
-//                 message: `[parsing queue error] ${R.toString(e)}`
-//             });
-//             done();
-//         });
-// });
-
 /******** Jobs createors block ********/
 
 const currencyParsingJob = queue
