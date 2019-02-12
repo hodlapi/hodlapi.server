@@ -1,23 +1,24 @@
 {
-  "name": "hodlapi.dbseeds",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@bitbucket.org/finkee/hodlapi.dbseeds.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "homepage": "https://bitbucket.org/finkee/hodlapi.dbseeds#readme",
-  "dependencies": {
-    "config": "^3.0.1",
-    "install": "^0.12.2",
-    "mongoose": "^5.4.9",
-    "mongoose-data-seed": "^1.0.7",
-    "npm": "^6.7.0"
-  }
+    "name": "hodlapi.dbseeds",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "migrate": "npx md-seed run"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+ssh://git@bitbucket.org/finkee/hodlapi.dbseeds.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "homepage": "https://bitbucket.org/finkee/hodlapi.dbseeds#readme",
+    "dependencies": {
+        "config": "^3.0.1",
+        "install": "^0.12.2",
+        "mongoose": "^5.4.9",
+        "mongoose-data-seed": "^1.0.7",
+        "npm": "^6.7.0"
+    }
 }

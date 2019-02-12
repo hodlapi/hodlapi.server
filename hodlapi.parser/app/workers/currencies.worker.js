@@ -8,15 +8,15 @@ const {
     binanceCurrenciesParser
 } = require('../parsers');
 
-const saveCurrenciesAndPair = dataSourceName => async (left, right) => {
+const saveCurrenciesAndPair = dataSourceName => async(left, right) => {
     let from = await Currency.findOne({
         symbol: left
-    }) || new Currency({
+    }) || await new Currency({
         symbol: left
     }).save();
     let to = await Currency.findOne({
         symbol: right
-    }) || new Currency({
+    }) || await new Currency({
         symbol: right
     }).save();
 
@@ -31,7 +31,7 @@ const saveCurrenciesAndPair = dataSourceName => async (left, right) => {
                 fromId: from._id,
                 toId: to._id
             }).save();
-            
+
             const dataSource = await DataSource.findOne({
                 name: dataSourceName
             });

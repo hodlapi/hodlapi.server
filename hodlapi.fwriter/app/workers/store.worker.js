@@ -8,7 +8,8 @@ const {
 } = require('../lib');
 const {
     getRateByInterval,
-    File
+    File,
+    DataSource
 } = require('../models');
 
 const folderExistingChecker = dirname => !fs.existsSync(dirname) && fs.mkdirSync(dirname);
@@ -29,35 +30,39 @@ const storeToFile = R.curry((filename, data) => {
     return writeDataToFile(filename, data);
 });
 
-const store = R.curry((interval, pair, start, end, ext, formatter) => new Promise((resolve, reject) => {
-    const filename = helpers.composeFileName(`${R.pathOr('', 'name')(pair)}`)(start)(end)(interval);
-    File.findOne({
-        name: filename,
-        extension: ext
-    }).then(data => {
-        if (!data) {
-            getRateByInterval(interval).find({
-                    currencyPair: R.propOr(-1, '_id')(pair),
-                    openTime: {
-                        $gte: new Date(start),
-                        $lt: new Date(end)
-                    }
-                })
-                .then((list = []) => list.map(binanceModelToRate))
-                .then(list => {
-                    storeToFile(`${filename}.${ext}`, formatter(list)).then(() => {
-                        const file = new File({
-                            url: `${config.get('staticUrl')}/${filename}.${ext}`,
-                            name: filename,
-                            extension: ext
+const store = R.curry((dataSourceId, interval, currencyPairId, start, end, ext, formatter) => new Promise((resolve, reject) => {
+    DataSource.findById(dataSourceId).then(dataSource => {
+        //ToDo: Change to use currencyPairNAme instead of Id
+        const filename = helpers.composeFileName(dataSource.name)(currencyPairId)(start)(end)(interval);
+        File.findOne({
+            name: filename,
+            extension: ext
+        }).then(data => {
+            if (!data) {
+                getRateByInterval(interval).find({
+                        currencyPair: currencyPairId,
+                        dataSource: dataSourceId,
+                        openTime: {
+                            $gte: new Date(start),
+                            $lt: new Date(end)
+                        }
+                    })
+                    .then((list = []) => list.map(binanceModelToRate))
+                    .then(list => {
+                        storeToFile(`${filename}.${ext}`, formatter(list)).then(() => {
+                            const file = new File({
+                                url: `${config.get('staticUrl')}/${filename}.${ext}`,
+                                name: filename,
+                                extension: ext
+                            });
+                            file.save();
+                            resolve(file);
                         });
-                        file.save();
-                        resolve(file);
-                    });
-                }, err => reject(err));
-        } else {
-            resolve(data);
-        }
+                    }, err => reject(err));
+            } else {
+                resolve(data);
+            }
+        }, err => reject(err));
     }, err => reject(err));
 }));
 
