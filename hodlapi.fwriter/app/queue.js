@@ -5,7 +5,9 @@ const {
     store
 } = require('./workers');
 const {
-    json, csv, constants
+    json,
+    csv,
+    constants
 } = require('./lib');
 
 const formattersMap = {
@@ -27,6 +29,7 @@ queue.process('fwriter.write', ({
     const {
         interval,
         pair,
+        dataSource,
         range: {
             start,
             end

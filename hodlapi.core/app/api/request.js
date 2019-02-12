@@ -4,81 +4,89 @@ const moment = require('moment');
 const config = require('config');
 const logger = require('../logger');
 const {
-  CurrencyPair
+  CurrencyPair,
+  Request
 } = require('../models');
+const validator = require('koa-joi-validate');
+const joi = require('joi');
 
 const queue = require('../queue');
 
 const router = new Router();
 
-const createRequest = async (ctx) => {
-  // try {
+const requestValidator = validator({
+  body: {
+    dataSource: joi.string().required(),
+    intervals: joi.array().required(),
+    pairs: joi.array().required(),
+    range: joi.array(),
+    extensions: joi.array()
+  }
+});
+
+const create = async ctx => {
   let {
-    symbols = [], interval, start, end, email, extensions = ['json', 'csv'], dataSource
+    dataSource,
+    intervals,
+    pairs,
+    range: [start, end] = [],
+    extensions = ['json', 'csv']
   } = ctx.request.body;
 
   logger.log({
     level: 'info',
-    message: `Request created for ${email}`
+    message: `Request created for ${R.path(['user', 'email'])(ctx)}`
   });
-  const emailsWhitelist = config.get('emailsWhitelist') || [];
-  const isEmailInWhiteList = !!emailsWhitelist.find(e => R.toLower(e || '') === R.toLower(email || ''));
-  if (isEmailInWhiteList) {
-    start = start || '2017-01-01';
-    end = end || moment().format('YYYY-MM-DD');
-    const jobs = R.map(async symbol => queue.create('fwriter.write', {
-      pair: await CurrencyPair.findOne({
-        name: symbol
-      }),
-      platform,
-      interval,
-      range: {
-        start,
-        end
-      },
-      email,
-      extensions
-    }))(symbols);
-    R.map(e => {
-      e.then(job => {
-        job.save();
-        job.on('complete', result => {
-          console.log(result);
-          queue.create('core.sendFileEmail', {
-            email,
-            link: `${config.get('hostingUrl')}/${result}`
-          }).save();
-        });
+
+  start = start || '2017-01-01';
+  end = end || moment().format('YYYY-MM-DD');
+
+  const request = await new Request({
+    user: R.pathOr(null, ['state', 'user', '_id'])(ctx),
+    currencyPairs: [...pairs],
+    intervals,
+    fromDate: start,
+    toDate: end,
+    extensions
+  }).save();
+  const jobs = R.compose(
+    R.flatten,
+    R.map(pair =>
+      R.map(async interval => queue.create('fwriter.write', {
+        pair: await CurrencyPair.findOne({
+          _id: pair
+        }),
+        dataSourceId: dataSource,
+        interval,
+        range: {
+          start,
+          end
+        },
+        request,
+        extensions
+      }))(intervals)
+    )
+  )(pairs);
+
+  R.map(e => {
+    e.then(job => {
+      job.save();
+      job.on('complete', result => {
+        queue.create('core.sendFileEmail', {
+          email,
+          link: `${config.get('hostingUrl')}/${result}`
+        }).save();
       });
-    })(jobs);
-
-    ctx.status = 200;
-    ctx.body = {
-      status: 200,
-      message: 'Success'
-    };
-  } else {
-    ctx.status = 403;
-    ctx.body = {
-      status: 403,
-      message: 'Permissions denied'
-    };
-    logger.log({
-      level: 'error',
-      message: ` ${email} isn't in white list`
     });
-  }
-  // } catch (e) {
-  //   ctx.status = 403;
-  //   ctx.body = e;
+  })(jobs);
 
-  //   logger.log({
-  //     level: 'error',
-  //     message: R.toString(e)
-  //   });
-  // }
-};
+  ctx.status = 200;
+  ctx.body = {
+    status: 200,
+    message: 'Success'
+  };
+}
 
-router.post('/request', createRequest);
+router.post('/request', requestValidator, create);
 
 module.exports = router;
