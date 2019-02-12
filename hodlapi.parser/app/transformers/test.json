@@ -1,0 +1,1214 @@
+[
+  {
+    "MKRDAI": {
+      "currencyPair": {
+        "name": "MKRDAI"
+      },
+      "openTime": "2019-02-07T09:24:37.000Z",
+      "closeTime": "2019-02-07T09:23:59.000Z",
+      "open": 0.002483922567321117,
+      "close": 0.0024839225673211167,
+      "low": 0.0024839225673211167,
+      "high": 0.002483922567321117,
+      "volume": 1480.1181751801519,
+      "quoteAssetVol": 3.6764989376321293,
+      "numTrades": 2
+    }
+  },
+  {
+    "MKRDAI": {
+      "currencyPair": {
+        "name": "MKRDAI"
+      },
+      "openTime": "2019-02-07T09:26:15.000Z",
+      "closeTime": "2019-02-07T09:26:15.000Z",
+      "open": 0.0024839225673211163,
+      "close": 0.0024839225673211163,
+      "low": 0.0024839225673211163,
+      "high": 0.0024839225673211163,
+      "volume": 130.23798190165127,
+      "quoteAssetVol": 0.3235010623678707,
+      "numTrades": 1
+    }
+  },
+  {
+    "WETHSBT": {
+      "currencyPair": {
+        "name": "WETHSBT"
+      },
+      "openTime": "2019-02-07T09:32:32.000Z",
+      "closeTime": "2019-02-07T09:32:32.000Z",
+      "open": 0.000016730682792665727,
+      "close": 0.000016730682792665727,
+      "low": 0.000016730682792665727,
+      "high": 0.000016730682792665727,
+      "volume": 2836,
+      "quoteAssetVol": 0.0474482164,
+      "numTrades": 1
+    },
+    "SBTWETH": {
+      "currencyPair": {
+        "name": "SBTWETH"
+      },
+      "openTime": "2019-02-07T09:32:32.000Z",
+      "closeTime": "2019-02-07T09:32:32.000Z",
+      "open": 60471.317774612144,
+      "close": 60471.317774612144,
+      "low": 60471.317774612144,
+      "high": 60471.317774612144,
+      "volume": 0.04689826688696118,
+      "quoteAssetVol": 2836,
+      "numTrades": 1
+    }
+  },
+  {
+    "MKRDAI": {
+      "currencyPair": {
+        "name": "MKRDAI"
+      },
+      "openTime": "2019-02-07T09:36:15.000Z",
+      "closeTime": "2019-02-07T09:36:15.000Z",
+      "open": 0.0024766732334945605,
+      "close": 0.0024766732334945605,
+      "low": 0.0024766732334945605,
+      "high": 0.0024766732334945605,
+      "volume": 997.6364445804513,
+      "quoteAssetVol": 2.4708194790510833,
+      "numTrades": 1
+    }
+  },
+  {
+    "WETHSBT": {
+      "currencyPair": {
+        "name": "WETHSBT"
+      },
+      "openTime": "2019-02-07T09:37:31.000Z",
+      "closeTime": "2019-02-07T09:37:31.000Z",
+      "open": 0.000016749414147982064,
+      "close": 0.000016749414147982064,
+      "low": 0.000016749414147982064,
+      "high": 0.000016749414147982064,
+      "volume": 2230,
+      "quoteAssetVol": 0.03735119355,
+      "numTrades": 1
+    },
+    "SBTWETH": {
+      "currencyPair": {
+        "name": "SBTWETH"
+      },
+      "openTime": "2019-02-07T09:37:31.000Z",
+      "closeTime": "2019-02-07T09:37:31.000Z",
+      "open": 60545.83396627393,
+      "close": 60545.83396627393,
+      "low": 60545.83396627393,
+      "high": 60545.83396627393,
+      "volume": 0.03683160101886093,
+      "quoteAssetVol": 2230,
+      "numTrades": 1
+    }
+  },
+  {
+    "MKRDAI": {
+      "currencyPair": {
+        "name": "MKRDAI"
+      },
+      "openTime": "2019-02-07T09:38:58.000Z",
+      "closeTime": "2019-02-07T09:38:36.000Z",
+      "open": 0.0024759790875654676,
+      "close": 0.0024766732334945605,
+      "low": 0.0024759790875654676,
+      "high": 0.0024766732334945605,
+      "volume": 793.051825392637,
+      "quoteAssetVol": 1.9640083238376134,
+      "numTrades": 2
+    }
+  },
+  {
+    "WETHSBT": {
+      "currencyPair": {
+        "name": "WETHSBT"
+      },
+      "openTime": "2019-02-07T09:42:48.000Z",
+      "closeTime": "2019-02-07T09:42:48.000Z",
+      "open": 0.00001987085873439082,
+      "close": 0.00001987085873439082,
+      "low": 0.00001987085873439082,
+      "high": 0.00001987085873439082,
+      "volume": 2963,
+      "quoteAssetVol": 0.05887735443,
+      "numTrades": 1
+    },
+    "SBTWETH": {
+      "currencyPair": {
+        "name": "SBTWETH"
+      },
+      "openTime": "2019-02-07T09:42:48.000Z",
+      "closeTime": "2019-02-07T09:42:48.000Z",
+      "open": 50847.22741686612,
+      "close": 50847.22741686612,
+      "low": 50847.22741686612,
+      "high": 50847.22741686612,
+      "volume": 0.05827259716066972,
+      "quoteAssetVol": 2963,
+      "numTrades": 1
+    }
+  },
+  {
+    "WETHSBT": {
+      "currencyPair": {
+        "name": "WETHSBT"
+      },
+      "openTime": "2019-02-07T09:52:52.000Z",
+      "closeTime": "2019-02-07T09:52:52.000Z",
+      "open": 0.00001977858717633042,
+      "close": 0.00001977858717633042,
+      "low": 0.00001977858717633042,
+      "high": 0.00001977858717633042,
+      "volume": 2518,
+      "quoteAssetVol": 0.04980248251,
+      "numTrades": 1
+    },
+    "SBTWETH": {
+      "currencyPair": {
+        "name": "SBTWETH"
+      },
+      "openTime": "2019-02-07T09:52:52.000Z",
+      "closeTime": "2019-02-07T09:52:52.000Z",
+      "open": 51152.1833358369,
+      "close": 51152.1833358369,
+      "low": 51152.1833358369,
+      "high": 51152.1833358369,
+      "volume": 0.04922566029035763,
+      "quoteAssetVol": 2518,
+      "numTrades": 1
+    }
+  },
+  {
+    "WETHSBT": {
+      "currencyPair": {
+        "name": "WETHSBT"
+      },
+      "openTime": "2019-02-07T09:57:35.000Z",
+      "closeTime": "2019-02-07T09:57:35.000Z",
+      "open": 0.000019540395149615854,
+      "close": 0.000019540395149615854,
+      "low": 0.000019540395149615854,
+      "high": 0.000019540395149615854,
+      "volume": 2473,
+      "quoteAssetVol": 0.048323397205,
+      "numTrades": 1
+    },
+    "SBTWETH": {
+      "currencyPair": {
+        "name": "SBTWETH"
+      },
+      "openTime": "2019-02-07T09:57:35.000Z",
+      "closeTime": "2019-02-07T09:57:35.000Z",
+      "open": 51787.77646787639,
+      "close": 51787.77646787639,
+      "low": 51787.77646787639,
+      "high": 51787.77646787639,
+      "volume": 0.04775258118166138,
+      "quoteAssetVol": 2473,
+      "numTrades": 1
+    }
+  },
+  {
+    "WETHBAT": {
+      "currencyPair": {
+        "name": "WETHBAT"
+      },
+      "openTime": "2019-02-07T09:59:39.000Z",
+      "closeTime": "2019-02-07T09:59:39.000Z",
+      "open": 0.0011229964939156627,
+      "close": 0.0011229964939156627,
+      "low": 0.0011229964939156627,
+      "high": 0.0011229964939156627,
+      "volume": 166,
+      "quoteAssetVol": 0.18641741799,
+      "numTrades": 1
+    },
+    "BATWETH": {
+      "currencyPair": {
+        "name": "BATWETH"
+      },
+      "openTime": "2019-02-07T09:59:39.000Z",
+      "closeTime": "2019-02-07T09:59:39.000Z",
+      "open": 896.0384745914397,
+      "close": 896.0384745914397,
+      "low": 896.0384745914397,
+      "high": 896.0384745914397,
+      "volume": 0.18525990201,
+      "quoteAssetVol": 166,
+      "numTrades": 1
+    }
+  },
+  {
+    "MKRWETH": {
+      "currencyPair": {
+        "name": "MKRWETH"
+      },
+      "openTime": "2019-02-07T10:04:32.000Z",
+      "closeTime": "2019-02-07T10:04:32.000Z",
+      "open": 0.2591079689951404,
+      "close": 0.2591079689951404,
+      "low": 0.2591079689951404,
+      "high": 0.2591079689951404,
+      "volume": 1.1578185,
+      "quoteAssetVol": 0.3,
+      "numTrades": 1
+    },
+    "WETHMKR": {
+      "currencyPair": {
+        "name": "WETHMKR"
+      },
+      "openTime": "2019-02-07T10:04:32.000Z",
+      "closeTime": "2019-02-07T10:04:32.000Z",
+      "open": 3.8635259575603893,
+      "close": 3.8635259575603893,
+      "low": 3.8635259575603893,
+      "high": 3.8635259575603893,
+      "volume": 0.29972,
+      "quoteAssetVol": 1.157976,
+      "numTrades": 1
+    }
+  },
+  {
+    "WETHSBT": {
+      "currencyPair": {
+        "name": "WETHSBT"
+      },
+      "openTime": "2019-02-07T10:07:44.000Z",
+      "closeTime": "2019-02-07T10:07:44.000Z",
+      "open": 0.000019078340377427628,
+      "close": 0.000019078340377427628,
+      "low": 0.000019078340377427628,
+      "high": 0.000019078340377427628,
+      "volume": 2729,
+      "quoteAssetVol": 0.05206479089,
+      "numTrades": 1
+    },
+    "SBTWETH": {
+      "currencyPair": {
+        "name": "SBTWETH"
+      },
+      "openTime": "2019-02-07T10:07:44.000Z",
+      "closeTime": "2019-02-07T10:07:44.000Z",
+      "open": 53005.01534935459,
+      "close": 53005.01534935459,
+      "low": 53005.01534935459,
+      "high": 53005.01534935459,
+      "volume": 0.05148569398599806,
+      "quoteAssetVol": 2729,
+      "numTrades": 1
+    },
+    "BATWETH": {
+      "currencyPair": {
+        "name": "BATWETH"
+      },
+      "openTime": "2019-02-07T10:07:58.000Z",
+      "closeTime": "2019-02-07T10:07:58.000Z",
+      "open": 914.7322454608137,
+      "close": 914.7322454608137,
+      "low": 914.7322454608137,
+      "high": 914.7322454608137,
+      "volume": 1.358652818853291,
+      "quoteAssetVol": 1242.803543791335,
+      "numTrades": 1
+    }
+  },
+  {
+    "TMWETH": {
+      "currencyPair": {
+        "name": "TMWETH"
+      },
+      "openTime": "2019-02-07T10:08:58.000Z",
+      "closeTime": "2019-02-07T10:08:58.000Z",
+      "open": 22988.984351311563,
+      "close": 22988.984351311563,
+      "low": 22988.984351311563,
+      "high": 22988.984351311563,
+      "volume": 9.995509900675115,
+      "quoteAssetVol": 229786.62069,
+      "numTrades": 1
+    },
+    "WETHTM": {
+      "currencyPair": {
+        "name": "WETHTM"
+      },
+      "openTime": "2019-02-07T10:08:58.000Z",
+      "closeTime": "2019-02-07T10:08:58.000Z",
+      "open": 0.00004350870372687059,
+      "close": 0.00004350870372687059,
+      "low": 0.00004350870372687059,
+      "high": 0.00004350870372687059,
+      "volume": 229786.62069,
+      "quoteAssetVol": 9.997718,
+      "numTrades": 1
+    }
+  },
+  {
+    "VEIL ETHVSHARE": {
+      "currencyPair": {
+        "name": "VEIL ETHVSHARE"
+      },
+      "openTime": "2019-02-07T10:14:00.000Z",
+      "closeTime": "2019-02-07T10:14:00.000Z",
+      "open": 7070,
+      "close": 3030.0000000000005,
+      "low": 3030.0000000000005,
+      "high": 7070,
+      "volume": 0.0000339,
+      "quoteAssetVol": 0.17119499999999999,
+      "numTrades": 2
+    },
+    "SBTWETH": {
+      "currencyPair": {
+        "name": "SBTWETH"
+      },
+      "openTime": "2019-02-07T10:14:00.000Z",
+      "closeTime": "2019-02-07T10:14:00.000Z",
+      "open": 52846.17574821926,
+      "close": 52846.17574821926,
+      "low": 52846.17574821926,
+      "high": 52846.17574821926,
+      "volume": 0.04015427739010054,
+      "quoteAssetVol": 2122,
+      "numTrades": 1
+    },
+    "WETHSBT": {
+      "currencyPair": {
+        "name": "WETHSBT"
+      },
+      "openTime": "2019-02-07T10:14:00.000Z",
+      "closeTime": "2019-02-07T10:14:00.000Z",
+      "open": 0.00001917989106032045,
+      "close": 0.00001917989106032045,
+      "low": 0.00001917989106032045,
+      "high": 0.00001917989106032045,
+      "volume": 2122,
+      "quoteAssetVol": 0.04069972883,
+      "numTrades": 1
+    },
+    "ELFWETH": {
+      "currencyPair": {
+        "name": "ELFWETH"
+      },
+      "openTime": "2019-02-07T10:14:24.000Z",
+      "closeTime": "2019-02-07T10:14:24.000Z",
+      "open": 1055.3716662453492,
+      "close": 1055.3716662453492,
+      "low": 1055.3716662453492,
+      "high": 1055.3716662453492,
+      "volume": 0.02179327031,
+      "quoteAssetVol": 23,
+      "numTrades": 1
+    },
+    "WETHELF": {
+      "currencyPair": {
+        "name": "WETHELF"
+      },
+      "openTime": "2019-02-07T10:14:24.000Z",
+      "closeTime": "2019-02-07T10:14:24.000Z",
+      "open": 0.0009765065082608696,
+      "close": 0.0009765065082608696,
+      "low": 0.0009765065082608696,
+      "high": 0.0009765065082608696,
+      "volume": 23,
+      "quoteAssetVol": 0.02245964969,
+      "numTrades": 1
+    }
+  },
+  {
+    "SBTWETH": {
+      "currencyPair": {
+        "name": "SBTWETH"
+      },
+      "openTime": "2019-02-07T10:17:19.000Z",
+      "closeTime": "2019-02-07T10:17:19.000Z",
+      "open": 53919.01499138374,
+      "close": 53919.01499138374,
+      "low": 53919.01499138374,
+      "high": 53919.01499138374,
+      "volume": 0.04944452342881314,
+      "quoteAssetVol": 2666,
+      "numTrades": 1
+    },
+    "WETHSBT": {
+      "currencyPair": {
+        "name": "WETHSBT"
+      },
+      "openTime": "2019-02-07T10:17:19.000Z",
+      "closeTime": "2019-02-07T10:17:19.000Z",
+      "open": 0.00001876045813203301,
+      "close": 0.00001876045813203301,
+      "low": 0.00001876045813203301,
+      "high": 0.00001876045813203301,
+      "volume": 2666,
+      "quoteAssetVol": 0.05001538138,
+      "numTrades": 1
+    }
+  },
+  {
+    "WETHSBT": {
+      "currencyPair": {
+        "name": "WETHSBT"
+      },
+      "openTime": "2019-02-07T10:22:16.000Z",
+      "closeTime": "2019-02-07T10:22:16.000Z",
+      "open": 0.00001917477011214042,
+      "close": 0.00001917477011214042,
+      "low": 0.00001917477011214042,
+      "high": 0.00001917477011214042,
+      "volume": 2051,
+      "quoteAssetVol": 0.0393274535,
+      "numTrades": 1
+    },
+    "SBTWETH": {
+      "currencyPair": {
+        "name": "SBTWETH"
+      },
+      "openTime": "2019-02-07T10:22:16.000Z",
+      "closeTime": "2019-02-07T10:22:16.000Z",
+      "open": 52879.648173319336,
+      "close": 52879.648173319336,
+      "low": 52879.648173319336,
+      "high": 52879.648173319336,
+      "volume": 0.03878618846474931,
+      "quoteAssetVol": 2051,
+      "numTrades": 1
+    }
+  },
+  {
+    "WETHMANA": {
+      "currencyPair": {
+        "name": "WETHMANA"
+      },
+      "openTime": "2019-02-07T10:26:33.000Z",
+      "closeTime": "2019-02-07T10:26:33.000Z",
+      "open": 0.0003189002123529411,
+      "close": 0.0003189002123529411,
+      "low": 0.0003189002123529411,
+      "high": 0.0003189002123529411,
+      "volume": 136,
+      "quoteAssetVol": 0.04337042888,
+      "numTrades": 1
+    },
+    "MANAWETH": {
+      "currencyPair": {
+        "name": "MANAWETH"
+      },
+      "openTime": "2019-02-07T10:26:33.000Z",
+      "closeTime": "2019-02-07T10:26:33.000Z",
+      "open": 3189.3878844035776,
+      "close": 3189.3878844035776,
+      "low": 3189.3878844035776,
+      "high": 3189.3878844035776,
+      "volume": 0.04264141112,
+      "quoteAssetVol": 136,
+      "numTrades": 1
+    }
+  },
+  {
+    "WETHSBT": {
+      "currencyPair": {
+        "name": "WETHSBT"
+      },
+      "openTime": "2019-02-07T10:31:40.000Z",
+      "closeTime": "2019-02-07T10:31:40.000Z",
+      "open": 0.00001772967022375215,
+      "close": 0.00001772967022375215,
+      "low": 0.00001772967022375215,
+      "high": 0.00001772967022375215,
+      "volume": 2905,
+      "quoteAssetVol": 0.051504692,
+      "numTrades": 1
+    },
+    "SBTWETH": {
+      "currencyPair": {
+        "name": "SBTWETH"
+      },
+      "openTime": "2019-02-07T10:31:40.000Z",
+      "closeTime": "2019-02-07T10:31:40.000Z",
+      "open": 57032.31125148805,
+      "close": 57032.31125148805,
+      "low": 57032.31125148805,
+      "high": 57032.31125148805,
+      "volume": 0.05093603847107292,
+      "quoteAssetVol": 2905,
+      "numTrades": 1
+    }
+  },
+  {
+    "VEIL ETHVSHARE": {
+      "currencyPair": {
+        "name": "VEIL ETHVSHARE"
+      },
+      "openTime": "2019-02-07T10:37:36.000Z",
+      "closeTime": "2019-02-07T10:37:36.000Z",
+      "open": 606,
+      "close": 9493.999999999998,
+      "low": 606,
+      "high": 9493.999999999998,
+      "volume": 0.00004,
+      "quoteAssetVol": 0.20199999999999999,
+      "numTrades": 2
+    }
+  },
+  {
+    "VEIL ETHVSHARE": {
+      "currencyPair": {
+        "name": "VEIL ETHVSHARE"
+      },
+      "openTime": "2019-02-07T10:41:56.000Z",
+      "closeTime": "2019-02-07T10:41:56.000Z",
+      "open": 908.9999999999999,
+      "close": 9191,
+      "low": 908.9999999999999,
+      "high": 9191,
+      "volume": 0.00003,
+      "quoteAssetVol": 0.1515,
+      "numTrades": 2
+    }
+  },
+  {
+    "VEIL ETHVSHARE": {
+      "currencyPair": {
+        "name": "VEIL ETHVSHARE"
+      },
+      "openTime": "2019-02-07T10:43:35.000Z",
+      "closeTime": "2019-02-07T10:43:35.000Z",
+      "open": 6262,
+      "close": 6262,
+      "low": 6262,
+      "high": 6262,
+      "volume": 0.0000075,
+      "quoteAssetVol": 0.046965,
+      "numTrades": 1
+    },
+    "VSHAREVEIL ETH": {
+      "currencyPair": {
+        "name": "VSHAREVEIL ETH"
+      },
+      "openTime": "2019-02-07T10:43:35.000Z",
+      "closeTime": "2019-02-07T10:43:35.000Z",
+      "open": 0.00016291951775822744,
+      "close": 0.00016291951775822744,
+      "low": 0.00016291951775822744,
+      "high": 0.00016291951775822744,
+      "volume": 0.046035,
+      "quoteAssetVol": 0.0000075,
+      "numTrades": 1
+    }
+  },
+  {
+    "TMWETH": {
+      "currencyPair": {
+        "name": "TMWETH"
+      },
+      "openTime": "2019-02-07T10:47:24.000Z",
+      "closeTime": "2019-02-07T10:47:24.000Z",
+      "open": 21053.06740255314,
+      "close": 21053.06740255314,
+      "low": 21053.06740255314,
+      "high": 21053.06740255314,
+      "volume": 9.993511118122635,
+      "quoteAssetVol": 210394.063158,
+      "numTrades": 1
+    },
+    "WETHTM": {
+      "currencyPair": {
+        "name": "WETHTM"
+      },
+      "openTime": "2019-02-07T10:47:24.000Z",
+      "closeTime": "2019-02-07T10:47:24.000Z",
+      "open": 0.00004750950597162762,
+      "close": 0.00004750950597162762,
+      "low": 0.00004750950597162762,
+      "high": 0.00004750950597162762,
+      "volume": 210394.063158,
+      "quoteAssetVol": 9.995718,
+      "numTrades": 1
+    }
+  },
+  {
+    "SBTWETH": {
+      "currencyPair": {
+        "name": "SBTWETH"
+      },
+      "openTime": "2019-02-07T11:00:07.000Z",
+      "closeTime": "2019-02-07T11:00:07.000Z",
+      "open": 70375.05897614633,
+      "close": 70375.05897614633,
+      "low": 70375.05897614633,
+      "high": 70375.05897614633,
+      "volume": 0.032269955194918654,
+      "quoteAssetVol": 2271,
+      "numTrades": 1
+    },
+    "WETHSBT": {
+      "currencyPair": {
+        "name": "WETHSBT"
+      },
+      "openTime": "2019-02-07T11:00:07.000Z",
+      "closeTime": "2019-02-07T11:00:07.000Z",
+      "open": 0.000014423505396301187,
+      "close": 0.000014423505396301187,
+      "low": 0.000014423505396301187,
+      "high": 0.000014423505396301187,
+      "volume": 2271,
+      "quoteAssetVol": 0.032755780755,
+      "numTrades": 1
+    }
+  },
+  {
+    "WETHSBT": {
+      "currencyPair": {
+        "name": "WETHSBT"
+      },
+      "openTime": "2019-02-07T11:07:31.000Z",
+      "closeTime": "2019-02-07T11:07:31.000Z",
+      "open": 0.00001412922994014536,
+      "close": 0.00001412922994014536,
+      "low": 0.00001412922994014536,
+      "high": 0.00001412922994014536,
+      "volume": 2339,
+      "quoteAssetVol": 0.03304826883,
+      "numTrades": 1
+    },
+    "SBTWETH": {
+      "currencyPair": {
+        "name": "SBTWETH"
+      },
+      "openTime": "2019-02-07T11:07:31.000Z",
+      "closeTime": "2019-02-07T11:07:31.000Z",
+      "open": 71839.60380908416,
+      "close": 71839.60380908416,
+      "low": 71839.60380908416,
+      "high": 71839.60380908416,
+      "volume": 0.03255864280955614,
+      "quoteAssetVol": 2339,
+      "numTrades": 1
+    }
+  },
+  {
+    "SBTWETH": {
+      "currencyPair": {
+        "name": "SBTWETH"
+      },
+      "openTime": "2019-02-07T11:13:18.000Z",
+      "closeTime": "2019-02-07T11:13:18.000Z",
+      "open": 75820.63881484684,
+      "close": 75820.63881484684,
+      "low": 75820.63881484684,
+      "high": 75820.63881484684,
+      "volume": 0.02782883437783473,
+      "quoteAssetVol": 2110,
+      "numTrades": 1
+    },
+    "WETHSBT": {
+      "currencyPair": {
+        "name": "WETHSBT"
+      },
+      "openTime": "2019-02-07T11:13:18.000Z",
+      "closeTime": "2019-02-07T11:13:18.000Z",
+      "open": 0.000013412055094786729,
+      "close": 0.000013412055094786729,
+      "low": 0.000013412055094786729,
+      "high": 0.000013412055094786729,
+      "volume": 2110,
+      "quoteAssetVol": 0.02829943625,
+      "numTrades": 1
+    }
+  },
+  {
+    "WETHLPT": {
+      "currencyPair": {
+        "name": "WETHLPT"
+      },
+      "openTime": "2019-02-07T11:17:03.000Z",
+      "closeTime": "2019-02-07T11:17:03.000Z",
+      "open": 0.051000000000000004,
+      "close": 0.051000000000000004,
+      "low": 0.051000000000000004,
+      "high": 0.051000000000000004,
+      "volume": 10.196078431372548,
+      "quoteAssetVol": 0.52,
+      "numTrades": 1
+    },
+    "LPTWETH": {
+      "currencyPair": {
+        "name": "LPTWETH"
+      },
+      "openTime": "2019-02-07T11:17:03.000Z",
+      "closeTime": "2019-02-07T11:17:03.000Z",
+      "open": 21.322007083170753,
+      "close": 21.322007083170753,
+      "low": 21.322007083170753,
+      "high": 21.322007083170753,
+      "volume": 0.4781950588235294,
+      "quoteAssetVol": 10.196078431372548,
+      "numTrades": 1
+    }
+  },
+  {
+    "WETHSBT": {
+      "currencyPair": {
+        "name": "WETHSBT"
+      },
+      "openTime": "2019-02-07T11:18:01.000Z",
+      "closeTime": "2019-02-07T11:18:01.000Z",
+      "open": 0.000014087172626262627,
+      "close": 0.000014087172626262627,
+      "low": 0.000014087172626262627,
+      "high": 0.000014087172626262627,
+      "volume": 2376,
+      "quoteAssetVol": 0.03347112216,
+      "numTrades": 1
+    },
+    "SBTWETH": {
+      "currencyPair": {
+        "name": "SBTWETH"
+      },
+      "openTime": "2019-02-07T11:18:01.000Z",
+      "closeTime": "2019-02-07T11:18:01.000Z",
+      "open": 72042.59566208719,
+      "close": 72042.59566208719,
+      "low": 72042.59566208719,
+      "high": 72042.59566208719,
+      "volume": 0.032980488531320136,
+      "quoteAssetVol": 2376,
+      "numTrades": 1
+    }
+  },
+  {
+    "WETHLC": {
+      "currencyPair": {
+        "name": "WETHLC"
+      },
+      "openTime": "2019-02-07T11:20:56.000Z",
+      "closeTime": "2019-02-07T11:20:43.000Z",
+      "open": 0.0023451166666666667,
+      "close": 0.002213716666666667,
+      "low": 0.002213716666666667,
+      "high": 0.0028283,
+      "volume": 27.81074459,
+      "quoteAssetVol": 0.06415069214462617,
+      "numTrades": 3
+    },
+    "LCWETH": {
+      "currencyPair": {
+        "name": "LCWETH"
+      },
+      "openTime": "2019-02-07T11:20:56.000Z",
+      "closeTime": "2019-02-07T11:20:43.000Z",
+      "open": 456.5436868965605,
+      "close": 466.26748949304135,
+      "low": 456.54368689656036,
+      "high": 466.26748949304135,
+      "volume": 0.06037633969796353,
+      "quoteAssetVol": 27.81074459,
+      "numTrades": 3
+    }
+  },
+  {
+    "VSHAREVEIL ETH": {
+      "currencyPair": {
+        "name": "VSHAREVEIL ETH"
+      },
+      "openTime": "2019-02-07T11:21:45.000Z",
+      "closeTime": "2019-02-07T11:21:45.000Z",
+      "open": 0.000040782502022812105,
+      "close": 0.000037928094401481986,
+      "low": 0.000037928094401481986,
+      "high": 0.000040782502022812105,
+      "volume": 0.06929999999999208,
+      "quoteAssetVol": 0.000002723735408559,
+      "numTrades": 2
+    },
+    "WETHLC": {
+      "currencyPair": {
+        "name": "WETHLC"
+      },
+      "openTime": "2019-02-07T11:21:46.000Z",
+      "closeTime": "2019-02-07T11:21:45.000Z",
+      "open": 0.0023123676963686954,
+      "close": 0.002312367696368696,
+      "low": 0.0023123676963686954,
+      "high": 0.002312367696368696,
+      "volume": 70.085,
+      "quoteAssetVol": 0.16206229000000003,
+      "numTrades": 2
+    },
+    "LCWETH": {
+      "currencyPair": {
+        "name": "LCWETH"
+      },
+      "openTime": "2019-02-07T11:21:46.000Z",
+      "closeTime": "2019-02-07T11:21:45.000Z",
+      "open": 446.1049461885909,
+      "close": 456.5436868240932,
+      "low": 446.1049461885909,
+      "high": 456.5436868240932,
+      "volume": 0.15387527897020106,
+      "quoteAssetVol": 70.085,
+      "numTrades": 2
+    }
+  },
+  {
+    "WETHLC": {
+      "currencyPair": {
+        "name": "WETHLC"
+      },
+      "openTime": "2019-02-07T11:22:28.000Z",
+      "closeTime": "2019-02-07T11:22:28.000Z",
+      "open": 0.002315875,
+      "close": 0.002315875,
+      "low": 0.002315875,
+      "high": 0.002315875,
+      "volume": 10,
+      "quoteAssetVol": 0.02315875,
+      "numTrades": 1
+    },
+    "LCWETH": {
+      "currencyPair": {
+        "name": "LCWETH"
+      },
+      "openTime": "2019-02-07T11:22:28.000Z",
+      "closeTime": "2019-02-07T11:22:28.000Z",
+      "open": 446.10494618859093,
+      "close": 446.10494618859093,
+      "low": 446.10494618859093,
+      "high": 446.10494618859093,
+      "volume": 0.02241625,
+      "quoteAssetVol": 10,
+      "numTrades": 1
+    }
+  },
+  {
+    "WETHLC": {
+      "currencyPair": {
+        "name": "WETHLC"
+      },
+      "openTime": "2019-02-07T11:23:11.000Z",
+      "closeTime": "2019-02-07T11:23:11.000Z",
+      "open": 0.0022684136188642922,
+      "close": 0.0022684136188642922,
+      "low": 0.0022684136188642922,
+      "high": 0.0022684136188642922,
+      "volume": 41.56,
+      "quoteAssetVol": 0.09427527,
+      "numTrades": 1
+    },
+    "LCWETH": {
+      "currencyPair": {
+        "name": "LCWETH"
+      },
+      "openTime": "2019-02-07T11:23:11.000Z",
+      "closeTime": "2019-02-07T11:23:11.000Z",
+      "open": 446.1049461885909,
+      "close": 446.1049461885909,
+      "low": 446.1049461885909,
+      "high": 446.1049461885909,
+      "volume": 0.093161935,
+      "quoteAssetVol": 41.56,
+      "numTrades": 1
+    }
+  },
+  {
+    "WETHHOT": {
+      "currencyPair": {
+        "name": "WETHHOT"
+      },
+      "openTime": "2019-02-07T11:29:41.000Z",
+      "closeTime": "2019-02-07T11:29:41.000Z",
+      "open": 0.000010801328421976921,
+      "close": 0.000010801328421976921,
+      "low": 0.000010801328421976921,
+      "high": 0.000010801328421976921,
+      "volume": 3986,
+      "quoteAssetVol": 0.04305409509,
+      "numTrades": 1
+    },
+    "HOTWETH": {
+      "currencyPair": {
+        "name": "HOTWETH"
+      },
+      "openTime": "2019-02-07T11:29:41.000Z",
+      "closeTime": "2019-02-07T11:29:41.000Z",
+      "open": 94173.7384617534,
+      "close": 94173.7384617534,
+      "low": 94173.7384617534,
+      "high": 94173.7384617534,
+      "volume": 0.04232602491,
+      "quoteAssetVol": 3986,
+      "numTrades": 1
+    }
+  },
+  {
+    "NPXSWETH": {
+      "currencyPair": {
+        "name": "NPXSWETH"
+      },
+      "openTime": "2019-02-07T11:30:23.000Z",
+      "closeTime": "2019-02-07T11:30:23.000Z",
+      "open": 183717.0534744006,
+      "close": 183717.0534744006,
+      "low": 183717.0534744006,
+      "high": 183717.0534744006,
+      "volume": 0.016574400375,
+      "quoteAssetVol": 3045,
+      "numTrades": 1
+    },
+    "WETHNPXS": {
+      "currencyPair": {
+        "name": "WETHNPXS"
+      },
+      "openTime": "2019-02-07T11:30:23.000Z",
+      "closeTime": "2019-02-07T11:30:23.000Z",
+      "open": 0.0000056568471674876855,
+      "close": 0.0000056568471674876855,
+      "low": 0.0000056568471674876855,
+      "high": 0.0000056568471674876855,
+      "volume": 3045,
+      "quoteAssetVol": 0.017225099625,
+      "numTrades": 1
+    }
+  },
+  {
+    "WETHOMG": {
+      "currencyPair": {
+        "name": "WETHOMG"
+      },
+      "openTime": "2019-02-07T11:46:01.000Z",
+      "closeTime": "2019-02-07T11:46:01.000Z",
+      "open": 0.009785318353076923,
+      "close": 0.009785318353076923,
+      "low": 0.009785318353076923,
+      "high": 0.009785318353076923,
+      "volume": 13,
+      "quoteAssetVol": 0.12720913859,
+      "numTrades": 1
+    },
+    "OMGWETH": {
+      "currencyPair": {
+        "name": "OMGWETH"
+      },
+      "openTime": "2019-02-07T11:46:01.000Z",
+      "closeTime": "2019-02-07T11:46:01.000Z",
+      "open": 102.98744277889044,
+      "close": 102.98744277889044,
+      "low": 102.98744277889044,
+      "high": 102.98744277889044,
+      "volume": 0.12622898141,
+      "quoteAssetVol": 13,
+      "numTrades": 1
+    },
+    "DAIWETH": {
+      "currencyPair": {
+        "name": "DAIWETH"
+      },
+      "openTime": "2019-02-07T11:46:39.000Z",
+      "closeTime": "2019-02-07T11:46:39.000Z",
+      "open": 103.97934945063218,
+      "close": 103.97934945063218,
+      "low": 103.97934945063218,
+      "high": 103.97934945063218,
+      "volume": 0.009617294253940152,
+      "quoteAssetVol": 1,
+      "numTrades": 1
+    },
+    "WETHMANA": {
+      "currencyPair": {
+        "name": "WETHMANA"
+      },
+      "openTime": "2019-02-07T11:46:41.000Z",
+      "closeTime": "2019-02-07T11:46:41.000Z",
+      "open": 0.00031014918863636365,
+      "close": 0.00031014918863636365,
+      "low": 0.00031014918863636365,
+      "high": 0.00031014918863636365,
+      "volume": 264,
+      "quoteAssetVol": 0.0818793858,
+      "numTrades": 1
+    },
+    "MANAWETH": {
+      "currencyPair": {
+        "name": "MANAWETH"
+      },
+      "openTime": "2019-02-07T11:46:41.000Z",
+      "closeTime": "2019-02-07T11:46:41.000Z",
+      "open": 3257.8509747456797,
+      "close": 3257.8509747456797,
+      "low": 3257.8509747456797,
+      "high": 3257.8509747456797,
+      "volume": 0.0810350142,
+      "quoteAssetVol": 264,
+      "numTrades": 1
+    }
+  },
+  {
+    "WETHSLT": {
+      "currencyPair": {
+        "name": "WETHSLT"
+      },
+      "openTime": "2019-02-07T11:57:04.000Z",
+      "closeTime": "2019-02-07T11:57:04.000Z",
+      "open": 0.0005261876967708333,
+      "close": 0.0005261876967708333,
+      "low": 0.0005261876967708333,
+      "high": 0.0005261876967708333,
+      "volume": 48,
+      "quoteAssetVol": 0.025257009445,
+      "numTrades": 1
+    },
+    "SLTWETH": {
+      "currencyPair": {
+        "name": "SLTWETH"
+      },
+      "openTime": "2019-02-07T11:57:04.000Z",
+      "closeTime": "2019-02-07T11:57:04.000Z",
+      "open": 1952.6283768284534,
+      "close": 1952.6283768284534,
+      "low": 1952.6283768284534,
+      "high": 1952.6283768284534,
+      "volume": 0.024582250555,
+      "quoteAssetVol": 48,
+      "numTrades": 1
+    }
+  },
+  {
+    "WETHSBT": {
+      "currencyPair": {
+        "name": "WETHSBT"
+      },
+      "openTime": "2019-02-07T12:12:34.000Z",
+      "closeTime": "2019-02-07T12:12:34.000Z",
+      "open": 0.000014060069511323004,
+      "close": 0.000014060069511323004,
+      "low": 0.000014060069511323004,
+      "high": 0.000014060069511323004,
+      "volume": 2517,
+      "quoteAssetVol": 0.03538919496,
+      "numTrades": 1
+    },
+    "SBTWETH": {
+      "currencyPair": {
+        "name": "SBTWETH"
+      },
+      "openTime": "2019-02-07T12:12:34.000Z",
+      "closeTime": "2019-02-07T12:12:34.000Z",
+      "open": 72134.94243928872,
+      "close": 72134.94243928872,
+      "low": 72134.94243928872,
+      "high": 72134.94243928872,
+      "volume": 0.034892936971820485,
+      "quoteAssetVol": 2517,
+      "numTrades": 1
+    }
+  },
+  {
+    "WETHBAT": {
+      "currencyPair": {
+        "name": "WETHBAT"
+      },
+      "openTime": "2019-02-07T12:22:32.000Z",
+      "closeTime": "2019-02-07T12:22:32.000Z",
+      "open": 0.0011250203844450602,
+      "close": 0.0011250203844450602,
+      "low": 0.0011250203844450602,
+      "high": 0.0011250203844450602,
+      "volume": 1623.8013956760979,
+      "quoteAssetVol": 1.8268096704259487,
+      "numTrades": 1
+    },
+    "WETHSBT": {
+      "currencyPair": {
+        "name": "WETHSBT"
+      },
+      "openTime": "2019-02-07T12:22:32.000Z",
+      "closeTime": "2019-02-07T12:22:32.000Z",
+      "open": 0.000013268017952522253,
+      "close": 0.000013268017952522253,
+      "low": 0.000013268017952522253,
+      "high": 0.000013268017952522253,
+      "volume": 2022,
+      "quoteAssetVol": 0.0268279323,
+      "numTrades": 1
+    },
+    "SBTWETH": {
+      "currencyPair": {
+        "name": "SBTWETH"
+      },
+      "openTime": "2019-02-07T12:22:32.000Z",
+      "closeTime": "2019-02-07T12:22:32.000Z",
+      "open": 76699.19094789683,
+      "close": 76699.19094789683,
+      "low": 76699.19094789683,
+      "high": 76699.19094789683,
+      "volume": 0.0263627291893285,
+      "quoteAssetVol": 2022,
+      "numTrades": 1
+    }
+  },
+  {
+    "WETHHOT": {
+      "currencyPair": {
+        "name": "WETHHOT"
+      },
+      "openTime": "2019-02-07T12:51:58.000Z",
+      "closeTime": "2019-02-07T12:51:58.000Z",
+      "open": 0.000010832526062416998,
+      "close": 0.000010832526062416998,
+      "low": 0.000010832526062416998,
+      "high": 0.000010832526062416998,
+      "volume": 4518,
+      "quoteAssetVol": 0.04894135275,
+      "numTrades": 1
+    },
+    "HOTWETH": {
+      "currencyPair": {
+        "name": "HOTWETH"
+      },
+      "openTime": "2019-02-07T12:51:58.000Z",
+      "closeTime": "2019-02-07T12:51:58.000Z",
+      "open": 93742.90538239427,
+      "close": 93742.90538239427,
+      "low": 93742.90538239427,
+      "high": 93742.90538239427,
+      "volume": 0.04819564725,
+      "quoteAssetVol": 4518,
+      "numTrades": 1
+    }
+  },
+  {
+    "WETHSBT": {
+      "currencyPair": {
+        "name": "WETHSBT"
+      },
+      "openTime": "2019-02-07T12:52:59.000Z",
+      "closeTime": "2019-02-07T12:52:59.000Z",
+      "open": 0.000013697500917602996,
+      "close": 0.000013697500917602996,
+      "low": 0.000013697500917602996,
+      "high": 0.000013697500917602996,
+      "volume": 1602,
+      "quoteAssetVol": 0.02194339647,
+      "numTrades": 1
+    },
+    "SBTWETH": {
+      "currencyPair": {
+        "name": "SBTWETH"
+      },
+      "openTime": "2019-02-07T12:52:59.000Z",
+      "closeTime": "2019-02-07T12:52:59.000Z",
+      "open": 74545.13907588091,
+      "close": 74545.13907588091,
+      "low": 74545.13907588091,
+      "high": 74545.13907588091,
+      "volume": 0.021490334847578643,
+      "quoteAssetVol": 1602,
+      "numTrades": 1
+    }
+  }
+]

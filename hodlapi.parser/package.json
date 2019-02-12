@@ -9,7 +9,8 @@
     "kue": "^0.11.6",
     "moment": "^2.24.0",
     "mongoose": "^5.4.9",
-    "ramda": "^0.26.1"
+    "ramda": "^0.26.1",
+    "redis": "^2.8.0"
   },
   "devDependencies": {},
   "scripts": {
