@@ -62,10 +62,30 @@ const create = async ctx => {
         )
     )(currencyPairs);
 
-    R.map(e => {
-        e.then(job => {
-            job.save();
-            job.on('complete', result => {
+    let jobsFinishedPromises = [];
+    R.map(jobPromise => {
+        const jobFinishedPromise = new Promise((resolve, reject) => {
+            jobPromise.then(
+                job => {
+                    job.save();
+                    job.on('complete', files => {
+                        resolve(files);
+                    });
+                },
+                err => reject(errr)
+            );
+        });
+        jobsFinishedPromises.push(jobFinishedPromise);
+    }, jobs);
+
+    Promise.all(jobsFinishedPromises).then(
+        results => {
+            let archiveJob = queue.create('fwriter.archiveResult', {
+                files: R.flatten(results),
+                requestId: request._id
+            });
+            archiveJob.save();
+            archiveJob.on('complete', result => {
                 queue
                     .create('core.sendFileEmail', {
                         email: userObject.email,
@@ -73,8 +93,11 @@ const create = async ctx => {
                     })
                     .save();
             });
-        });
-    })(jobs);
+        },
+        err => {
+            let c = err;
+        }
+    );
 
     ctx.status = 200;
     ctx.body = {

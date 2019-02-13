@@ -1,8 +1,9 @@
 const kue = require("kue");
 const config = require("config");
 const R = require("ramda");
-const { store } = require("./workers");
-const { DataSource } = require("./models");
+const fs = require("fs");
+const { store, archiveList } = require("./workers");
+const { DataSource, Request } = require("./models");
 const { json, csv, constants } = require("./lib");
 
 const formattersMap = {
@@ -26,16 +27,35 @@ kue.prototype.processAsync = (name, concurrency, handler) => {
     });
 };
 
+queue.processAsync("fwriter.archiveResult", async({ data }, done) => {
+    try {
+        const { requestId, files } = data;
+        let request = await Request.findById(requestId);
+        const archiveName = requestId;
+
+        if (fs.existsSync(`./static/${archiveName}.zip`)) {
+            done(null, `${archiveName}.zip`);
+        } else {
+            archiveList(archiveName, files).then(data => {
+                done(null, data);
+            });
+        }
+    } catch (ex) {
+        console.log(ex);
+    }
+});
+
 queue.processAsync("fwriter.write", async({ data }, done) => {
     const { requestId, interval, pair } = data;
+    let request = await Request.findById(requestId);
 
     Promise.all(
-        R.map(ext =>
-            store(requestId, interval, pair, ext, formattersMap[ext])
-        )(request.extensions)
+        R.map(ext => store(requestId, interval, pair, ext, formattersMap[ext]))(
+            request.extensions
+        )
     ).then(
-        data => {
-            done(null, data);
+        files => {
+            done(null, files);
         },
         err => done(err)
     );

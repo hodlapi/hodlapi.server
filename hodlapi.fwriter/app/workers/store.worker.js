@@ -1,5 +1,3 @@
-import { request } from "http";
-
 const fs = require("fs");
 const R = require("ramda");
 const path = require("path");
@@ -40,42 +38,51 @@ const storeToFile = R.curry((filename, data) => {
 const store = R.curry(
     (requestId, interval, currencyPairId, ext, formatter) =>
     new Promise(async(resolve, reject) => {
+        let request = await Request.findById(requestId).populate("files");
         const dataSourceId = request.dataSource;
-        let request = await Request.findById(requestId);
+        const startDate = request.fromDate;
+        const endDate = request.toDate;
         const dataSource = await DataSource.findById(dataSourceId);
         const currencyPair = await CurrencyPair.findById(currencyPairId);
 
         const filename = helpers.composeFileName(dataSource.name)(
             currencyPair.name
-        )(start)(end)(interval);
+        )(startDate)(endDate)(interval);
         let file = await File.findOne({
             name: filename,
             extension: ext
         });
 
         if (!file) {
-            const ratesList = getRateByInterval(interval)
+            const ratesList = await getRateByInterval(interval)
                 .find({
                     currencyPair: currencyPairId,
                     dataSource: dataSourceId,
                     openTime: {
-                        $gte: new Date(start),
-                        $lt: new Date(end)
+                        $gte: new Date(startDate),
+                        $lt: new Date(endDate)
                     }
                 })
                 .then((list = []) => list.map(binanceModelToRate));
-            storeToFile(`${filename}.${ext}`, formatter(ratesList)).then(() => {
-                const newFile = new File({
-                    url: `${config.get("staticUrl")}/${filename}.${ext}`,
-                    name: filename,
-                    extension: ext,
-                    request: requestId
-                });
-                newFile.save();
-                resolve(newFile);
-                request.Files.push(newFile);
-                request.save();
-            });
+            storeToFile(`${filename}.${ext}`, formatter(ratesList)).then(
+                async() => {
+                    const newFile = new File({
+                        url: `${config.get("staticUrl")}/${filename}.${ext}`,
+                        name: filename,
+                        extension: ext,
+                        request: requestId
+                    });
+                    try {
+                        await newFile.save();
+                        request.files.push(newFile);
+                        await request.save();
+                        resolve(newFile);
+                    } catch (ex) {
+                        console.log(ex);
+                    }
+                },
+                err => reject(err)
+            );
         } else {
             resolve(file);
         }

@@ -20,7 +20,8 @@ const Request = mongoose.Schema({
     status: mongoose.SchemaTypes.String,
     description: mongoose.SchemaTypes.String,
     extensions: [mongoose.SchemaTypes.String],
-    files: [{ type: mongoose.Schema.Types.ObjectId, ref: 'File' }]
+    files: [{ type: mongoose.Schema.Types.ObjectId, ref: 'File' }],
+    resultUrl: mongoose.SchemaTypes.String
 }, { timestamps: true });
 
 module.exports = {
