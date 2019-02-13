@@ -21,6 +21,7 @@
     "moment": "^2.24.0",
     "mongoose": "^5.4.8",
     "ramda": "^0.26.1",
+    "serve-static": "^1.13.2",
     "zip-dir": "^1.0.2"
   }
 }

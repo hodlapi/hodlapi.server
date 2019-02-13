@@ -62,6 +62,7 @@ const create = async ctx => {
         )
     )(currencyPairs);
 
+    // TODO: refactor this shit
     let jobsFinishedPromises = [];
     R.map(jobPromise => {
         const jobFinishedPromise = new Promise((resolve, reject) => {

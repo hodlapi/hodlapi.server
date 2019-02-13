@@ -1,7 +1,7 @@
 {
     "hostingUrl": "http://localhost:3000",
     "mongodb": {
-        "host": "localhost",
+        "host": "mongo",
         "port": 27017,
         "password": "example",
         "username": "root",
@@ -13,7 +13,7 @@
         "fromName": "Blue Whale"
     },
     "redis": {
-        "host": "localhost",
+        "host": "redis",
         "port": 6379,
         "auth": "Password1Startup"
     },
