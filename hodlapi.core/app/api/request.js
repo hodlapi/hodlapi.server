@@ -3,7 +3,7 @@ const R = require('ramda');
 const moment = require('moment');
 const config = require('config');
 const logger = require('../logger');
-const { CurrencyPair, Request } = require('../models');
+const { CurrencyPair, Request, RequestStatuses } = require('../models');
 const validator = require('koa-joi-validate');
 const joi = require('joi');
 
@@ -15,7 +15,7 @@ const requestValidator = validator({
     body: {
         dataSource: joi.string().required(),
         intervals: joi.array().required(),
-        pairs: joi.array().required(),
+        currencyPairs: joi.array().required(),
         range: joi.array(),
         extensions: joi.array()
     }
@@ -25,7 +25,7 @@ const create = async ctx => {
     let {
         dataSource,
         intervals,
-        pairs,
+        currencyPairs,
         range: [start, end] = [],
         extensions = ['json', 'csv']
     } = ctx.request.body;
@@ -42,11 +42,12 @@ const create = async ctx => {
     const request = await new Request({
         user: R.pathOr(null, ['_id'])(userObject),
         dataSource: dataSource,
-        currencyPairs: [...pairs],
+        currencyPairs: [...currencyPairs],
         intervals,
         fromDate: start,
         toDate: end,
-        extensions
+        extensions,
+        status: RequestStatuses.created
     }).save();
     const jobs = R.compose(
         R.flatten,
@@ -59,7 +60,7 @@ const create = async ctx => {
                 })
             )(intervals)
         )
-    )(pairs);
+    )(currencyPairs);
 
     R.map(e => {
         e.then(job => {

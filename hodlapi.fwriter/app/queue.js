@@ -2,7 +2,6 @@ const kue = require("kue");
 const config = require("config");
 const R = require("ramda");
 const { store } = require("./workers");
-const { Request } = require("./models");
 const { DataSource } = require("./models");
 const { json, csv, constants } = require("./lib");
 
@@ -30,10 +29,9 @@ kue.prototype.processAsync = (name, concurrency, handler) => {
 queue.processAsync("fwriter.write", async({ data }, done) => {
     const { requestId, interval, pair } = data;
 
-    let request = await Request.findById(requestId);
     Promise.all(
-        R.map(e =>
-            store(request.dataSource, interval, pair, request.fromDate, request.toDate, e, formattersMap[e])
+        R.map(ext =>
+            store(requestId, interval, pair, ext, formattersMap[ext])
         )(request.extensions)
     ).then(
         data => {

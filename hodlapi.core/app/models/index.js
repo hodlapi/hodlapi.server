@@ -6,13 +6,14 @@ const {
     Rate1m,
     RateBase,
     getRateByInterval
-} = require("./Rate");
-const Request = require("./Request");
-const Currency = require("./Currency");
-const CurrencyPair = require("./CurrencyPair");
-const DataSource = require("./DataSource");
+} = require('./Rate');
+const { Request, RequestStatuses } = require('./Request');
+const Currency = require('./Currency');
+const CurrencyPair = require('./CurrencyPair');
+const DataSource = require('./DataSource');
 const User = require('./User');
 const Role = require('./Role');
+const File = require('./File');
 
 module.exports = {
     Rate1h,
@@ -22,10 +23,12 @@ module.exports = {
     Rate1m,
     RateBase,
     Request,
+    RequestStatuses,
     Currency,
     CurrencyPair,
     DataSource,
     getRateByInterval,
     User,
-    Role
+    Role,
+    File
 };
