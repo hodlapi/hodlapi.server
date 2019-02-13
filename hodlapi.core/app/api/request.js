@@ -86,6 +86,9 @@ const create = async ctx => {
             });
             archiveJob.save();
             archiveJob.on('complete', result => {
+                request.resultUrl = `${config.get('hostingUrl')}/${result}`;
+                request.status = RequestStatuses.ready;
+                request.save();
                 queue
                     .create('core.sendFileEmail', {
                         email: userObject.email,

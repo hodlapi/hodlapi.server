@@ -8,7 +8,8 @@ const {
     File,
     DataSource,
     CurrencyPair,
-    Request
+    Request,
+    RequestStatuses
 } = require("../models");
 
 const folderExistingChecker = dirname =>
@@ -39,6 +40,8 @@ const store = R.curry(
     (requestId, interval, currencyPairId, ext, formatter) =>
     new Promise(async(resolve, reject) => {
         let request = await Request.findById(requestId).populate("files");
+        request.status = RequestStatuses.preparingFiles;
+        await request.save();
         const dataSourceId = request.dataSource;
         const startDate = request.fromDate;
         const endDate = request.toDate;
