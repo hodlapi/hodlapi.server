@@ -32,7 +32,7 @@ const create = async ctx => {
 
     logger.log({
         level: 'info',
-        message: `Request created for ${R.path(['user', 'email'])(ctx)}`
+        message: `Request created for ${R.path(['state', 'user', 'email'])(ctx)}`
     });
 
     start = start || '2017-01-01';
