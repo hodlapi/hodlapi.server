@@ -1,18 +1,21 @@
 const R = require('ramda')
-const {ZeroXTransaction, Rate1h, Rate5m, Rate15m, Rate30m} = require('../models')
+const { Types } = require('mongoose')
+const {
+  ZeroXTransaction, DataSource, CurrencyPair,
+  Rate1h, Rate5m, Rate15m, Rate30m, Rate1m,
+} = require('../models')
 const moment = require('moment')
-const {HGET, HSET} = require('../utils/redis')
 
-const checkTest = (data) => require('fs')
-  .writeFileSync(require('path')
-    .resolve(__dirname, './test.json'), JSON.stringify(data))
+const { ObjectId } = Types
+// const {HGET, HSET} = require('../utils/redis')
 
 
 const intervalMap = {
   '1m': {num: 1, symb: 'm'},
+  '5m': {num: 5, symb: 'm'},
   '15m': {num: 15, symb: 'm'},
   '30m': {num: 30, symb: 'm'},
-  '60m': {num: 60, symb: 'h'},
+  '60m': {num: 60, symb: 'm'},
 }
 
 const fold = R.curry((fn, data) => R.reduce(fn, R.head(data), R.tail(data) || []))
@@ -21,18 +24,12 @@ const mapPairs = (fn) => R.map(mapPair(fn))
 const countRate = (data) => R.path(['takerPrice', 'USD'], data) / R.path(['makerPrice', 'USD'], data)
 const countPeaks = (fn) => R.compose(fold(fn), R.map(countRate))
 const sumPath = (path) => R.compose(R.sum, R.map(R.compose(parseFloat, R.path(path))))
-const sortByDate = (oldestFirst) => (a, b) => oldestFirst ? new Date(a.date) - new Date(b.date) : new Date(b.date) - new Date(a.date)
 
-const transformTransactions = R.compose(
+const createTransactionsTransformer = ({ dataSourceId, currencyPairs }) => R.compose(
   R.map(R.last),
   mapPairs(R.applySpec({
-    // currencyPair: {
-    //   name: R.compose(
-    //     (data) => R.concat(R.path(['makerToken', 'symbol'], data), R.path(['takerToken', 'symbol'], data)),
-    //     R.head
-    //   ),
-    //   // add from and to id
-    // },
+    // add currency pair
+    dataSource: R.always(ObjectId(dataSourceId)),
     openTime: R.path([0, 'date']),
     closeTime: R.compose(R.prop('date'), R.last),
     open: R.compose(countRate, R.head),
@@ -50,40 +47,29 @@ const transformTransactions = R.compose(
 
 const saveRates = (Model) => R.compose(
   R.forEach((data) => {
-    console.log(data)
     const model = new Model(data)
     model.save()
   }),
   R.flatten
 )
 
-const splitTransactionsByInterval = R.curry((interval, start, data) => {
+const splitTransactionsByInterval = R.curry((start, interval, data) => {
   if (!data.length) return []
   
   const {num, symb} = interval
   const end = moment(start).add(num, symb).toISOString()
-  const groupSize = R.findLastIndex(
-    R.propSatisfies(d => {
-      return (new Date(end) - new Date(d)) > 0
-    }, 'date')
+  
+  const leftSize = R.findLastIndex(
+    R.propSatisfies(d => (new Date(end) - new Date(d)) < 0, 'date')
   )(data) + 1
   
-  return [R.take(groupSize, data), ...splitTransactionsByInterval(interval, end, R.takeLast(data.length - groupSize, data))]
+  return [R.takeLast(data.length - leftSize, data), ...splitTransactionsByInterval(end, interval, R.take(leftSize, data))]
 })
-
-const splitFractionalTransaction = R.curry((interval, transactions) => R.compose(
-  R.filter(R.length),
-  R.reduce(R.concat, []),
-  R.map((transactions1h) => splitTransactionsByInterval(
-    interval,
-    R.path([0, 'date'], transactions1h),
-    transactions1h
-  )),
-)(transactions))
 
 const zeroXTransformerInitial = async () => {
   try {
-    const transactionsRes = await ZeroXTransaction.find()
+    console.log('starting initial 0x transactions transform')
+    const transactionsRes = await ZeroXTransaction.find({}).sort({ date: -1 })
     
     const transactions = R.compose(
       R.filter(
@@ -99,80 +85,114 @@ const zeroXTransformerInitial = async () => {
     
     console.log(`Transactions to transform ${transactions.length}`)
     
+    const dataSourceId = await DataSource.findOne({
+      name: '0x'
+    }).then(R.prop('_id'))
+    const currencyPairs = await CurrencyPair.find({})
     
-    const splitTransactions1h = splitTransactionsByInterval(
-      intervalMap['60m'],
-      transactions[0].date
-    )(transactions)
+    const startDate = moment(R.last(transactions).date).startOf('hour').format()
+    const splitTransactions = splitTransactionsByInterval(startDate)
+    const transactionsTransformer = createTransactionsTransformer({ dataSourceId, currencyPairs })
     
-    const splitTransactions30m = splitFractionalTransaction(intervalMap['30m'])(splitTransactions1h)
-    const splitTransactions15m = splitFractionalTransaction(intervalMap['15m'])(splitTransactions1h)
-    const splitTransactions5m = splitFractionalTransaction(intervalMap['15m'])(splitTransactions1h)
-    const splitTransactions1m = splitFractionalTransaction(intervalMap['1m'])(splitTransactions1h)
+    const transactionsToRates = (interval, trns) => R.compose(
+      R.map(transactionsTransformer),
+      splitTransactions(intervalMap[interval]),
+    )(trns)
     
-    const rates1h = R.map(transformTransactions, splitTransactions1h)
-    const rates30m = R.map(transformTransactions, splitTransactions30m)
-    const rates15m = R.map(transformTransactions, splitTransactions15m)
-    const rates5m = R.map(transformTransactions, splitTransactions5m)
-    const rates1m = R.map(transformTransactions, splitTransactions1m)
+    const rates1h = transactionsToRates('60m', transactions)
+    const rates30m = transactionsToRates('30m', transactions)
+    const rates15m = transactionsToRates('15m', transactions)
+    const rates5m = transactionsToRates('5m', transactions)
+    const rates1m = transactionsToRates('1m', transactions)
     
     saveRates(Rate1h)(rates1h)
     saveRates(Rate30m)(rates30m)
+    saveRates(Rate15m)(rates15m)
+    saveRates(Rate5m)(rates5m)
+    saveRates(Rate1m)(rates1m)
     
-    const now = moment().toISOString()
-    
+    // const now = moment().toISOString()
     R.compose(
-      R.forEach((int) => HSET('zeroX', int, now)),
+      // R.forEach((int) => HSET('zeroX', int, now)),
       R.keys,
     )(intervalMap)
     
   } catch (e) {
     console.log(e)
+  } finally {
+    console.log('initial transform 0x completed')
   }
   
 }
 
+// zeroXTransformerInitial()
 
-const conditionalSaveInterval = R.curry(async (interval, now, transactions) => {
+const conditionalSaveInterval = R.curry(async ({interval, model, now, transactions, transformer}) => {
   const storedIntervalTime = await HGET('zeroX', interval)
-  if (moment.duration(now.diff(moment(storedIntervalTime))).asMinutes() < intervalMap[interval].num) {
+  if (moment.duration(moment(now).diff(moment(storedIntervalTime))).asMinutes() < interval.num) {
     return
   }
   
   R.compose(
-    // save to db
-    R.map(transformTransactions),
+    saveRates(model),
+    R.map(transformer),
     R.filter(R.length),
-    splitTransactionsByInterval(intervalMap['15m'], now.format().toISOString())
+    splitTransactionsByInterval(interval, now)
   )(transactions)
   
-  HSET('zeroX', `key-${interval}`, now.format())
+  HSET('zeroX', `key-${interval}`, now)
   
 })
 
 const zeroXTransformNewTransactions = async () => {
-  const now = moment()
-  const newTransactions = require('./mock')
-    .sort(sortByDate(true))
-    .filter(R.allPass([R.path(['takerPrice', 'USD']), R.path(['makerPrice', 'USD'])]))
+  try {
+    const now = moment().format()
+    const newTransactions = await ZeroXTransaction.find({
+      date: {
+        $gt: now,
+      }
+    })
+      .sort({ date: -1 })
+      .then(R.filter(R.allPass([R.path(['takerPrice', 'USD']), R.path(['makerPrice', 'USD'])])))
+      
   
-  if (!newTransactions.length) {
-    console.log('No new transactions')
-    return
+    if (!newTransactions.length) {
+      console.log('No new transactions')
+      return
+    }
+  
+    const dataSourceId = await DataSource.findOne({
+      name: '0x'
+    }).then(R.prop('_id'))
+    const currencyPairs = await CurrencyPair.find({})
+  
+    const transactionsTransformer = createTransactionsTransformer({ dataSourceId })
+    
+    const rates1m = R.compose(
+      R.map(transactionsTransformer),
+      R.filter(R.length),
+      splitTransactionsByInterval(
+        now,
+        intervalMap['1m']
+      )
+    )(newTransactions)
+  
+    saveRates(Rate1m)(rates1m)
+  
+    // R.compose(
+    //   R.map(([interval, model]) => conditionalSaveInterval({
+    //     interval, model, now, newTransactions, transformer: transactionsTransformer
+    //   })),
+    //   R.zip(R.__, [Rate5m, Rate15m, Rate30m, Rate1h]),
+    //   R.tail,
+    //   R.values,
+    // )(intervalMap)
+  
+    console.log('new transactions saved')
+    
+  } catch (e) {
+    console.log(e)
   }
-  
-  const rates1m = R.compose(
-    R.map(transformTransactions),
-    R.filter(R.length),
-    splitTransactionsByInterval(intervalMap['1m'], newTransactions[0].date)
-  )(newTransactions)
-  
-  // save 1m rates into db
-  
-  R.compose(
-    R.map(conditionalSaveInterval(R.__, now, newTransactions)),
-    R.tail,
-    R.keys,
-  )(intervalMap)
-  
 }
+
+// zeroXTransformNewTransactions()

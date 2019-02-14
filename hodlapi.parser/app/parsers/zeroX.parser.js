@@ -69,10 +69,7 @@ const zeroXParser = async (loadedCount) => {
   
 }
 
-// zeroXParser(709500)
-
-// console.log('asdadasasdsd')
-
+// zeroXParser(711500)
 
 module.exports = { zeroXParser }
 
