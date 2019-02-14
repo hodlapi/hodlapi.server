@@ -23,14 +23,14 @@ const server = http.createServer(function onRequest(req, res) {
     serve(req, res);
 });
 
-server.listen(8080);
+server.listen(process.env.NODE_ENV === 'production' ? 8080 : 8090);
 
 if (process.env.NODE_ENV === 'production') {
-    process.on('uncaughtException', function (error) {
+    process.on('uncaughtException', function(error) {
         process.exit(1);
     });
 
-    process.on('unhandledRejection', function (error) {
+    process.on('unhandledRejection', function(error) {
         process.exit(1);
     });
 }

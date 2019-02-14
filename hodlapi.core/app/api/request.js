@@ -87,13 +87,13 @@ const create = async ctx => {
             });
             archiveJob.save();
             archiveJob.on('complete', result => {
-                request.resultUrl = `${config.get('hostingUrl')}/${result}`;
+                request.resultUrl = `${config.get('filesStorageUrl')}/${result}`;
                 request.status = RequestStatuses.ready;
                 request.save();
                 queue
                     .create('core.sendFileEmail', {
                         email: userObject.email,
-                        link: `${config.get('hostingUrl')}/${result}`
+                        link: `${config.get('filesStorageUrl')}/${result}`
                     })
                     .save();
             });

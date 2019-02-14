@@ -1,5 +1,6 @@
 {
     "hostingUrl": "http://api.hodlapi.com:8080",
+    "filesStorageUrl": "http://files.hodlapi.com:8080",
     "mongodb": {
         "host": "mongo",
         "port": 27017,
