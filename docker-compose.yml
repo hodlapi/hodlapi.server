@@ -3,6 +3,8 @@ services:
   mongo:
     restart: always
     image: mongo
+    ports:
+      - '27017:27017'
     logging:
       driver: "none"
     volumes:
