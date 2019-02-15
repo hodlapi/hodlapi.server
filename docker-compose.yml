@@ -64,7 +64,7 @@ services:
     restart: on-failure
     build:
       context: ./hodlapi.dbseeds/
-    command: bash -c "cd hodlapi.dbseeds && export NODE_ENV=production && npx md-seed run --dropdb"
+    command: bash -c "cd hodlapi.dbseeds && export NODE_ENV=production && npx md-seed run"
     depends_on:
       - redis
       - mongo

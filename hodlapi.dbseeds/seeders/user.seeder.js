@@ -1,4 +1,6 @@
-const { Seeder } = require('mongoose-data-seed');
+const {
+  Seeder
+} = require('mongoose-data-seed');
 const {
   User,
   Role
@@ -8,6 +10,11 @@ const data = require('../seeds/Users.json') || [];
 let mappedData = [];
 
 class UserSeeder extends Seeder {
+  async shouldRun() {
+    return User.countDocuments()
+      .exec()
+      .then(count => count === 0);
+  }
 
   async run() {
     const roles = await Role.find().exec();
