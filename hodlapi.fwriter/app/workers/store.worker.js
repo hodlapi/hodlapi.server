@@ -59,7 +59,7 @@ const store = R.curry(
         if (!file) {
             const ratesList = await getRateByInterval(interval)
                 .find({
-                    currencyPair: currencyPairId,
+                    currencyPair: currencyPair._id,
                     dataSource: dataSourceId,
                     openTime: {
                         $gte: new Date(startDate),
@@ -81,7 +81,7 @@ const store = R.curry(
                         await request.save();
                         resolve(newFile);
                     } catch (ex) {
-                        console.log(ex);
+                        reject(ex);
                     }
                 },
                 err => reject(err)
