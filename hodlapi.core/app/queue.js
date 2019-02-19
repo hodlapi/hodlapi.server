@@ -42,12 +42,12 @@ const zeroXParsingJob = queue.createJob('parser.zeroX.transactions', null);
 
 /******** Scheduler block ********/
 queue.now(currencyParsingJob);
-queue.now(zeroXParsingJob);
+// queue.now(zeroXParsingJob);
 queue.now(rateParsingJobs);
 
 queue.every('1 day', currencyParsingJob);
 queue.every('3 hours', rateParsingJobs);
-queue.every('2 days', zeroXParsingJob);
+// queue.every('2 days', zeroXParsingJob);
 
 /******** Scheduler block end ********/
 

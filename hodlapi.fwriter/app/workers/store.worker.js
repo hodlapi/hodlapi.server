@@ -43,8 +43,8 @@ const store = R.curry(
         request.status = RequestStatuses.preparingFiles;
         await request.save();
         const dataSourceId = request.dataSource;
-        const startDate = request.fromDate;
-        const endDate = request.toDate;
+        const startDate = new Date(request.fromDate).toISOString();
+        const endDate = new Date(request.toDate).toISOString();
         const dataSource = await DataSource.findById(dataSourceId);
         const currencyPair = await CurrencyPair.findById(currencyPairId);
 
