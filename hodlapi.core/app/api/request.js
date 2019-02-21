@@ -44,7 +44,7 @@ const create = async ctx => {
   const userObject = R.pathOr(null, ['state', 'user'])(ctx);
 
   const request = await new Request({
-    user: R.pathOr(null, ['_id'])(userObject),
+    user: R.pathOr(null, ['id'])(userObject),
     dataSource: dataSource,
     currencyPairs: [...currencyPairs],
     intervals,
@@ -56,7 +56,7 @@ const create = async ctx => {
   const jobs = R.compose(
     R.flatten,
     R.map(pair =>
-      R.map(async interval =>
+      R.map(interval =>
         queue.create('fwriter.write', {
           requestId: request._id,
           interval,
@@ -97,7 +97,7 @@ const create = async ctx => {
       });
     },
     err => {
-      let c = err;
+      ctx.throw(500, err);
     }
   );
 
@@ -108,6 +108,61 @@ const create = async ctx => {
   };
 };
 
+const createParse = async ctx => {
+  let {
+    dataSource,
+    intervals,
+    currencyPairs,
+    range: [start, end] = [],
+    extensions = ['json', 'csv']
+  } = ctx.request.body;
+
+  logger.log({
+    level: 'info',
+    message: `Request created for ${R.path(['state', 'user', 'email'])(ctx)}`
+  });
+
+  start = start || '2017-01-01';
+  end = end || moment().format('YYYY-MM-DD');
+  const userObject = R.pathOr(null, ['state', 'user'])(ctx);
+
+  const request = await new Request({
+    user: R.pathOr(null, ['id'])(userObject),
+    dataSource: dataSource,
+    currencyPairs: [...currencyPairs],
+    intervals,
+    fromDate: start,
+    toDate: end,
+    extensions,
+    status: RequestStatuses.created
+  }).save();
+
+  const jobs = R.compose(
+    R.map(e => new Promise((resolve, reject) => {
+      e.then(job => {
+        job.save();
+        job.on('complete', e => {
+          resolve(e);
+        });
+      });
+    })),
+    R.flatten,
+    R.map(pair => R.map(async interval => queue.create('parser.binance.rates', {
+      pair: await CurrencyPair.findOne({
+        _id: pair
+      }).exec(),
+      interval,
+      start,
+      end
+    }))(intervals))
+  )(currencyPairs);
+  Promise.all(jobs).then(data => {
+    console.log(data);
+
+  });
+};
+
 router.post('/request', requestValidator, create);
+router.post('/request/parse', requestValidator, createParse);
 
 module.exports = router;
