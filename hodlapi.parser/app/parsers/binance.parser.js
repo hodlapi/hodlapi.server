@@ -1,6 +1,8 @@
 const axios = require("axios").default;
 const R = require("ramda");
-const { DataSource } = require("../models");
+const {
+    DataSource
+} = require("../models");
 const moment = require("moment");
 
 const mapBinanceRateToDoc = R.curry((currencyPairId, dataSourceId, data) => ({
@@ -29,15 +31,14 @@ const createParseRequest = params =>
 
 const binanceParser = R.curry(
     (storeCb, interval, pair, start, end) =>
-    new Promise(async(resolve, reject) => {
+    new Promise(async (resolve, reject) => {
         let startTime = moment(start).unix() * 1000;
         const currentDate = moment(end).unix() * 1000;
         let parsedLength = 1;
-        const dataSource = await DataSource.findOne({ name: "Binance" });
-        const symbol = `${R.pathOr("", ["fromId", "symbol"])(pair)}${R.pathOr(
-        "",
-        ["toId", "symbol"]
-      )(pair)}`;
+        const dataSource = await DataSource.findOne({
+            name: "Binance"
+        });
+        const symbol = R.prop("name")(pair);
         const mapRateToDoc = mapBinanceRateToDoc(R.propOr(-1, "_id")(pair), R.propOr(-1, "_id")(dataSource));
 
         while (startTime < currentDate && parsedLength > 0) {
@@ -48,6 +49,7 @@ const binanceParser = R.curry(
                         interval,
                         startTime
                     })) || [];
+                
                 parsedLength = data.length;
                 data.map(
                     R.compose(
