@@ -45,7 +45,7 @@ queue.processAsync("fwriter.archiveResult", async({ data }, done) => {
     }
 });
 
-queue.processAsync("fwriter.write", async({ data }, done) => {
+queue.processAsync("fwriter.write", async ({ data }, done) => {
     const { requestId, interval, pair } = data;
     let request = await Request.findById(requestId);
 

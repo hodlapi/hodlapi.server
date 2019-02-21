@@ -25,6 +25,23 @@ const requestValidator = validator({
   }
 });
 
+const createFileJobs = R.curry((requestId, pairs, intervals) => R.compose(
+  R.map(job => new Promise((resolve, reject) => {
+    job.save().on('complete', files => {
+      resolve(files);
+    }).on('failed', reject);
+  })),
+  R.flatten,
+  R.map(pair =>
+    R.map(interval =>
+      queue.create('fwriter.write', {
+        requestId,
+        interval,
+        pair
+      }))(intervals)
+  )
+)(pairs));
+
 const create = async ctx => {
   let {
     dataSource,
@@ -53,48 +70,27 @@ const create = async ctx => {
     extensions,
     status: RequestStatuses.created
   }).save();
-  const jobs = R.compose(
-    R.flatten,
-    R.map(pair =>
-      R.map(interval =>
-        queue.create('fwriter.write', {
-          requestId: request._id,
-          interval,
-          pair
-        }))(intervals)
-    )
-  )(currencyPairs);
 
-  const jobsFinishedPromises = R.map(jobPromise => new Promise((resolve, reject) => {
-    jobPromise.then(
-      job => {
-        job.save();
-        job.on('complete', files => {
-          resolve(files);
-        });
-      },
-      err => reject(errr)
-    )
-  }))(jobs);
+  const jobs = createFileJobs(R.prop('_id')(request), currencyPairs, intervals);
 
-  Promise.all(jobsFinishedPromises).then(
+  Promise.all(jobs).then(
     results => {
-      let archiveJob = queue.create('fwriter.archiveResult', {
-        files: R.flatten(results),
-        requestId: request._id
-      });
-      archiveJob.save();
-      archiveJob.on('complete', result => {
-        request.resultUrl = `${config.get('filesStorageUrl')}/${result}`;
-        request.status = RequestStatuses.ready;
-        request.save();
-        queue
-          .create('core.sendFileEmail', {
-            email: userObject.email,
-            link: `${config.get('filesStorageUrl')}/${result}`
-          })
-          .save();
-      });
+      queue.create('fwriter.archiveResult', {
+          files: R.flatten(results),
+          requestId: request._id
+        })
+        .save()
+        .on('complete', result => {
+          request.resultUrl = `${config.get('filesStorageUrl')}/${result}`;
+          request.status = RequestStatuses.ready;
+          request.save();
+          queue
+            .create('core.sendFileEmail', {
+              email: userObject.email,
+              link: `${config.get('filesStorageUrl')}/${result}`
+            })
+            .save();
+        });
     },
     err => {
       ctx.throw(500, err);
@@ -157,9 +153,35 @@ const createParse = async ctx => {
     }))(intervals))
   )(currencyPairs);
   Promise.all(jobs).then(data => {
-    console.log(data);
-
+    const fileJobs = createFileJobs(R.prop('_id')(request), currencyPairs, intervals);
+    Promise.all(fileJobs)
+      .then(results => {
+          queue.create('fwriter.archiveResult', {
+              files: R.flatten(results),
+              requestId: request._id
+            })
+            .save()
+            .on('complete', result => {
+              request.resultUrl = `${config.get('filesStorageUrl')}/${result}`;
+              request.status = RequestStatuses.ready;
+              request.save();
+              queue
+                .create('core.sendFileEmail', {
+                  email: userObject.email,
+                  link: `${config.get('filesStorageUrl')}/${result}`
+                })
+                .save();
+            });
+        },
+        err => {
+          ctx.throw(500, err);
+        });
   });
+  ctx.status = 200;
+  ctx.body = {
+    status: 200,
+    message: 'Success'
+  };
 };
 
 router.post('/request', requestValidator, create);
