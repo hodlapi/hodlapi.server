@@ -43,6 +43,8 @@ const updateUserValidator = validator({
  */
 const list = async ctx => {};
 
+const index = async ctx => {};
+
 const create = async ctx => {};
 
 const remove = async ctx => {};
@@ -52,11 +54,12 @@ const update = async ctx => {};
 /**
  * Routes block
  */
+router.get('/:id', index);
 router.get('/', aclMiddleware('SUPERADMIN', 'ADMIN'), listParamsValidator, list);
 router.post('/', aclMiddleware('SUPERADMIN', 'ADMIN'), createUserValidator, create);
 router.put('/:id', aclMiddleware('SUPERADMIN', 'ADMIN'), update);
 // TODO: implement redirect to /:id with user.id
-// router.put('/my', );
+// router.put('/me', );
 router.delete('/', aclMiddleware('SUPERADMIN', 'ADMIN'), removeUserValidator, remove);
 
 module.exports = router;
