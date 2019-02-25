@@ -12,7 +12,7 @@ const mongoURL = `mongodb://${config.get('mongodb.host')}:${config.get('mongodb.
 const {
   RolesSeeder,
   UserSeeder,
-  DataSource
+  DataSource,
 } = require('./seeders');
 
 /*
@@ -23,11 +23,11 @@ const {
 const seedersList = {
   RolesSeeder,
   UserSeeder,
-  DataSource
+  DataSource,
 };
 
 module.exports = {
   mongoose,
   mongoURL,
-  seedersList
+  seedersList,
 };

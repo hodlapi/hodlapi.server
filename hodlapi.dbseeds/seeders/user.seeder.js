@@ -1,13 +1,12 @@
+/* eslint-disable class-methods-use-this */
 const {
-  Seeder
+  Seeder,
 } = require('mongoose-data-seed');
 const {
   User,
-  Role
+  Role,
 } = require('../models');
-
-const data = require('../seeds/Users.json') || [];
-let mappedData = [];
+const data = require('../seeds/Users.json');
 
 class UserSeeder extends Seeder {
   async shouldRun() {
@@ -18,8 +17,9 @@ class UserSeeder extends Seeder {
 
   async run() {
     const roles = await Role.find().exec();
-    mappedData = data.map(e => (Object.assign(e, {
-      role: roles.find(j => j.name === e.role)._id
+    const mappedData = (data || []).map(e => (Object.assign(e, {
+      // eslint-disable-next-line no-underscore-dangle
+      role: roles.find(j => j.name === e.role)._id,
     })));
     return User.create(mappedData);
   }
