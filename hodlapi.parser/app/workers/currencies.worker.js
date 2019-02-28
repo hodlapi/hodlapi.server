@@ -1,49 +1,47 @@
-const R = require('ramda');
 const {
-    Currency,
-    CurrencyPair,
-    DataSource
+  Currency,
+  CurrencyPair,
+  DataSource,
 } = require('../models');
 const {
-    binanceCurrenciesParser
+  binanceCurrenciesParser,
 } = require('../parsers');
 
-const saveCurrenciesAndPair = dataSourceName => async(left, right) => {
-    let from = await Currency.findOne({
-        symbol: left
-    }) || await new Currency({
-        symbol: left
-    }).save();
-    let to = await Currency.findOne({
-        symbol: right
-    }) || await new Currency({
-        symbol: right
-    }).save();
+const saveCurrenciesAndPair = dataSourceName => async (left, right) => {
+  const from = await Currency.findOne({
+    symbol: left,
+  }) || await new Currency({
+    symbol: left,
+  }).save();
+  const to = await Currency.findOne({
+    symbol: right,
+  }) || await new Currency({
+    symbol: right,
+  }).save();
 
-    return CurrencyPair.findOne({
+  return CurrencyPair.findOne({
+    name: `${left}${right}`,
+    fromId: from._id,
+    toId: to._id,
+  }).then(async (doc) => {
+    if (!doc) {
+      const pair = new CurrencyPair({
         name: `${left}${right}`,
         fromId: from._id,
-        toId: to._id
-    }).then(async doc => {
-        if (!doc) {
-            const pair = new CurrencyPair({
-                name: `${left}${right}`,
-                fromId: from._id,
-                toId: to._id
-            }).save();
+        toId: to._id,
+      }).save();
 
-            const dataSource = await DataSource.findOne({
-                name: dataSourceName
-            });
-            dataSource.currencyPairs.push(await pair);
-            return dataSource.save();
-        }
-    });
-
+      const dataSource = await DataSource.findOne({
+        name: dataSourceName,
+      });
+      dataSource.currencyPairs.push(await pair);
+      return dataSource.save();
+    }
+  });
 };
 
 const binanceCurrenciesWorker = () => binanceCurrenciesParser(saveCurrenciesAndPair('Binance'));
 
 module.exports = {
-    binanceCurrenciesWorker
+  binanceCurrenciesWorker,
 };

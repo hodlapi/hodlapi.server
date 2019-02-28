@@ -11,7 +11,11 @@
         "mongoose": "^5.4.9",
         "ramda": "^0.26.1"
     },
-    "devDependencies": {},
+    "devDependencies": {
+        "eslint": "^5.14.1",
+        "eslint-config-airbnb-base": "^13.1.0",
+        "eslint-plugin-import": "^2.16.0"
+    },
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "node server.js",

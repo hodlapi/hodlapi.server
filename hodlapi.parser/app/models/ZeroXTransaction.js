@@ -1,5 +1,5 @@
-const mongoose = require("mongoose")
-const baseModel = require("./BaseModel")
+const mongoose = require('mongoose');
+const baseModel = require('./BaseModel');
 
 const ZeroXTransaction = mongoose.Schema({
   ...baseModel,
@@ -22,7 +22,7 @@ const ZeroXTransaction = mongoose.Schema({
   takerToken: mongoose.SchemaTypes.Mixed,
   totalFees: mongoose.SchemaTypes.Mixed,
   transactionHash: mongoose.SchemaTypes.String,
-})
+});
 
 
 module.exports = mongoose.model('zeroXTransaction', ZeroXTransaction);

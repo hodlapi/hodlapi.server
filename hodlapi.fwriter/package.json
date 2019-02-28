@@ -23,5 +23,10 @@
     "ramda": "^0.26.1",
     "serve-static": "^1.13.2",
     "zip-dir": "^1.0.2"
+  },
+  "devDependencies": {
+    "eslint": "^5.14.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0"
   }
 }

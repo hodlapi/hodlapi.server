@@ -3,5 +3,5 @@ const { aclMiddleware } = require('./acl');
 
 module.exports = {
   userMiddleware,
-  aclMiddleware
+  aclMiddleware,
 };
