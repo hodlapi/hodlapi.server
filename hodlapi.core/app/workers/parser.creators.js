@@ -11,7 +11,6 @@ const {
 const parseHistoricalData = () => R.compose(
   R.then(R.flatten),
   e => Promise.all(e),
-  R.take(2),
   R.map(async ({
     value,
   }) => {
