@@ -22,9 +22,6 @@ app.use(
       /^\/api\/intervals/,
       /^\/api\/currencyPairs/,
       /^\/api\/dataSources/,
-      /^\/swagger.json/,
-      /^\/swagger/,
-      /^\/kue/,
     ],
   }),
 );
