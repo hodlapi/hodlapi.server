@@ -37,10 +37,12 @@ const rateParsingJobs = queue
 /** ****** Scheduler block ******* */
 queue.now(currencyParsingJob);
 // queue.now(zeroXParsingJob);
-queue.now(rateParsingJobs);
+if (process.env.NODE_ENV === 'production' || process.env.RUN_PARSING_JOBS) {
+  queue.now(rateParsingJobs);
+  queue.every('3 hours', rateParsingJobs);
+}
 
 queue.every('1 day', currencyParsingJob);
-queue.every('3 hours', rateParsingJobs);
 // queue.every('2 days', zeroXParsingJob);
 
 /** ****** Scheduler block end ******* */
@@ -51,8 +53,12 @@ queue.process('core.rateParserStarter', (_, done) => Promise.resolve(
   R.compose(
     R.then(
       R.map(R.then((payload) => {
-        const { id } = payload;
-        return queue.create('parser.binance.rates', { ...payload }).unique(id).save();
+        const {
+          id,
+        } = payload;
+        return queue.create('parser.binance.rates', {
+          ...payload,
+        }).unique(id).save();
       })),
     ),
   )(

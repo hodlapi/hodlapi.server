@@ -31,7 +31,7 @@ const createParseRequest = params => axios
 const binanceParser = R.curry(
   (storeCb, interval, pair, start, end) => new Promise(async (resolve, reject) => {
     let startTime = moment(start).unix() * 1000;
-    const currentDate = moment(end).unix() * 1000;
+    const currentDate = (moment(end).unix() + 1000) * 1000;
     let parsedLength = 1;
     const dataSource = await DataSource.findOne({
       name: 'Binance',
