@@ -113,19 +113,19 @@ router.post('/register', async (ctx) => {
   }
 
   const user = await User.findOne({
-    userName: email,
+    username: email,
   });
   if (user) {
     ctx.status = 400;
     ctx.body = {
-      message: 'User with such userName already exists',
+      message: 'User with such username already exists',
     };
     return;
   }
 
   new User({
     email,
-    userName: email,
+    username: email,
     password: await bcrypt.hash(password, 10),
   }).save();
   ctx.status = 200;
