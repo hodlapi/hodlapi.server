@@ -1,18 +1,18 @@
 const {
-  zeroXParser
-} = require('../parsers')
+  zeroXParser,
+} = require('../parsers');
 const {
-  ZeroXTransaction
-} = require('../models')
+  ZeroXTransaction,
+} = require('../models');
 
 const zeroXWorker = () => ZeroXTransaction
-    .countDocuments()
-    .then(zeroXParser)
-    .then((diff) => {
-      console.log(`loaded ${diff} transactions`);
-      return diff;
-    });
+  .countDocuments()
+  .then(zeroXParser)
+  .then((diff) => {
+    console.log(`loaded ${diff} transactions`);
+    return diff;
+  });
 
 module.exports = {
-  zeroXWorker
-}
+  zeroXWorker,
+};

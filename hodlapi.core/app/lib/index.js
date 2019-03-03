@@ -1,7 +1,7 @@
 const {
-  generateJWT
+  generateJWT,
 } = require('./jwt');
 
 module.exports = {
-  generateJWT
+  generateJWT,
 };

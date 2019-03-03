@@ -9,7 +9,7 @@ const auth = require('./auth');
 const requests = require('./requests');
 
 const api = new Router({
-    prefix: '/api'
+  prefix: '/api',
 });
 
 api.use(currencyPairs.routes());

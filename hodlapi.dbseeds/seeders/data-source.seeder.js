@@ -1,14 +1,14 @@
+/* eslint-disable class-methods-use-this */
 const {
-  Seeder
+  Seeder,
 } = require('mongoose-data-seed');
 const {
-  DataSource
+  DataSource,
 } = require('../models');
 
 const data = require('../seeds/DataSources.json');
 
 class DataSourceSeeder extends Seeder {
-
   async shouldRun() {
     return DataSource.countDocuments()
       .exec()
