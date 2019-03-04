@@ -5,6 +5,7 @@ const R = require('ramda');
 const {
   sendEmail,
   sendSignUpEmail,
+  sendRestorePasswordEmail,
   parseHistoricalData,
 } = require('./workers');
 
@@ -62,6 +63,7 @@ queue.process('core.rateParserStarter', (_, done) => Promise.resolve(
 
 queue.process('core.sendFileEmail', sendEmail);
 queue.process('core.sendSignUpEmail', sendSignUpEmail);
+queue.process('core.sendRestorePasswordEmail', sendRestorePasswordEmail);
 /** ****** Job processors end ******** */
 
 module.exports = queue;

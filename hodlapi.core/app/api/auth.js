@@ -21,6 +21,12 @@ const loginValidator = validator({
   },
 });
 
+const passwordResetValidator = validator({
+  body: {
+    email: joi.string().email().required(),
+  },
+});
+
 router.post('/login', loginValidator, async (ctx) => {
   const {
     email,
@@ -128,6 +134,30 @@ router.post('/register', async (ctx) => {
     username: email,
     password: await bcrypt.hash(password, 10),
   }).save();
+  ctx.status = 200;
+});
+
+router.post('/password-reset', passwordResetValidator, async (ctx) => {
+  const {
+    email,
+  } = ctx.request.body;
+  const user = await User.findOne({
+    email,
+  });
+  if (!user) {
+    ctx.throw(404, 'User with such email not found');
+  }
+  const password = Math.random()
+    .toString(36)
+    .slice(-8);
+  user.password = bcrypt.hashSync(password, 10);
+  user.save();
+  queue
+    .create('core.sendRestorePasswordEmail', {
+      email,
+      password,
+    })
+    .save();
   ctx.status = 200;
 });
 
