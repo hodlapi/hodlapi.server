@@ -17,6 +17,7 @@
     "homepage": "https://bitbucket.org/finkee/cryptoparser.server#readme",
     "dependencies": {
         "@koa/cors": "^2.2.3",
+        "@wegolook/joi-objectid": "^2.4.0",
         "axios": "^0.18.0",
         "bcryptjs": "^2.4.3",
         "config": "^3.0.1",

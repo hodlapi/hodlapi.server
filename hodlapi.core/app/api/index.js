@@ -7,6 +7,7 @@ const intervals = require('./intervals');
 const request = require('./request');
 const auth = require('./auth');
 const requests = require('./requests');
+const users = require('./users');
 
 const api = new Router({
   prefix: '/api',
@@ -19,5 +20,6 @@ api.use(intervals.routes());
 api.use(request.routes());
 api.use(requests.routes());
 api.use('/auth', auth.routes());
+api.use('/users', users.routes());
 
 module.exports = api;
