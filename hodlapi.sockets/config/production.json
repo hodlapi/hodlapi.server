@@ -1,0 +1,8 @@
+{
+    "redis": {
+        "host": "redis",
+        "port": 6379,
+        "auth": "Password1Startup"
+    },
+    "socketPort": "5000"
+}

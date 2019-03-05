@@ -75,5 +75,18 @@ services:
     volumes:
       - './:/app/'
       - '/app/node_modules'
+  sockets:
+    restart: always
+    build:
+      context: ./hodlapi.sockets/
+    command: bash -c "cd hodlapi.sockets && nodemon server.js"
+    depends_on:
+      - redis
+    links:
+      - redis
+    volumes:
+      - './:/app/'
+    ports:
+      - '5000:5000'
 volumes:
   mongo:

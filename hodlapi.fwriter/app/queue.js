@@ -71,7 +71,8 @@ queue.processAsync('fwriter.write', async ({
       request.extensions,
     ),
   ).then(
-    (files) => {
+    async (files) => {
+      queue.create('socket.updateRequest', await Request.findById(requestId)).save();
       done(null, files);
     },
     err => done(err),

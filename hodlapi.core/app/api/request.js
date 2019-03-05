@@ -132,6 +132,8 @@ const createParse = async (ctx) => {
     status: RequestStatuses.created,
   }).save();
 
+  queue.create('socket.updateRequest', request).save();
+
   const jobs = R.compose(
     R.map(e => new Promise((resolve) => {
       e.then((job) => {
@@ -175,10 +177,7 @@ const createParse = async (ctx) => {
       });
   });
   ctx.status = 200;
-  ctx.body = {
-    status: 200,
-    message: 'Success',
-  };
+  ctx.body = request;
 };
 
 router.post('/request', requestValidator, create);

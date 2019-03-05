@@ -7,11 +7,7 @@ const {
 
 const zeroXWorker = () => ZeroXTransaction
   .countDocuments()
-  .then(zeroXParser)
-  .then((diff) => {
-    console.log(`loaded ${diff} transactions`);
-    return diff;
-  });
+  .then(zeroXParser);
 
 module.exports = {
   zeroXWorker,
