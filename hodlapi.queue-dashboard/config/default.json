@@ -1,0 +1,17 @@
+{
+    "redis": {
+        "host": "redis",
+        "port": 6379,
+        "auth": "Password1Startup"
+    },
+    "queues": [
+        "core",
+        "fwriter",
+        "parser",
+        "socket"
+    ],
+    "users": {
+        "admin": "Password1"
+    },
+    "socketPort": "5000"
+}

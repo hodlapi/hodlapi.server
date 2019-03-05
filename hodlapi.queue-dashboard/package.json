@@ -1,22 +1,21 @@
 {
-  "name": "hodlapi.sockets",
+  "name": "hodlapi.queue-dashboard",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bull": "^3.7.0",
+    "bull-arena": "^2.6.2",
     "config": "^3.0.1",
     "express": "^4.16.4",
-    "ramda": "^0.26.1",
-    "socket.io": "^2.2.0"
+    "express-basic-auth": "^1.1.6"
   },
   "devDependencies": {
-    "eslint": "^5.15.0",
+    "eslint": "^5.15.1",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.16.0"
   }

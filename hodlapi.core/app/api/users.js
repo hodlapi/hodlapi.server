@@ -11,7 +11,9 @@ const {
 const {
   aclMiddleware,
 } = require('../middlewares');
-const queue = require('../queue');
+const {
+  coreQueue,
+} = require('../queue');
 
 const joiExtended = joi.extend(joiObjectId);
 const router = new Router();
@@ -112,8 +114,8 @@ const create = async (ctx) => {
     password: bcrypt.hashSync(password, 10),
     role: R.prop('_id')(role),
   }).save();
-  queue
-    .create('core.sendSignUpEmail', {
+  coreQueue
+    .create('sendSignUpEmail', {
       email,
       password,
     })

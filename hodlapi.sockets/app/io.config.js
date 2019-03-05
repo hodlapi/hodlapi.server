@@ -7,7 +7,7 @@ const init = (server) => {
 
   io.on('connection', () => {
     console.log('socket connected');
-    queue.process('socket.updateRequest', ({ data }, done) => {
+    queue.process('updateRequest', ({ data }, done) => {
       io.emit(R.prop('_id')(data), data);
       done();
     });

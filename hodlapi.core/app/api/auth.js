@@ -9,7 +9,9 @@ const {
 const {
   User,
 } = require('../models');
-const queue = require('../queue');
+const {
+  coreQueue,
+} = require('../queue');
 const logger = require('../logger');
 
 const router = new Router();
@@ -96,8 +98,8 @@ router.post('/create', async (ctx) => {
     login,
     password: await bcrypt.hash(generatedPassword, 10),
   }).save();
-  queue
-    .create('core.sendSignUpEmail', {
+  coreQueue
+    .add('sendSignUpEmail', {
       email: login,
       password: generatedPassword,
     })
@@ -152,8 +154,8 @@ router.post('/password-reset', passwordResetValidator, async (ctx) => {
     .slice(-8);
   user.password = bcrypt.hashSync(password, 10);
   user.save();
-  queue
-    .create('core.sendRestorePasswordEmail', {
+  coreQueue
+    .create('sendRestorePasswordEmail', {
       email,
       password,
     })

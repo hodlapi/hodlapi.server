@@ -1,4 +1,4 @@
-const kue = require('kue');
+const Bull = require('bull');
 const config = require('config');
 const R = require('ramda');
 const fs = require('fs');
@@ -20,20 +20,15 @@ const formattersMap = {
   csv: e => csv(constants.binanseCsvFields, e),
 };
 
-const queue = kue.createQueue({
+const queue = new Bull('fwriter', {
   redis: {
     host: config.get('redis.host'),
     port: config.get('redis.port'),
-    auth: config.get('redis.auth'),
+    password: config.get('redis.auth'),
   },
 });
 
-// eslint-disable-next-line max-len
-kue.prototype.processAsync = (name, concurrency, handler) => queue.process(name, concurrency, (job, done) => handler(job)
-  .then(() => done(null))
-  .catch(done));
-
-queue.processAsync('fwriter.archiveResult', async ({
+queue.process('archiveResult', async ({
   data,
 }, done) => {
   try {
@@ -56,7 +51,7 @@ queue.processAsync('fwriter.archiveResult', async ({
   }
 });
 
-queue.processAsync('fwriter.write', async ({
+queue.process('fwriter.write', async ({
   data,
 }, done) => {
   const {
@@ -72,7 +67,6 @@ queue.processAsync('fwriter.write', async ({
     ),
   ).then(
     async (files) => {
-      queue.create('socket.updateRequest', await Request.findById(requestId)).save();
       done(null, files);
     },
     err => done(err),
