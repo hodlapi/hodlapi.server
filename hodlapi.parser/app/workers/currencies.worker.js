@@ -1,3 +1,4 @@
+const R = require('ramda');
 const {
   Currency,
   CurrencyPair,
@@ -21,14 +22,14 @@ const saveCurrenciesAndPair = dataSourceName => async (left, right) => {
 
   return CurrencyPair.findOne({
     name: `${left}${right}`,
-    fromId: from._id,
-    toId: to._id,
+    fromId: R.prop('_id')(from),
+    toId: R.prop('_id')(to),
   }).then(async (doc) => {
     if (!doc) {
       const pair = new CurrencyPair({
         name: `${left}${right}`,
-        fromId: from._id,
-        toId: to._id,
+        fromId: R.prop('_id')(from),
+        toId: R.prop('_id')(to),
       }).save();
 
       const dataSource = await DataSource.findOne({
@@ -37,6 +38,7 @@ const saveCurrenciesAndPair = dataSourceName => async (left, right) => {
       dataSource.currencyPairs.push(await pair);
       return dataSource.save();
     }
+    return doc;
   });
 };
 
