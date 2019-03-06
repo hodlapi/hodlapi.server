@@ -51,7 +51,7 @@ queue.process('archiveResult', async ({
   }
 });
 
-queue.process('fwriter.write', async ({
+queue.process('write', async ({
   data,
 }, done) => {
   const {

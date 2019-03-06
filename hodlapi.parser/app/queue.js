@@ -14,9 +14,11 @@ const queue = new Bull('parser', {
   },
 });
 
+
 queue.process('binance.rates', binanceWorker);
 
 queue.process('binance.currencies', (_, done) => {
+  console.log('parsing ');
   binanceCurrenciesWorker().then(
     result => done(null, result),
     error => done(error),

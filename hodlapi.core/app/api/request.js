@@ -76,7 +76,9 @@ const createParse = async (ctx) => {
   const jobs = R.compose(
     R.map(e => new Promise((resolve) => {
       e.then((job) => {
-        job.on('complete', resolve);
+        console.log(job);
+
+        // job.on('complete', resolve);
       });
     })),
     R.flatten,
