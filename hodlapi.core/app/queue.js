@@ -43,7 +43,7 @@ coreQueue.add('rateParserStarter', null, {
 coreQueue.process('rateParserStarter', (_, done) => Promise.resolve(
   R.compose(
     R.then(
-      R.map(R.then(payload => parserQueue.create('binance.rates', {
+      R.map(R.then(payload => parserQueue.add('binance.rates', {
         ...payload,
       }))),
     ),

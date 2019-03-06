@@ -30,11 +30,7 @@ const requestValidator = validator({
 });
 
 const createFileJobs = R.curry((requestId, pairs, intervals) => R.compose(
-  R.map(job => new Promise((resolve, reject) => {
-    job.on('completed', (files) => {
-      resolve(files);
-    }).on('failed', reject);
-  })),
+  R.map(e => e.then(job => job.finished())),
   R.flatten,
   R.map(pair => R.map(interval => fwriterQueue.add('write', {
     requestId,
@@ -74,13 +70,7 @@ const createParse = async (ctx) => {
   }).save();
 
   const jobs = R.compose(
-    R.map(e => new Promise((resolve) => {
-      e.then((job) => {
-        console.log(job);
-
-        // job.on('complete', resolve);
-      });
-    })),
+    R.map(e => e.then(job => job.finished())),
     R.flatten,
     R.map(pair => R.map(async interval => parserQueue.add('binance.rates', {
       pair: await CurrencyPair.findOne({
@@ -100,18 +90,17 @@ const createParse = async (ctx) => {
           files: R.flatten(results),
           requestId: R.prop('_id')(request),
         })
-          .save()
-          .on('completed', (result) => {
+          .then(e => e.finished())
+          .then((result) => {
             request.resultUrl = `${config.get('filesStorageUrl')}/${result}`;
             request.status = RequestStatuses.ready;
             request.save();
             socketQueue.add('updateRequest', request);
             coreQueue
-              .create('sendFileEmail', {
+              .add('sendFileEmail', {
                 email: userObject.email,
                 link: `${config.get('filesStorageUrl')}/${result}`,
-              })
-              .save();
+              });
           });
       },
       (err) => {
