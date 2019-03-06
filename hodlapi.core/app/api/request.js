@@ -94,8 +94,15 @@ const createParse = async (ctx) => {
           .then((result) => {
             request.resultUrl = `${config.get('filesStorageUrl')}/${result}`;
             request.status = RequestStatuses.ready;
-            request.save();
-            socketQueue.add('updateRequest', request);
+            request.save(async () => {
+              socketQueue.add('updateRequest', await Request.findOne({
+                _id: R.prop('_id')(request),
+              })
+                .populate('currencyPairs')
+                .populate('dataSource')
+                .populate('files'));
+            });
+
             coreQueue
               .add('sendFileEmail', {
                 email: userObject.email,
