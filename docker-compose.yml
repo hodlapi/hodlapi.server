@@ -78,7 +78,7 @@ services:
     restart: always
     build:
       context: ./hodlapi.sockets/
-    command: bash -c "cd hodlapi.sockets && nodemon server.js"
+    command: bash -c "cd hodlapi.sockets && export NODE_ENV=production && node server.js"
     depends_on:
       - redis
     links:
