@@ -10,7 +10,12 @@ const {
   RequestStatuses,
 } = require('../models');
 const logger = require('../logger');
-const queue = require('../queue');
+const {
+  fwriterQueue,
+  parserQueue,
+  coreQueue,
+  socketQueue,
+} = require('../queue');
 
 const router = new Router();
 
@@ -25,82 +30,14 @@ const requestValidator = validator({
 });
 
 const createFileJobs = R.curry((requestId, pairs, intervals) => R.compose(
-  R.map(job => new Promise((resolve, reject) => {
-    job.save().on('complete', (files) => {
-      resolve(files);
-    }).on('failed', reject);
-  })),
+  R.map(e => e.then(job => job.finished())),
   R.flatten,
-  R.map(pair => R.map(interval => queue.create('fwriter.write', {
+  R.map(pair => R.map(interval => fwriterQueue.add('write', {
     requestId,
     interval,
     pair,
   }))(intervals)),
 )(pairs));
-
-const create = async (ctx) => {
-  const {
-    dataSource,
-    intervals,
-    currencyPairs,
-    range = [],
-    extensions = ['json', 'csv'],
-  } = ctx.request.body;
-
-  let [start, end] = range;
-
-  logger.log({
-    level: 'info',
-    message: `Request created for ${R.path(['state', 'user', 'email'])(ctx)}`,
-  });
-
-  start = start || '2017-01-01';
-  end = end || moment().format('YYYY-MM-DD');
-  const userObject = R.pathOr(null, ['state', 'user'])(ctx);
-
-  const request = await new Request({
-    user: R.pathOr(null, ['id'])(userObject),
-    dataSource,
-    currencyPairs: [...currencyPairs],
-    intervals,
-    fromDate: start,
-    toDate: end,
-    extensions,
-    status: RequestStatuses.created,
-  }).save();
-
-  const jobs = createFileJobs(R.prop('_id')(request), currencyPairs, intervals);
-
-  Promise.all(jobs).then(
-    (results) => {
-      queue.create('fwriter.archiveResult', {
-        files: R.flatten(results),
-        requestId: R.prop('_id')(request),
-      })
-        .save()
-        .on('complete', (result) => {
-          request.resultUrl = `${config.get('filesStorageUrl')}/${result}`;
-          request.status = RequestStatuses.ready;
-          request.save();
-          queue
-            .create('core.sendFileEmail', {
-              email: userObject.email,
-              link: `${config.get('filesStorageUrl')}/${result}`,
-            })
-            .save();
-        });
-    },
-    (err) => {
-      ctx.throw(500, err);
-    },
-  );
-
-  ctx.status = 200;
-  ctx.body = {
-    status: 200,
-    message: 'Success',
-  };
-};
 
 const createParse = async (ctx) => {
   const {
@@ -132,17 +69,10 @@ const createParse = async (ctx) => {
     status: RequestStatuses.created,
   }).save();
 
-  queue.create('socket.updateRequest', request).save();
-
   const jobs = R.compose(
-    R.map(e => new Promise((resolve) => {
-      e.then((job) => {
-        job.save();
-        job.on('complete', resolve);
-      });
-    })),
+    R.map(e => e.then(job => job.finished())),
     R.flatten,
-    R.map(pair => R.map(async interval => queue.create('parser.binance.rates', {
+    R.map(pair => R.map(async interval => parserQueue.add('binance.rates', {
       pair: await CurrencyPair.findOne({
         _id: pair,
       }).exec(),
@@ -151,25 +81,26 @@ const createParse = async (ctx) => {
       end,
     }))(intervals)),
   )(currencyPairs);
+
   Promise.all(jobs).then(() => {
     const fileJobs = createFileJobs(R.prop('_id')(request), currencyPairs, intervals);
     Promise.all(fileJobs)
       .then((results) => {
-        queue.create('fwriter.archiveResult', {
+        fwriterQueue.add('archiveResult', {
           files: R.flatten(results),
           requestId: R.prop('_id')(request),
         })
-          .save()
-          .on('complete', (result) => {
+          .then(e => e.finished())
+          .then((result) => {
             request.resultUrl = `${config.get('filesStorageUrl')}/${result}`;
             request.status = RequestStatuses.ready;
             request.save();
-            queue
-              .create('core.sendFileEmail', {
+            socketQueue.add('updateRequest', request);
+            coreQueue
+              .add('sendFileEmail', {
                 email: userObject.email,
                 link: `${config.get('filesStorageUrl')}/${result}`,
-              })
-              .save();
+              });
           });
       },
       (err) => {
@@ -180,7 +111,6 @@ const createParse = async (ctx) => {
   ctx.body = request;
 };
 
-router.post('/request', requestValidator, create);
 router.post('/request/parse', requestValidator, createParse);
 
 module.exports = router;

@@ -5,7 +5,9 @@ const {
   connect,
 } = require('./app/db');
 
-connect().then((e) => {
+require('./app/queue');
+
+connect().then(() => {
   console.log('Connected to mongo');
 });
 

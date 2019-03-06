@@ -1,20 +1,20 @@
 const {
   connect,
 } = require('./app/db');
-const queue = require('./app/queue');
 
 require('./app/transformers/zeroX.transformer');
+require('./app/queue');
 
-connect().then((e) => {
+connect().then(() => {
   console.log('Connected to mongo');
 });
 
 if (process.env.NODE_ENV === 'production') {
-  process.on('uncaughtException', (error) => {
-        process.exit(1);
-    });
+  process.on('uncaughtException', () => {
+    process.exit(1);
+  });
 
-  process.on('unhandledRejection', (error) => {
-        process.exit(1);
-    });
+  process.on('unhandledRejection', () => {
+    process.exit(1);
+  });
 }

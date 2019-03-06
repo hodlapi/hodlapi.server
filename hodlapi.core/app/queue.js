@@ -1,4 +1,4 @@
-const kue = require('kue-scheduler');
+const Bull = require('bull');
 const config = require('config');
 const R = require('ramda');
 
@@ -9,61 +9,56 @@ const {
   parseHistoricalData,
 } = require('./workers');
 
-const queue = kue.createQueue({
+const queueConfig = {
   redis: {
     host: config.get('redis.host'),
     port: config.get('redis.port'),
-    auth: config.get('redis.auth'),
+    password: config.get('redis.auth'),
   },
-});
+};
 
-queue.clear();
+const parserQueue = new Bull('parser', queueConfig);
+const fwriterQueue = new Bull('fwriter', queueConfig);
+const socketQueue = new Bull('socket', queueConfig);
+const coreQueue = new Bull('core', queueConfig);
+
+// coreQueue.removeRepeatable();
 
 /** ****** Jobs createors block ******* */
 
-const currencyParsingJob = queue
-  .createJob('parser.binance.currencies', null)
-  .attempts(1)
-  .priority('normal');
+parserQueue.add('binance.currencies', null, {
+  repeat: {
+    every: 24 * 60 * 60 * 1000,
+  },
+});
 
-const rateParsingJobs = queue
-  .createJob('core.rateParserStarter', null)
-  .attempts(3)
-  .priority('normal');
-
-// const zeroXParsingJob = queue.createJob('parser.zeroX.transactions', null);
-
-/** ****** Jobs createors block end ******* */
-
-/** ****** Scheduler block ******* */
-queue.now(currencyParsingJob);
-// queue.now(zeroXParsingJob);
-// queue.now(rateParsingJobs);
-
-queue.every('1 day', currencyParsingJob);
-// queue.every('3 hours', rateParsingJobs);
-// queue.every('2 days', zeroXParsingJob);
-
-/** ****** Scheduler block end ******* */
+coreQueue.add('rateParserStarter', null, {
+  repeat: {
+    every: 3 * 60 * 60 * 1000,
+  },
+});
 
 /** ****** Job processors ******** */
 
-queue.process('core.rateParserStarter', (_, done) => Promise.resolve(
+coreQueue.process('rateParserStarter', (_, done) => Promise.resolve(
   R.compose(
     R.then(
-      R.map(R.then((payload) => {
-        const { id } = payload;
-        return queue.create('parser.binance.rates', { ...payload }).unique(id).save();
-      })),
+      R.map(R.then(payload => parserQueue.add('binance.rates', {
+        ...payload,
+      }))),
     ),
   )(
     parseHistoricalData(),
   ),
 ).then(() => done()));
 
-queue.process('core.sendFileEmail', sendEmail);
-queue.process('core.sendSignUpEmail', sendSignUpEmail);
-queue.process('core.sendRestorePasswordEmail', sendRestorePasswordEmail);
-/** ****** Job processors end ******** */
+coreQueue.process('sendFileEmail', sendEmail);
+coreQueue.process('sendSignUpEmail', sendSignUpEmail);
+coreQueue.process('sendRestorePasswordEmail', sendRestorePasswordEmail);
 
-module.exports = queue;
+module.exports = {
+  parserQueue,
+  fwriterQueue,
+  socketQueue,
+  coreQueue,
+};

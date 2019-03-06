@@ -1,11 +1,11 @@
-const kue = require('kue');
+const Bull = require('bull');
 const config = require('config');
 
-const queue = kue.createQueue({
+const queue = new Bull('socket', {
   redis: {
     host: config.get('redis.host'),
     port: config.get('redis.port'),
-    auth: config.get('redis.auth'),
+    password: config.get('redis.auth'),
   },
 });
 
