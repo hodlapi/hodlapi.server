@@ -88,5 +88,18 @@ services:
       - './:/app/'
     ports:
       - '5000:5000'
+  queue-dashboard:
+    restart: always
+    build:
+      context: ./hodlapi.queue-dashboard/
+    command: bash -c "cd hodlapi.queue-dashboard && nodemon server.js"
+    depends_on:
+      - redis
+    links:
+      - redis
+    volumes:
+      - './:/app/'
+    ports:
+      - '4567:4567'
 volumes:
   mongo:
