@@ -42,11 +42,14 @@ const binanceParser = R.curry(
     while (startTime < currentDate && parsedLength > 0) {
       try {
         // eslint-disable-next-line no-await-in-loop
-        const data = (await createParseRequest({
-          symbol,
-          interval,
-          startTime,
-        })) || [];
+        let data = [];
+        try {
+          data = (await createParseRequest({
+            symbol,
+            interval,
+            startTime,
+          })) || [];
+        } catch (e) {}
 
         parsedLength = data.length;
         data.map(

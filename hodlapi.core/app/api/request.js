@@ -29,6 +29,15 @@ const requestValidator = validator({
   },
 });
 
+const emitRequestBySocket = async requestId => {
+  socketQueue.add('updateRequest', await Request.findOne({
+    _id: requestId,
+  })
+    .populate('currencyPairs')
+    .populate('dataSource')
+    .populate('files'));
+};
+
 const createFileJobs = R.curry((requestId, pairs, intervals) => R.compose(
   R.map(e => e.then(job => job.finished())),
   R.flatten,
@@ -79,6 +88,8 @@ const createParse = async (ctx) => {
       interval,
       start,
       end,
+    }, {
+      attempts: 5
     }))(intervals)),
   )(currencyPairs);
 
@@ -94,20 +105,16 @@ const createParse = async (ctx) => {
           .then((result) => {
             request.resultUrl = `${config.get('filesStorageUrl')}/${result}`;
             request.status = RequestStatuses.ready;
-            request.save(async () => {
-              socketQueue.add('updateRequest', await Request.findOne({
-                _id: R.prop('_id')(request),
-              })
-                .populate('currencyPairs')
-                .populate('dataSource')
-                .populate('files'));
-            });
+            request.save(emitRequestBySocket(R.prop('_id')(request)));
 
             coreQueue
               .add('sendFileEmail', {
                 email: userObject.email,
                 link: `${config.get('filesStorageUrl')}/${result}`,
               });
+          }).catch(() => {
+            request.status = RequestStatuses.error;
+            request.save(emitRequestBySocket(R.prop('_id')(request)));
           });
       },
       (err) => {

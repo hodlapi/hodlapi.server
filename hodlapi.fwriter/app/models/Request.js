@@ -6,6 +6,8 @@ const RequestStatuses = Object.freeze({
   fetchingData: 'fetchingData',
   preparingFiles: 'preparingFiles',
   ready: 'ready',
+  error: 'error',
+  retrying: 'retrying',
 });
 
 const Request = mongoose.Schema({
