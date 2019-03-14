@@ -13,7 +13,9 @@ const saveRateDocument = R.curry((interval, document) => {
 });
 
 
-const binanceWorker = ({ data }, done) => {
+const binanceWorker = ({
+  data
+}, done) => {
   const {
     interval,
     pair,
@@ -24,7 +26,7 @@ const binanceWorker = ({ data }, done) => {
   const saveRate = saveRateDocument(interval);
   binanceParser(saveRate)(interval, pair, start, end).then(
     result => done(null, result),
-    error => done(error),
+    error => done(error, data),
   );
 };
 

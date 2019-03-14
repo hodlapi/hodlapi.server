@@ -24,6 +24,18 @@ const coreQueue = new Bull('core', queueConfig);
 
 // coreQueue.removeRepeatable();
 
+/**
+ * Jobs events block
+ */
+
+parserQueue.on('error', (job) => {
+  console.log(job);
+})
+
+/**
+ * Jobs events block end
+ */
+
 /** ****** Jobs createors block ******* */
 
 parserQueue.add('binance.currencies', null, {
@@ -32,11 +44,14 @@ parserQueue.add('binance.currencies', null, {
   },
 });
 
-coreQueue.add('rateParserStarter', null, {
-  repeat: {
-    every: 3 * 60 * 60 * 1000,
-  },
-});
+if (process.env.REGULAR_PARSER) {
+  /* process.env.NODE_ENV === 'production' || */
+  coreQueue.add('rateParserStarter', null, {
+    repeat: {
+      every: 3 * 60 * 60 * 1000,
+    },
+  });
+}
 
 /** ****** Job processors ******** */
 
